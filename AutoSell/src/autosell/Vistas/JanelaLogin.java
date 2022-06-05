@@ -28,13 +28,13 @@ public class JanelaLogin extends javax.swing.JFrame {
         labelPassword = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("AutoSell _Login");
+        setTitle("AutoSell - Login");
         setResizable(false);
 
-        labelCapa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/cover_350.jpg"))); // NOI18N
+        labelCapa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/autosell/Resources/cover_350.jpg"))); // NOI18N
         labelCapa.setText("jLabel1");
 
-        buttonEntrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/login.png"))); // NOI18N
+        buttonEntrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/autosell/Resources/login.png"))); // NOI18N
         buttonEntrar.setText("Entrar");
         buttonEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -42,7 +42,7 @@ public class JanelaLogin extends javax.swing.JFrame {
             }
         });
 
-        buttonFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/logout.png"))); // NOI18N
+        buttonFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/autosell/Resources/logout.png"))); // NOI18N
         buttonFechar.setText("Fechar");
         buttonFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -53,8 +53,10 @@ public class JanelaLogin extends javax.swing.JFrame {
         labelEmail.setText("E-mail");
 
         passwordField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        passwordField.setText("1234");
 
         textPaneEmail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        textPaneEmail.setText("admin@autosell.pt");
         scrollPaneEmail.setViewportView(textPaneEmail);
 
         labelPassword.setText("Password");
@@ -67,16 +69,20 @@ public class JanelaLogin extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelPassword)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(buttonEntrar, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(buttonFechar))
-                        .addComponent(labelEmail, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(scrollPaneEmail, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(passwordField, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addGap(0, 16, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(labelPassword)
+                        .addGap(0, 246, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(passwordField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(labelEmail)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(buttonEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(buttonFechar)))
+                            .addComponent(scrollPaneEmail, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addContainerGap(19, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,7 +100,7 @@ public class JanelaLogin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonEntrar)
                     .addComponent(buttonFechar))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
