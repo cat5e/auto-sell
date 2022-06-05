@@ -1,5 +1,8 @@
 package autosell.Vistas;
 
+import autosell.Gestores.GestorColaboradores;
+import javax.swing.JOptionPane;
+
 public class JanelaLogin extends javax.swing.JFrame {
 
     public JanelaLogin() {
@@ -98,9 +101,19 @@ public class JanelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEntrarActionPerformed
-       var jp = new JanelaPrincipal();
-       jp.setVisible(true);
-       this.setVisible(false);
+        var email = textPaneEmail.getText();
+        var password = passwordField.getPassword();
+        
+        var colaborador = GestorColaboradores.INSTANCIA.validarCredenciais(email, String.valueOf(password));
+        if(colaborador == null){
+            
+            JOptionPane.showMessageDialog(this,"Credênciais Invalidas.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        var jp = new JanelaPrincipal(colaborador);
+        jp.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_buttonEntrarActionPerformed
 
     private void buttonFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonFecharActionPerformed

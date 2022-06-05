@@ -1,6 +1,9 @@
 package autosell.Gestores;
 
 import autosell.CustomExceptions.CustomExeption;
+import autosell.Enumeracoes.TipoEstabelecimento;
+import autosell.Modelos.Colaborador;
+import autosell.Modelos.Estabelecimento;
 import autosell.Utils.AppFileHandler;
 import autosell.Utils.AppLogger;
 import java.io.File;
@@ -9,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.LinkedList;
 
 public enum GestorArmazenamentoDados {
     INSTANCIA;
@@ -20,30 +24,43 @@ public enum GestorArmazenamentoDados {
     }
 
     public void lerDados() throws IOException, ClassNotFoundException, CustomExeption {
-
         var file = new AppFileHandler(ficheiro).seek();
         var fileStream = new FileInputStream(file);
-        var objectInputStream = new ObjectInputStream(fileStream);
-
-        // TODO: implementar a criação das listas de todos os gestores
-        //var firstread = objectInputStream.readObject();
-        objectInputStream.close();
+        
+        try (var objectInputStream = new ObjectInputStream(fileStream)) {
+            GestorEstabelecimentos.INSTANCIA.setListagem((LinkedList<Estabelecimento>) objectInputStream.readObject());
+            GestorColaboradores.INSTANCIA.setListagem((LinkedList<Colaborador>) objectInputStream.readObject());
+        }
     }
 
-    public void escreverDados() throws IOException { 
+    public boolean escreverDados() throws IOException { 
         var file = new AppFileHandler(ficheiro).create();
         
-        var objectOutputStream = new ObjectOutputStream(new FileOutputStream(file));
-
-        // TODO: Implementar a obtenção das listagens aqui. 
-        // objectOutputStream.writeObject(colaboradores1);
-        objectOutputStream.close();
+        try (var objectOutputStream = new ObjectOutputStream(new FileOutputStream(file))) {
+            objectOutputStream.writeObject(GestorEstabelecimentos.INSTANCIA.getListagem());
+            objectOutputStream.writeObject(GestorColaboradores.INSTANCIA.getListagem());
+        }
+        
+        return true;
     }
     
     public void popularDadosIniciais() throws IOException {
+        var estabelecimento = new Estabelecimento("Estabelecimento Inicial", 
+                "email@autosell.pt", 
+                "+351 0000 000 00", 
+                "", 
+                1000, 
+                TipoEstabelecimento.SEDE);
+        GestorEstabelecimentos.INSTANCIA.adicionar(estabelecimento);
         
-        escreverDados();
-        // TODO: Implementar este método após criar os modelos
-        //AppLogger.LOG.info(this, "Os dados iniciais foram populados com sucesso");
+        var colaborador = new Colaborador("Administrador", 
+                "admin@autosell.pt", 
+                estabelecimento, 
+                "1234");
+        GestorColaboradores.INSTANCIA.adicionar(colaborador);
+        
+        if(escreverDados()) {
+            AppLogger.LOG.info(this, "Os dados iniciais foram populados com sucesso");
+        }
     }
 }
