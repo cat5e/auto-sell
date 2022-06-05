@@ -50,4 +50,12 @@ public enum GestorColaboradores {
             .findFirst()
             .orElse(null);
     }
+    
+    public boolean remover(Colaborador colaborador){
+        if(colaborador == null || !colaboradores.contains(colaborador)){
+            return false;
+        }
+        
+        return colaboradores.remove(colaborador);
+    }
 }
