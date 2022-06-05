@@ -4,6 +4,7 @@
  */
 package autosell;
 
+import autosell.Vistas.JanelaLogin;
 import autosell.Vistas.JanelaPrincipal;
 
 public class AutoSell {
@@ -28,7 +29,7 @@ public class AutoSell {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new JanelaPrincipal().setVisible(true);
+            new JanelaLogin().setVisible(true);
         });
     }
 

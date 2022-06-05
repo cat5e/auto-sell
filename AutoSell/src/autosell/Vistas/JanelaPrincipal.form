@@ -202,6 +202,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="title" type="java.lang.String" value="AutoSell"/>
     <Property name="focusCycleRoot" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
@@ -227,7 +228,7 @@
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="desktopPane" max="32767" attributes="0"/>
-                  <Component id="toolBarPrincipal" pref="1210" max="32767" attributes="0"/>
+                  <Component id="toolBarPrincipal" pref="877" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
           </Group>

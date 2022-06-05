@@ -5,7 +5,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     public JanelaPrincipal() {
         initComponents();
-         this.setExtendedState(MAXIMIZED_BOTH);
+        setExtendedState(MAXIMIZED_BOTH);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -44,6 +45,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         menuEstatisticas = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("AutoSell");
         setFocusCycleRoot(false);
 
         toolBarPrincipal.setRollover(true);
@@ -224,7 +226,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(desktopPane)
-                    .addComponent(toolBarPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 1210, Short.MAX_VALUE))
+                    .addComponent(toolBarPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 877, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
