@@ -1,0 +1,31 @@
+package autosell.Gestores;
+
+import autosell.Modelos.Colaborador;
+import autosell.Modelos.Estabelecimento;
+import java.util.LinkedList;
+
+public enum GestorEstabelecimentos {
+    INSTANCIA;
+    
+    private LinkedList<Estabelecimento> estabelecimentos;
+    
+    private GestorEstabelecimentos() {
+        estabelecimentos = new LinkedList<>();
+    }
+    
+    public void adicionar(Estabelecimento estabelecimento){
+        if(estabelecimento == null || estabelecimentos.contains(estabelecimento)) {
+            return;
+        }
+        
+        estabelecimentos.add(estabelecimento);
+    }
+    
+    public LinkedList<Estabelecimento> getListagem(){
+        return estabelecimentos;
+    }
+    
+    public void setListagem(LinkedList<Estabelecimento> estabelecimentos){
+        this.estabelecimentos = estabelecimentos;
+    }
+}
