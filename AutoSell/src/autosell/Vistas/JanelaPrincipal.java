@@ -1,6 +1,7 @@
 package autosell.Vistas;
 
 import autosell.Modelos.Colaborador;
+import autosell.Vistas.Colaboradores.JanelaListagemColaboradores;
 
 
 public class JanelaPrincipal extends javax.swing.JFrame {
@@ -56,6 +57,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         menuEntidades = new javax.swing.JMenu();
         menuItemAdicionarEntidade = new javax.swing.JMenuItem();
         menuItemListagemEntidades = new javax.swing.JMenuItem();
+        menuColaboradores = new javax.swing.JMenu();
+        menuItemAdicionarColaborador = new javax.swing.JMenuItem();
+        menuItemListagemColaboradores = new javax.swing.JMenuItem();
         menuEstatisticas = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -75,7 +79,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         });
         toolBarPrincipal.add(buttonNomeDoUtilizador);
 
-        menuVeiculos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/car.png"))); // NOI18N
+        menuVeiculos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/autosell/Resources/car.png"))); // NOI18N
         menuVeiculos.setText("Veículos");
 
         menuItemAdicionarVeiculo.setText("Adicionar Veículo");
@@ -96,7 +100,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         menuBar.add(menuVeiculos);
 
-        menuEventos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/calendar-star.png"))); // NOI18N
+        menuEventos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/autosell/Resources/calendar-star.png"))); // NOI18N
         menuEventos.setText("Eventos");
 
         menuItemAdicionarEventos.setText("Adicionar Eventos");
@@ -117,7 +121,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         menuBar.add(menuEventos);
 
-        menuTransacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/swap-horizontal.png"))); // NOI18N
+        menuTransacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/autosell/Resources/swap-horizontal.png"))); // NOI18N
         menuTransacoes.setText("Transações");
 
         menuItemAdicionarTransacoes.setText("Adicionar Transações");
@@ -138,7 +142,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         menuBar.add(menuTransacoes);
 
-        menuArmazem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/warehouse.png"))); // NOI18N
+        menuArmazem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/autosell/Resources/warehouse.png"))); // NOI18N
         menuArmazem.setText("Armazém");
 
         menuItemAdicionarArtigo.setText("Adicionar Artigo");
@@ -159,7 +163,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         menuBar.add(menuArmazem);
 
-        menuIntervencoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/hammer-wrench.png"))); // NOI18N
+        menuIntervencoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/autosell/Resources/hammer-wrench.png"))); // NOI18N
         menuIntervencoes.setText("Intervenções");
 
         menuItemAdicionarIntervencao.setText("Adicionar Intervenção");
@@ -180,7 +184,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         menuBar.add(menuIntervencoes);
 
-        menuEstabelecimento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/office-building-marker.png"))); // NOI18N
+        menuEstabelecimento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/autosell/Resources/office-building-marker.png"))); // NOI18N
         menuEstabelecimento.setText("Estabelecimentos");
 
         menuItemAdicionarEstabelecimento.setText("Adicionar Estabelecimento");
@@ -201,7 +205,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         menuBar.add(menuEstabelecimento);
 
-        menuEntidades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/account-group.png"))); // NOI18N
+        menuEntidades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/autosell/Resources/account-group.png"))); // NOI18N
         menuEntidades.setText("Entidades");
 
         menuItemAdicionarEntidade.setText("Adicionar Entidade");
@@ -222,7 +226,28 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         menuBar.add(menuEntidades);
 
-        menuEstatisticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/chart-line.png"))); // NOI18N
+        menuColaboradores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/autosell/Resources/badge-account.png"))); // NOI18N
+        menuColaboradores.setText("Colaboradores");
+
+        menuItemAdicionarColaborador.setText("Adicionar Colaborador");
+        menuItemAdicionarColaborador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemAdicionarColaboradorActionPerformed(evt);
+            }
+        });
+        menuColaboradores.add(menuItemAdicionarColaborador);
+
+        menuItemListagemColaboradores.setText("Listagem de Colaboradores");
+        menuItemListagemColaboradores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemListagemColaboradoresActionPerformed(evt);
+            }
+        });
+        menuColaboradores.add(menuItemListagemColaboradores);
+
+        menuBar.add(menuColaboradores);
+
+        menuEstatisticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/autosell/Resources/chart-line.png"))); // NOI18N
         menuEstatisticas.setText("Estatísticas");
         menuEstatisticas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -240,13 +265,13 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(desktopPane)
-                    .addComponent(toolBarPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 877, Short.MAX_VALUE))
+                    .addComponent(toolBarPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 949, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+                .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(toolBarPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -318,17 +343,30 @@ public class JanelaPrincipal extends javax.swing.JFrame {
          buttonNomeDoUtilizador.setText(colaborador.getNome());
     }//GEN-LAST:event_buttonNomeDoUtilizadorActionPerformed
 
+    private void menuItemAdicionarColaboradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarColaboradorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuItemAdicionarColaboradorActionPerformed
+
+    private void menuItemListagemColaboradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemColaboradoresActionPerformed
+         var janelaListagemColaboradores = new JanelaListagemColaboradores(desktopPane);
+        desktopPane.add(janelaListagemColaboradores);
+        janelaListagemColaboradores.setVisible(true);
+
+    }//GEN-LAST:event_menuItemListagemColaboradoresActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonNomeDoUtilizador;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu menuArmazem;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenu menuColaboradores;
     private javax.swing.JMenu menuEntidades;
     private javax.swing.JMenu menuEstabelecimento;
     private javax.swing.JMenu menuEstatisticas;
     private javax.swing.JMenu menuEventos;
     private javax.swing.JMenu menuIntervencoes;
     private javax.swing.JMenuItem menuItemAdicionarArtigo;
+    private javax.swing.JMenuItem menuItemAdicionarColaborador;
     private javax.swing.JMenuItem menuItemAdicionarEntidade;
     private javax.swing.JMenuItem menuItemAdicionarEstabelecimento;
     private javax.swing.JMenuItem menuItemAdicionarEventos;
@@ -336,6 +374,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemAdicionarTransacoes;
     private javax.swing.JMenuItem menuItemAdicionarVeiculo;
     private javax.swing.JMenuItem menuItemListagemArtigos;
+    private javax.swing.JMenuItem menuItemListagemColaboradores;
     private javax.swing.JMenuItem menuItemListagemEntidades;
     private javax.swing.JMenuItem menuItemListagemEstabelecimentos;
     private javax.swing.JMenuItem menuItemListagemEventos;
