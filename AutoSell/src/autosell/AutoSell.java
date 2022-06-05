@@ -1,11 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package autosell;
 
+import autosell.CustomExceptions.CustomExeption;
+import autosell.Gestores.GestorArmazenamentoDados;
+import autosell.Utils.AppLogger;
 import autosell.Vistas.JanelaLogin;
-import autosell.Vistas.JanelaPrincipal;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AutoSell {
 
@@ -23,11 +24,30 @@ public class AutoSell {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            AppLogger.LOG.severe(AutoSell.class.getClass(), ex);
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        
+        try {
+            GestorArmazenamentoDados.INSTANCIA.lerDados();
+        }
+        catch (CustomExeption ne){
+            AppLogger.LOG.warning(GestorArmazenamentoDados.class.getName(), ne);
+            
+            try {
+                GestorArmazenamentoDados.INSTANCIA.popularDadosIniciais();
+            } 
+            catch (IOException ex) {
+                AppLogger.LOG.severe(GestorArmazenamentoDados.class.getName(), ex);
+                return;
+            }
+        }
+        catch (IOException | ClassNotFoundException e) {
+            AppLogger.LOG.severe(GestorArmazenamentoDados.class.getName(), e);
+            return;
+        }
+        
         java.awt.EventQueue.invokeLater(() -> {
             new JanelaLogin().setVisible(true);
         });
