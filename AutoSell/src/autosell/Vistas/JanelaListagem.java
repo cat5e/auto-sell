@@ -1,10 +1,16 @@
 package autosell.Vistas;
 
+import autosell.Modelos.Colaborador;
+import autosell.Utils.AppLogger;
 import autosell.Utils.TableModel;
+import autosell.Vistas.Colaboradores.JanelaEditarColaborador;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
+import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -12,43 +18,58 @@ import javax.swing.RowFilter;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.TableRowSorter;
 
-public abstract class JanelaListagem extends javax.swing.JInternalFrame {
+public abstract class JanelaListagem<T> extends javax.swing.JInternalFrame {
 
+    protected JDesktopPane desktopPane;
+    protected Colaborador colaboradorAutenticado;
     protected JTable table;
     protected TableRowSorter<TableModel> tableRowSorter;
     protected int[] tableColumnIndex;
     protected TableModel tableModel;
+    protected String[] columnNames;
+    private int objectColumnIndex;
 
-    public JanelaListagem() {
-        this("");
-    }
-    
-    public JanelaListagem(String nomeJanela) {
+    public JanelaListagem(String nomeJanela, String[] columnNames, JDesktopPane desktopPane, Colaborador colaboradorAutenticado) {
+        this.desktopPane = desktopPane;
+        this.colaboradorAutenticado = colaboradorAutenticado;
+        this.columnNames = columnNames;
+
         initComponents();
         setTitle(nomeJanela);
+
+        initTableComponents(columnNames, getTableData());
     }
 
-    protected void initTableComponents(String[] columnNames, Object[][] tableData) {
-        tableModel = new TableModel(columnNames, tableData);
-        tableRowSorter = new TableRowSorter<>(tableModel);
-        table = new JTable(tableModel);
+    private void initTableComponents(String[] columnNames, Object[][] tableData) {
+        try {
+            tableModel = new TableModel(columnNames, tableData);
+            tableRowSorter = new TableRowSorter<>(tableModel);
+            table = new JTable(tableModel);
 
-        if (tableData.length == 0) {
-            return;
+            if (tableData.length == 0) {
+                return;
+            }
+
+            table.setRowSorter(tableRowSorter);
+            table.setPreferredScrollableViewportSize(new Dimension(500, 70));
+            table.setFillsViewportHeight(true);
+            table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            table.getSelectionModel().addListSelectionListener(this::selecaoAlterada);
+
+            panelTable.add(table);
+
+            JScrollPane scrollPane = new JScrollPane(table);
+            panelTable.add(scrollPane);
+
+            tableColumnIndex = tableModel.getColumnIndexes();
+
+            objectColumnIndex = columnNames.length - 1;
+            table.getColumnModel().getColumn(objectColumnIndex).setMinWidth(0);
+            table.getColumnModel().getColumn(objectColumnIndex).setMaxWidth(0);
+            table.getColumnModel().getColumn(objectColumnIndex).setWidth(0);
+        } catch (Exception e) {
+            AppLogger.LOG.warning(getTitle(), e);
         }
-
-        table.setRowSorter(tableRowSorter);
-        table.setPreferredScrollableViewportSize(new Dimension(500, 70));
-        table.setFillsViewportHeight(true);
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        table.getSelectionModel().addListSelectionListener(this::selecaoAlterada);
-
-        panelTable.add(table);
-
-        JScrollPane scrollPane = new JScrollPane(table);
-        panelTable.add(scrollPane);
-
-        tableColumnIndex = tableModel.getColumnIndexes();
     }
 
     private void selecaoAlterada(ListSelectionEvent e) {
@@ -90,11 +111,62 @@ public abstract class JanelaListagem extends javax.swing.JInternalFrame {
         tableRowSorter.setRowFilter(rowFilter);
     }
 
-    protected abstract void acaoRemover();
+    protected void acaoRemover() {
+        if (tableModel.getRowCount() < 2) {
+            return;
+        }
 
-    protected abstract void acaoSelecionar();
+        var resultado = JOptionPane.showConfirmDialog(this,
+                "Deseja remover a linha selecionada? Esta opção é irreversível.",
+                "Remover?",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+
+        if (resultado != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        try {
+            var value = (T) table.getValueAt(table.getSelectedRow(), objectColumnIndex);
+
+            acaoRemoverGestor(value);
+
+            tableModel.setData(getTableData());
+        } catch (Exception e) {
+            AppLogger.LOG.warning(this, e);
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao tentar remover o registo", "Erro", JOptionPane.WARNING_MESSAGE);
+        }
+
+        JOptionPane.showMessageDialog(this, "Registo removido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    protected abstract void acaoRemoverGestor(T t);
+
+    private Object[][] getTableData() {
+        return getData();
+    }
+
+    protected abstract Object[][] getData();
+
+    protected void acaoSelecionar() {
+        var value = (T) table.getValueAt(table.getSelectedRow(), objectColumnIndex);
+
+        var janela = getInternalFrame(value);
+        desktopPane.add(janela);
+        janela.setVisible(true);
+    }
     
-    protected abstract void acaoAtualizar();
+    protected abstract JInternalFrame getInternalFrame(T value); 
+
+    protected void acaoAtualizar() {
+        try {
+            tableModel.setData(getTableData());
+        } catch (Exception e) {
+            AppLogger.LOG.warning(this, e);
+        }
+    }
+
+    ;
 
     /**
      * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The
@@ -214,12 +286,12 @@ public abstract class JanelaListagem extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_buttonSelecionarActionPerformed
 
     private void buttonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPesquisarActionPerformed
-       aplicarFiltro(textFieldPesquisar.getText());
+        aplicarFiltro(textFieldPesquisar.getText());
     }//GEN-LAST:event_buttonPesquisarActionPerformed
 
     private void buttonLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLimparActionPerformed
-       textFieldPesquisar.setText("");
-       aplicarFiltro("");
+        textFieldPesquisar.setText("");
+        aplicarFiltro("");
     }//GEN-LAST:event_buttonLimparActionPerformed
 
     private void buttonAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAtualizarActionPerformed
