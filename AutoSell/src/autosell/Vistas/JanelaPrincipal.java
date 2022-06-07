@@ -1,28 +1,47 @@
 package autosell.Vistas;
 
+import autosell.Enumeracoes.TipoColaborador;
 import autosell.Modelos.Colaborador;
+import autosell.Vistas.Colaboradores.JanelaEditarColaborador;
 import autosell.Vistas.Colaboradores.JanelaListagemColaboradores;
 
-
 public class JanelaPrincipal extends javax.swing.JFrame {
-    private final Colaborador colaborador;
-    
+
+    private final Colaborador colaboradorAutenticado;
+
     public JanelaPrincipal(Colaborador colaborador) {
-        this.colaborador = colaborador;
-        
+        this.colaboradorAutenticado = colaborador;
+
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
+        
+        bloquearAcessos();
         
         buttonNomeDoUtilizador.setText(colaborador.getNome());
     }
 
     // <editor-fold defaultstate="collapsed" desc="Getter Section">
-    public Colaborador getColaborador(){
-        return colaborador;
+    public Colaborador getColaborador() {
+        return colaboradorAutenticado;
     }
     // </editor-fold>  
-    
+
+    private void bloquearAcessos(){
+        if(colaboradorAutenticado.getTipoColaborador().equals(TipoColaborador.COMERCIAL)){
+            menuEstatisticas.setVisible(false);
+        }
+        
+        if(colaboradorAutenticado.getTipoColaborador().equals(TipoColaborador.TECNICO)){
+            menuEventos.setVisible(false);
+            menuTransacoes.setVisible(false);
+            menuEstabelecimento.setVisible(false);
+            menuEntidades.setVisible(false);
+            menuColaboradores.setVisible(false);
+            menuEstatisticas.setVisible(false);
+            menuItemAdicionarVeiculo.setVisible(false);
+        }
+    }
     
     /**
      * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The
@@ -280,75 +299,80 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuItemAdicionarVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarVeiculoActionPerformed
-        // TODO add your handling code here:
+        // TODO: Criar a edição de veículos (ter atenção as permissões)
     }//GEN-LAST:event_menuItemAdicionarVeiculoActionPerformed
 
     private void menuItemListagemVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemVeiculosActionPerformed
-        // TODO add your handling code here:
+        // TODO: Criar listagem de veículos (ter atenção as permissões)
     }//GEN-LAST:event_menuItemListagemVeiculosActionPerformed
 
     private void menuItemAdicionarEventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarEventosActionPerformed
-        // TODO add your handling code here:
+        // TODO: Criar a edição de eventos
     }//GEN-LAST:event_menuItemAdicionarEventosActionPerformed
 
     private void menuItemListagemEventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemEventosActionPerformed
-        // TODO add your handling code here:
+        // TODO: Criar listagem de eventos
     }//GEN-LAST:event_menuItemListagemEventosActionPerformed
 
     private void menuItemAdicionarTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarTransacoesActionPerformed
-        // TODO add your handling code here:
+        // TODO: Criar a edição de transações
     }//GEN-LAST:event_menuItemAdicionarTransacoesActionPerformed
 
     private void menuItemListagemTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemTransacoesActionPerformed
-        // TODO add your handling code here:
+        // TODO: Criar listagem de transações
     }//GEN-LAST:event_menuItemListagemTransacoesActionPerformed
 
     private void menuItemAdicionarArtigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarArtigoActionPerformed
-        // TODO add your handling code here:
+        // TODO: Criar a edição de Artigos
     }//GEN-LAST:event_menuItemAdicionarArtigoActionPerformed
 
     private void menuItemListagemArtigosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemArtigosActionPerformed
-        // TODO add your handling code here:
+        // TODO: Criar a listagem de Artigos
     }//GEN-LAST:event_menuItemListagemArtigosActionPerformed
 
     private void menuItemAdicionarIntervencaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarIntervencaoActionPerformed
-        // TODO add your handling code here:
+        // TODO: Criar a edição de Intervenções
     }//GEN-LAST:event_menuItemAdicionarIntervencaoActionPerformed
 
     private void menuItemListagemIntervencoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemIntervencoesActionPerformed
-        // TODO add your handling code here:
+        // TODO: Criar a listagem de Intervenções
     }//GEN-LAST:event_menuItemListagemIntervencoesActionPerformed
 
     private void menuItemAdicionarEstabelecimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarEstabelecimentoActionPerformed
-        // TODO add your handling code here:
+        // TODO: Criar a edição de Estabelecimentos
     }//GEN-LAST:event_menuItemAdicionarEstabelecimentoActionPerformed
 
     private void menuItemListagemEstabelecimentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemEstabelecimentosActionPerformed
-        // TODO add your handling code here:
+        // TODO: Criar a listagem de Estabelecimentos
     }//GEN-LAST:event_menuItemListagemEstabelecimentosActionPerformed
 
     private void menuItemAdicionarEntidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarEntidadeActionPerformed
-        // TODO add your handling code here:
+        // TODO: Criar a edição de Entidades
     }//GEN-LAST:event_menuItemAdicionarEntidadeActionPerformed
 
     private void menuItemListagemEntidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemEntidadesActionPerformed
-        // TODO add your handling code here:
+        // TODO: Criar a listagem de Entidades
     }//GEN-LAST:event_menuItemListagemEntidadesActionPerformed
 
     private void menuEstatisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEstatisticasActionPerformed
-        // TODO add your handling code here:
+        // TODO: Criar a listagem de Estatisticas
     }//GEN-LAST:event_menuEstatisticasActionPerformed
 
     private void buttonNomeDoUtilizadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNomeDoUtilizadorActionPerformed
-         buttonNomeDoUtilizador.setText(colaborador.getNome());
+        buttonNomeDoUtilizador.setText(colaboradorAutenticado.getNome());
+        var janelaEditarColaborador = new JanelaEditarColaborador(colaboradorAutenticado, colaboradorAutenticado);
+        desktopPane.add(janelaEditarColaborador);
+        janelaEditarColaborador.setVisible(true);
     }//GEN-LAST:event_buttonNomeDoUtilizadorActionPerformed
 
     private void menuItemAdicionarColaboradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarColaboradorActionPerformed
-        // TODO add your handling code here:
+        var janelaEditarColaborador = new JanelaEditarColaborador(null, colaboradorAutenticado);
+        desktopPane.add(janelaEditarColaborador);
+        janelaEditarColaborador.setVisible(true);
     }//GEN-LAST:event_menuItemAdicionarColaboradorActionPerformed
 
     private void menuItemListagemColaboradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemColaboradoresActionPerformed
-         var janelaListagemColaboradores = new JanelaListagemColaboradores(desktopPane);
+        var janelaListagemColaboradores = new JanelaListagemColaboradores(desktopPane, colaboradorAutenticado);
         desktopPane.add(janelaListagemColaboradores);
         janelaListagemColaboradores.setVisible(true);
 
