@@ -27,4 +27,12 @@ public enum GestorEstabelecimentos {
     public void setListagem(LinkedList<Estabelecimento> estabelecimentos){
         this.estabelecimentos = estabelecimentos;
     }
+    
+    public boolean remover(Estabelecimento estabelecimento){
+        if(estabelecimento == null || !estabelecimentos.contains(estabelecimento)){
+            return false;
+        }
+        
+        return estabelecimentos.remove(estabelecimento);
+    }
 }
