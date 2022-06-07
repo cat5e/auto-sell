@@ -4,6 +4,7 @@ import autosell.Enumeracoes.TipoColaborador;
 import autosell.Modelos.Colaborador;
 import autosell.Vistas.Colaboradores.JanelaEditarColaborador;
 import autosell.Vistas.Colaboradores.JanelaListagemColaboradores;
+import autosell.Vistas.Estabelecimentos.JanelaEditarEstabelecimento;
 import autosell.Vistas.Estabelecimentos.JanelaListagemEstabelecimentos;
 
 public class JanelaPrincipal extends javax.swing.JFrame {
@@ -341,7 +342,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemListagemIntervencoesActionPerformed
 
     private void menuItemAdicionarEstabelecimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarEstabelecimentoActionPerformed
-        // TODO: Criar a edição de Estabelecimentos
+        var janela = new JanelaEditarEstabelecimento(null);
+        desktopPane.add(janela);
+        janela.setVisible(true);
     }//GEN-LAST:event_menuItemAdicionarEstabelecimentoActionPerformed
 
     private void menuItemListagemEstabelecimentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemEstabelecimentosActionPerformed

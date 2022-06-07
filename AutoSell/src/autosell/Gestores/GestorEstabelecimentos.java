@@ -12,12 +12,12 @@ public enum GestorEstabelecimentos {
         estabelecimentos = new LinkedList<>();
     }
     
-    public void adicionar(Estabelecimento estabelecimento){
+    public boolean adicionar(Estabelecimento estabelecimento){
         if(estabelecimento == null || estabelecimentos.contains(estabelecimento)) {
-            return;
+            return false;
         }
         
-        estabelecimentos.add(estabelecimento);
+        return estabelecimentos.add(estabelecimento);
     }
     
     public LinkedList<Estabelecimento> getListagem(){

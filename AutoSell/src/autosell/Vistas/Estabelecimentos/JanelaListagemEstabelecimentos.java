@@ -66,11 +66,11 @@ public class JanelaListagemEstabelecimentos extends JanelaListagem {
 
     @Override
     protected void acaoSelecionar() {
-        var estabelecimento = (Estabelecimento) table.getValueAt(table.getSelectedRow(), 4);
+        var estabelecimento = (Estabelecimento) table.getValueAt(table.getSelectedRow(), 5);
 
-        /*var janelaEditarEstabelecimento = new JanelaEditarEstabelecimento(estabelecimento, colaboradorAutenticado);
-        desktopPane.add(janelaEditarEstabelecimento);
-        janelaEditarEstabelecimento.setVisible(true);*/
+        var janela = new JanelaEditarEstabelecimento(estabelecimento);
+        desktopPane.add(janela);
+        janela.setVisible(true);
     }
 
     @Override
