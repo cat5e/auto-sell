@@ -1,6 +1,5 @@
 package autosell.Gestores;
 
-import autosell.Modelos.Colaborador;
 import autosell.Modelos.Estabelecimento;
 import java.util.LinkedList;
 
@@ -22,7 +21,7 @@ public enum GestorEstabelecimentos {
     }
     
     public LinkedList<Estabelecimento> getListagem(){
-        return estabelecimentos;
+        return new LinkedList<>(estabelecimentos);
     }
     
     public void setListagem(LinkedList<Estabelecimento> estabelecimentos){

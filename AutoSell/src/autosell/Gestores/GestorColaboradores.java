@@ -1,6 +1,7 @@
 package autosell.Gestores;
 
 import autosell.Modelos.Colaborador;
+import static autosell.Utils.ValidacoesUtils.isNullOrEmpty;
 import java.util.LinkedList;
 
 public enum GestorColaboradores {
@@ -13,16 +14,16 @@ public enum GestorColaboradores {
         colaboradores = new LinkedList<>();
     }
     
-    public void adicionar(Colaborador colaborador){
+    public boolean adicionar(Colaborador colaborador){
         if(colaborador == null || colaboradores.contains(colaborador)) {
-            return;
+            return false;
         }
         
-        colaboradores.add(colaborador);
+        return colaboradores.add(colaborador);
     }
     
     public LinkedList<Colaborador> getListagem(){
-        return colaboradores;
+        return new LinkedList<>(colaboradores);
     }
     
     public void setListagem(LinkedList<Colaborador> colaboradores){
@@ -30,8 +31,7 @@ public enum GestorColaboradores {
     }
     
     public Colaborador validarCredenciais(String email, String password){
-        if(email == null || email.length() == 0 || 
-                password == null || password.length() == 0 ){
+        if(isNullOrEmpty(email) || isNullOrEmpty(password)){
             return null;
         }
         
@@ -44,7 +44,7 @@ public enum GestorColaboradores {
         return null;
     }
     
-    public Colaborador getColaboradorbyEmail(String email) {
+    private Colaborador getColaboradorbyEmail(String email) {
         return colaboradores.stream()
             .filter((colaborador) -> colaborador.getEmail().equals(email))
             .findFirst()
@@ -57,5 +57,9 @@ public enum GestorColaboradores {
         }
         
         return colaboradores.remove(colaborador);
+    }
+    
+    public boolean isEmailDuplicated(String email){
+        return getColaboradorbyEmail(email) != null;
     }
 }
