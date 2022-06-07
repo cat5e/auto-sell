@@ -18,6 +18,8 @@ import java.util.LinkedList;
 public enum GestorArmazenamentoDados {
     INSTANCIA;
 
+    // TODO: As listagens dos gestores deveriam ser implementadas aqui para proteção de carregamento e disponibilização.
+    
     private final String ficheiro;
 
     private GestorArmazenamentoDados() {
