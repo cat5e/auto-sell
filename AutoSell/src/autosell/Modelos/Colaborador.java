@@ -1,5 +1,6 @@
 package autosell.Modelos;
 
+import autosell.Enumeracoes.TipoColaborador;
 import java.io.Serializable;
 
 public class Colaborador implements Serializable {
@@ -7,12 +8,14 @@ public class Colaborador implements Serializable {
     private String email;
     private Estabelecimento estabelecimento;
     private String password;
+    private TipoColaborador tipoColaborador;
 
-    public Colaborador(String nome, String email, Estabelecimento estabelecimento, String password) {
+    public Colaborador(String nome, String email, Estabelecimento estabelecimento, String password, TipoColaborador tipoColaborador) {
         this.nome = nome;
         this.email = email;
         this.estabelecimento = estabelecimento;
         this.password = password;
+        this.tipoColaborador = tipoColaborador;
     }
 
     // <editor-fold defaultstate="collapsed" desc="Getter Section">
@@ -30,6 +33,10 @@ public class Colaborador implements Serializable {
 
     public String getPassword() {
         return password;
+    }
+    
+    public TipoColaborador getTipoColaborador() {
+        return tipoColaborador;
     }
     // </editor-fold>  
     
@@ -49,6 +56,10 @@ public class Colaborador implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    public void setTipoColaborador(TipoColaborador tipoColaborador) {
+        this.tipoColaborador = tipoColaborador;
+    }
     // </editor-fold>  
     
     // <editor-fold defaultstate="collapsed" desc="Override Section">
@@ -56,5 +67,4 @@ public class Colaborador implements Serializable {
     public String toString() {
         return nome;
     } // </editor-fold>
-
 }
