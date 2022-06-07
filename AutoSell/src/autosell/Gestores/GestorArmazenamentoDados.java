@@ -1,6 +1,7 @@
 package autosell.Gestores;
 
 import autosell.CustomExceptions.CustomExeption;
+import autosell.Enumeracoes.TipoColaborador;
 import autosell.Enumeracoes.TipoEstabelecimento;
 import autosell.Modelos.Colaborador;
 import autosell.Modelos.Estabelecimento;
@@ -56,7 +57,8 @@ public enum GestorArmazenamentoDados {
         var colaborador = new Colaborador("Administrador", 
                 "admin@autosell.pt", 
                 estabelecimento, 
-                "1234");
+                "1234", 
+                TipoColaborador.ADMINISTRADOR);
         GestorColaboradores.INSTANCIA.adicionar(colaborador);
         
         if(escreverDados()) {
