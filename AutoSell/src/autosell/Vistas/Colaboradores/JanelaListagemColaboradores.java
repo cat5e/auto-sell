@@ -9,10 +9,12 @@ import javax.swing.JOptionPane;
 
 public class JanelaListagemColaboradores extends JanelaListagem {
     private JDesktopPane desktopPane;
+    private Colaborador colaboradorAutenticado;
     
-    public JanelaListagemColaboradores(JDesktopPane desktopPane) {
+    public JanelaListagemColaboradores(JDesktopPane desktopPane, Colaborador colaboradorAutenticado) {
         super("Listagem de Colaboradores");
         
+        this.colaboradorAutenticado = colaboradorAutenticado;
         this.desktopPane = desktopPane;
         
         var columnNames = new String[]{"Nome", "E-mail", "Estabelecimento", "Veiculos Vendidos", "Obj"};
@@ -64,7 +66,7 @@ public class JanelaListagemColaboradores extends JanelaListagem {
     protected void acaoSelecionar() {
         var colaborador = (Colaborador) table.getValueAt(table.getSelectedRow(), 4);
         
-        var janelaEditarColaborador = new JanelaEditarColaborador(colaborador);
+        var janelaEditarColaborador = new JanelaEditarColaborador(colaborador, colaboradorAutenticado);
         desktopPane.add(janelaEditarColaborador);
         janelaEditarColaborador.setVisible(true);
     }
