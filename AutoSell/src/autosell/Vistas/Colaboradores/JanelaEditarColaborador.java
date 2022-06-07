@@ -1,31 +1,181 @@
 package autosell.Vistas.Colaboradores;
 
+import autosell.CustomExceptions.CustomExeption;
+import autosell.Enumeracoes.TipoColaborador;
+import autosell.Gestores.GestorArmazenamentoDados;
+import autosell.Gestores.GestorColaboradores;
+import autosell.Gestores.GestorEstabelecimentos;
 import autosell.Modelos.Colaborador;
-import autosell.Utils.TableModel;
-import javax.swing.JTable;
-import javax.swing.table.TableRowSorter;
+import autosell.Modelos.Estabelecimento;
+import autosell.Utils.AppLogger;
+import java.io.IOException;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import static autosell.Utils.ValidacoesUtils.isNullOrEmpty;
+import static autosell.Utils.ValidacoesUtils.validacaoComponente;
+
 
 
 public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
     private Colaborador colaborador;
-    protected JTable table;
-    protected TableRowSorter<TableModel> tableRowSorter;
-    protected int[] tableColumnIndex;
-    protected TableModel tableModel;
+    private final boolean isColaboradorAutenticadoColaborador;
+    private final boolean isColaboradorAutenticadoAdmin;
+    // TOOD: Implementar vendas do colaborador
+    /*private JTable table;
+    private TableRowSorter<TableModel> tableRowSorter;
+    private int[] tableColumnIndex;
+    private TableModel tableModel;*/
     
-    public JanelaEditarColaborador() {
-        this(null);
-    }
-    
-    public JanelaEditarColaborador(Colaborador colaborador) {
+    public JanelaEditarColaborador(Colaborador colaborador, Colaborador colaboradorAutenticado) {
         this.colaborador = colaborador;
+        
+        isColaboradorAutenticadoColaborador = this.colaborador != null && 
+                this.colaborador.equals(colaboradorAutenticado);
+        
+        isColaboradorAutenticadoAdmin = colaboradorAutenticado != null && 
+                colaboradorAutenticado.getTipoColaborador().equals(TipoColaborador.ADMINISTRADOR);
         initComponents();
         
-        // TODO: Carregar a listagem de todos os estabelecimentos
-        // TODO: Popular os dados do colaborador
+        // TODO: Verificar o tipo de colaborador
+        loadTipoColaboradores();
+        loadEstabelecimentos();
+        if(this.colaborador != null){
+            popularDados();
+        }
+        
         // TODO: Carregar a listagem de vendas do colaborador
     }
     
+    private void loadTipoColaboradores(){
+        comboBoxTipoColaborador.setModel(new DefaultComboBoxModel(TipoColaborador.values()));
+    }
+    
+    private void loadEstabelecimentos(){
+        var estabelecimentos = GestorEstabelecimentos.INSTANCIA.getListagem();
+       
+        for (Estabelecimento estabelecimento : estabelecimentos) {
+            comboBoxEstabelecimento.addItem(estabelecimento);
+        }
+    }
+    
+    private void popularDados(){
+        textFieldNome.setText(colaborador.getNome());
+        textFieldEmail.setText(colaborador.getEmail());
+        comboBoxEstabelecimento.setSelectedItem(colaborador.getEstabelecimento());
+        comboBoxTipoColaborador.setSelectedItem(colaborador.getTipoColaborador());
+        passwordFieldConfirmNovaPassword.setText("");
+        passwordFieldNovaPassword.setText("");
+        passwordFieldPasswordAntiga.setText("");
+    }
+    
+    private void acaoGuardar(){
+        try {
+             if(!isDadosValidos()){
+                return;
+            }
+
+            if(colaborador == null){
+                colaborador = new Colaborador(
+                        textFieldNome.getText(), 
+                        textFieldEmail.getText(), 
+                        (Estabelecimento) comboBoxEstabelecimento.getSelectedItem(), 
+                        String.valueOf(passwordFieldNovaPassword.getPassword()), 
+                        (TipoColaborador) comboBoxTipoColaborador.getSelectedItem());
+
+                if(!GestorColaboradores.INSTANCIA.adicionar(colaborador)){
+                    throw new CustomExeption("Não foi possível guardar o registo.");
+                }
+            }
+            else {
+                colaborador.setNome(textFieldNome.getText());
+                colaborador.setEmail(textFieldEmail.getText());
+                colaborador.setEstabelecimento((Estabelecimento) comboBoxEstabelecimento.getSelectedItem());
+                if(passwordFieldNovaPassword.getPassword().length > 0){
+                    colaborador.setPassword(String.valueOf(passwordFieldNovaPassword.getPassword()));
+                }
+                colaborador.setTipoColaborador((TipoColaborador) comboBoxTipoColaborador.getSelectedItem());
+            }
+            
+            GestorArmazenamentoDados.INSTANCIA.escreverDados();
+        } 
+        catch(CustomExeption e) {
+            AppLogger.LOG.warning(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+        catch (IOException e) {
+            AppLogger.LOG.severe(this, e);
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao guardar os dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        JOptionPane.showMessageDialog(this, "Os dados foram gravados com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private boolean isDadosValidos(){
+        JComponent componentesAValidar[] = {textFieldNome, textFieldEmail, 
+            comboBoxEstabelecimento, comboBoxTipoColaborador};
+   
+        for (JComponent jComponent : componentesAValidar) {
+            if(!validacaoComponente(this, jComponent)){
+                return false;
+            }
+        }
+        
+        
+        String emailColaborador = colaborador == null ? "" : colaborador.getEmail();
+        if(!textFieldEmail.getText().equals(emailColaborador) &&
+              GestorColaboradores.INSTANCIA.isEmailDuplicated(textFieldEmail.getText())){
+            JOptionPane.showMessageDialog(this,String.format("O email '%s', já existe no sistema.", textFieldEmail.getText()),
+                            "Dados inválidos", JOptionPane.WARNING_MESSAGE);
+                    return false;
+        }
+        
+        return isPasswordValid();
+    }
+    
+    private boolean isPasswordValid(){
+        
+        var passwordAtual = String.valueOf(passwordFieldPasswordAntiga.getPassword());
+        var novaPassword = String.valueOf(passwordFieldNovaPassword.getPassword());
+        var confirmacaoNovaPassword = String.valueOf(passwordFieldConfirmNovaPassword.getPassword());
+        
+        boolean isValido = true;
+        
+        if(colaborador == null){
+            isValido = validacaoComponente(this,passwordFieldNovaPassword);
+        }
+        
+        if(isValido && !isNullOrEmpty(novaPassword)){
+            if(isColaboradorAutenticadoColaborador) {
+               isValido = validacaoComponente(this,passwordFieldPasswordAntiga);
+            }
+            
+            if(isValido){
+                isValido = validacaoComponente(this,passwordFieldConfirmNovaPassword);
+            }
+            
+            if(isValido && novaPassword.length() < GestorColaboradores.INSTANCIA.LIMITE_MIN_CHAR_PASSWORD){
+                JOptionPane.showMessageDialog(this, String.format("A password tem de ter no minimo %d caracteres.",
+                    GestorColaboradores.INSTANCIA.LIMITE_MIN_CHAR_PASSWORD),
+                            "Dados inválidos", JOptionPane.WARNING_MESSAGE);
+                isValido = false;
+            }
+            
+            if(isValido && !novaPassword.equals(confirmacaoNovaPassword)){
+                JOptionPane.showMessageDialog(this,"A nova password e a confirmação não são iguais.",
+                            "Dados inválidos", JOptionPane.WARNING_MESSAGE);
+                isValido = false;
+            }
+            
+            if(isValido && isColaboradorAutenticadoColaborador && !passwordAtual.equals(colaborador.getPassword())){
+                JOptionPane.showMessageDialog(this,"Password antiga inválida.",
+                            "Dados inválidos", JOptionPane.WARNING_MESSAGE);
+                isValido = false;
+            }
+        }
+        return isValido;
+    }
+ 
     /**
      * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The
      * content of this method is always regenerated by the Form Editor.
@@ -43,8 +193,10 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
         labelEmail = new javax.swing.JLabel();
         labelEstabelecimento = new javax.swing.JLabel();
         comboBoxEstabelecimento = new javax.swing.JComboBox<>();
+        comboBoxEstabelecimento.setEnabled(isColaboradorAutenticadoAdmin);
         labelPasswordAntiga = new javax.swing.JLabel();
         passwordFieldPasswordAntiga = new javax.swing.JPasswordField();
+        passwordFieldPasswordAntiga.setEnabled(isColaboradorAutenticadoColaborador);
         passwordFieldNovaPassword = new javax.swing.JPasswordField();
         labelVendas = new javax.swing.JLabel();
         passwordFieldConfirmNovaPassword = new javax.swing.JPasswordField();
@@ -52,11 +204,16 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
         labelNovaPassword = new javax.swing.JLabel();
         panelVendas = new javax.swing.JPanel();
         labelToBeImplemented = new javax.swing.JLabel();
+        labelTipoColaborador = new javax.swing.JLabel();
+        comboBoxTipoColaborador = new javax.swing.JComboBox<>();
+        comboBoxTipoColaborador.setEnabled(isColaboradorAutenticadoAdmin);
 
         setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
         setTitle("Editar Colaborador");
         setToolTipText("");
+        setMaximumSize(new java.awt.Dimension(678, 230));
+        setMinimumSize(new java.awt.Dimension(678, 230));
 
         buttonGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/autosell/Resources/content-save.png"))); // NOI18N
         buttonGuardar.setText("Guardar");
@@ -76,20 +233,33 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
         labelNome.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelNome.setText("Nome");
 
+        textFieldNome.setName("Nome"); // NOI18N
+
+        textFieldEmail.setName("E-mail"); // NOI18N
+
         labelEmail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelEmail.setText("E-mail");
 
         labelEstabelecimento.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelEstabelecimento.setText("Estabelecimento");
 
+        comboBoxEstabelecimento.setName("Estabelecimento"); // NOI18N
+
         labelPasswordAntiga.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelPasswordAntiga.setText("Password Antiga");
+
+        passwordFieldPasswordAntiga.setName("Password Antiga"); // NOI18N
+
+        passwordFieldNovaPassword.setName("Nova Password"); // NOI18N
 
         labelVendas.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelVendas.setText("Vendas");
 
+        passwordFieldConfirmNovaPassword.setName("Confirmação Nova Password"); // NOI18N
+
         labelConfirmNovaPassword.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelConfirmNovaPassword.setText("Confirmação Nova Password");
+        labelConfirmNovaPassword.setName("Confirmação Nova Password"); // NOI18N
 
         labelNovaPassword.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelNovaPassword.setText("Nova Password");
@@ -101,6 +271,11 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
         labelToBeImplemented.setText("To be Implemented...");
         panelVendas.add(labelToBeImplemented, new java.awt.GridBagConstraints());
 
+        labelTipoColaborador.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        labelTipoColaborador.setText("Tipo Colaborador");
+
+        comboBoxTipoColaborador.setName("Tipo Colaborador"); // NOI18N
+
         javax.swing.GroupLayout panelEdicaoLayout = new javax.swing.GroupLayout(panelEdicao);
         panelEdicao.setLayout(panelEdicaoLayout);
         panelEdicaoLayout.setHorizontalGroup(
@@ -108,13 +283,16 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
             .addGroup(panelEdicaoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelEdicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelVendas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelEdicaoLayout.createSequentialGroup()
-                        .addGroup(panelEdicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelEdicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(passwordFieldPasswordAntiga, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
-                                .addComponent(textFieldNome)
-                                .addComponent(labelNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(labelPasswordAntiga))
+                        .addGroup(panelEdicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(comboBoxTipoColaborador, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(panelEdicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(panelEdicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(passwordFieldPasswordAntiga, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                                    .addComponent(textFieldNome)
+                                    .addComponent(labelNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(labelPasswordAntiga)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelEdicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelEdicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -125,13 +303,14 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelEdicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(comboBoxEstabelecimento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(passwordFieldConfirmNovaPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+                            .addComponent(passwordFieldConfirmNovaPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
                             .addComponent(labelEstabelecimento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(labelConfirmNovaPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(labelConfirmNovaPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)))
                     .addGroup(panelEdicaoLayout.createSequentialGroup()
-                        .addComponent(labelVendas)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(panelVendas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(panelEdicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelTipoColaborador)
+                            .addComponent(labelVendas))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelEdicaoLayout.setVerticalGroup(
@@ -166,9 +345,13 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
                         .addGap(0, 0, 0)
                         .addComponent(passwordFieldConfirmNovaPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(labelVendas)
+                .addComponent(labelTipoColaborador)
                 .addGap(0, 0, 0)
-                .addComponent(panelVendas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(comboBoxTipoColaborador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(labelVendas)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(panelVendas, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -177,7 +360,7 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelEdicao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(toolBarMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
+            .addComponent(toolBarMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,19 +374,20 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGuardarActionPerformed
-        
+        acaoGuardar();
     }//GEN-LAST:event_buttonGuardarActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonGuardar;
-    private javax.swing.JComboBox<String> comboBoxEstabelecimento;
+    private javax.swing.JComboBox<Estabelecimento> comboBoxEstabelecimento;
+    private javax.swing.JComboBox<TipoColaborador> comboBoxTipoColaborador;
     private javax.swing.JLabel labelConfirmNovaPassword;
     private javax.swing.JLabel labelEmail;
     private javax.swing.JLabel labelEstabelecimento;
     private javax.swing.JLabel labelNome;
     private javax.swing.JLabel labelNovaPassword;
     private javax.swing.JLabel labelPasswordAntiga;
+    private javax.swing.JLabel labelTipoColaborador;
     private javax.swing.JLabel labelToBeImplemented;
     private javax.swing.JLabel labelVendas;
     private javax.swing.JPanel panelEdicao;
