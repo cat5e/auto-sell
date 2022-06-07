@@ -48,13 +48,21 @@ public enum GestorArmazenamentoDados {
     }
     
     public void popularDadosIniciais() throws IOException {
-        var estabelecimento = new Estabelecimento("Estabelecimento Inicial", 
-                "email@autosell.pt", 
-                "+351 0000 000 00", 
+        var estabelecimento = new Estabelecimento("AutoSell - Lisboa", 
+                "lisboa@autosell.pt", 
+                "+351 211 000 00", 
                 "", 
                 1000, 
                 TipoEstabelecimento.SEDE);
         GestorEstabelecimentos.INSTANCIA.adicionar(estabelecimento);
+        
+        var estabelecimento1 = new Estabelecimento("Filial AutoSell - Leiria", 
+                "leiria@autosell.pt", 
+                "+351 248 500 323", 
+                "Rua da Gordinhela, N2", 
+                100, 
+                TipoEstabelecimento.FILIAL);
+        GestorEstabelecimentos.INSTANCIA.adicionar(estabelecimento1);
         
         var colaborador = new Colaborador("Administrador", 
                 "admin@autosell.pt", 
@@ -62,6 +70,8 @@ public enum GestorArmazenamentoDados {
                 "1234", 
                 TipoColaborador.ADMINISTRADOR);
         GestorColaboradores.INSTANCIA.adicionar(colaborador);
+        
+        
         
         if(escreverDados()) {
             AppLogger.LOG.info(this, "Os dados iniciais foram populados com sucesso");
