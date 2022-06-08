@@ -16,4 +16,11 @@ public class GestorEntidades extends Gestor<Entidade> {
     public static GestorEntidades getInstance() {
         return Singleton.GESTOR_ENTIDADES;
     }
+     
+    public boolean isNifDuplicated(String nif){
+        return ts.stream()
+            .filter((entidade) -> entidade.getNif().equals(nif))
+            .findFirst()
+            .orElse(null) != null;
+    }
 }

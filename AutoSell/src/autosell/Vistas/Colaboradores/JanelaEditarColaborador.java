@@ -2,7 +2,6 @@ package autosell.Vistas.Colaboradores;
 
 import autosell.CustomExceptions.CustomExeption;
 import autosell.Enumeracoes.TipoColaborador;
-import autosell.Gestores.Gestor;
 import autosell.Gestores.GestorArmazenamentoDados;
 import autosell.Gestores.GestorColaboradores;
 import autosell.Gestores.GestorEstabelecimentos;
