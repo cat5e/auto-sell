@@ -4,8 +4,12 @@ import autosell.Enumeracoes.TipoColaborador;
 import autosell.Modelos.Colaborador;
 import autosell.Vistas.Colaboradores.JanelaEditarColaborador;
 import autosell.Vistas.Colaboradores.JanelaListagemColaboradores;
+import autosell.Vistas.Entidades.JanelaEditarEntidade;
+import autosell.Vistas.Entidades.JanelaListagemEntidades;
 import autosell.Vistas.Estabelecimentos.JanelaEditarEstabelecimento;
 import autosell.Vistas.Estabelecimentos.JanelaListagemEstabelecimentos;
+import autosell.Vistas.Eventos.JanelaEditarEvento;
+import autosell.Vistas.Eventos.JanelaListagemEventos;
 import autosell.Vistas.Veiculos.JanelaListagemVeiculos;
 
 public class JanelaPrincipal extends javax.swing.JFrame {
@@ -313,11 +317,15 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemListagemVeiculosActionPerformed
 
     private void menuItemAdicionarEventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarEventosActionPerformed
-        // TODO: Criar a edição de eventos
+        var janela = new JanelaEditarEvento(null);
+        desktopPane.add(janela);
+        janela.setVisible(true);
     }//GEN-LAST:event_menuItemAdicionarEventosActionPerformed
 
     private void menuItemListagemEventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemEventosActionPerformed
-        // TODO: Criar listagem de eventos
+        var janelaListagem = new JanelaListagemEventos(desktopPane, colaboradorAutenticado);
+        desktopPane.add(janelaListagem);
+        janelaListagem.setVisible(true);
     }//GEN-LAST:event_menuItemListagemEventosActionPerformed
 
     private void menuItemAdicionarTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarTransacoesActionPerformed
@@ -357,11 +365,15 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemListagemEstabelecimentosActionPerformed
 
     private void menuItemAdicionarEntidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarEntidadeActionPerformed
-        // TODO: Criar a edição de Entidades
+        var janela = new JanelaEditarEntidade(null);
+        desktopPane.add(janela);
+        janela.setVisible(true);
     }//GEN-LAST:event_menuItemAdicionarEntidadeActionPerformed
 
     private void menuItemListagemEntidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemEntidadesActionPerformed
-        // TODO: Criar a listagem de Entidades
+        var janelaListagem = new JanelaListagemEntidades(desktopPane, colaboradorAutenticado);
+        desktopPane.add(janelaListagem);
+        janelaListagem.setVisible(true);
     }//GEN-LAST:event_menuItemListagemEntidadesActionPerformed
 
     private void menuEstatisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEstatisticasActionPerformed
