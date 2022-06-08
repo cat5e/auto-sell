@@ -365,7 +365,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemListagemEstabelecimentosActionPerformed
 
     private void menuItemAdicionarEntidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarEntidadeActionPerformed
-        var janela = new JanelaEditarEntidade(null);
+        var janela = new JanelaEditarEntidade(null); 
         desktopPane.add(janela);
         janela.setVisible(true);
     }//GEN-LAST:event_menuItemAdicionarEntidadeActionPerformed
