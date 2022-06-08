@@ -2,7 +2,6 @@ package autosell.Vistas.Colaboradores;
 
 import autosell.Gestores.GestorColaboradores;
 import autosell.Modelos.Colaborador;
-import autosell.Modelos.Veiculo;
 import autosell.Vistas.JanelaListagem;
 import java.util.LinkedList;
 import javax.swing.JDesktopPane;
