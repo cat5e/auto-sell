@@ -4,8 +4,9 @@ import autosell.Enumeracoes.ClassesVeiculos;
 import autosell.Enumeracoes.EstadoVeiculo;
 import autosell.Enumeracoes.MesesAno;
 import autosell.Enumeracoes.TipoCombustivel;
+import java.io.Serializable;
 
-public class Veiculo {
+public class Veiculo implements Serializable{
 
     private float preco;
     private String matricula;

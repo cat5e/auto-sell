@@ -1,12 +1,9 @@
 package autosell.Vistas.Estabelecimentos;
 
 import autosell.CustomExceptions.CustomExeption;
-import autosell.Enumeracoes.TipoColaborador;
 import autosell.Enumeracoes.TipoEstabelecimento;
 import autosell.Gestores.GestorArmazenamentoDados;
-import autosell.Gestores.GestorColaboradores;
 import autosell.Gestores.GestorEstabelecimentos;
-import autosell.Modelos.Colaborador;
 import autosell.Modelos.Estabelecimento;
 import autosell.Utils.AppLogger;
 import static autosell.Utils.ValidacoesUtils.validacaoComponente;
@@ -57,7 +54,7 @@ public class JanelaEditarEstabelecimento extends javax.swing.JInternalFrame {
                         Integer.parseInt(textFieldLimiteVeiculos.getText()),
                         (TipoEstabelecimento) comboboxTipo.getSelectedItem());
 
-                if (!GestorEstabelecimentos.INSTANCIA.adicionar(estabelecimento)) {
+                if (!GestorEstabelecimentos.getInstance().adicionar(estabelecimento)) {
                     throw new CustomExeption("Não foi possível guardar o registo.");
                 }
             } else {

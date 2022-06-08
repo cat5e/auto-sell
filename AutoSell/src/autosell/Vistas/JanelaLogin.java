@@ -110,7 +110,7 @@ public class JanelaLogin extends javax.swing.JFrame {
         var email = textPaneEmail.getText();
         var password = passwordField.getPassword();
         
-        var colaborador = GestorColaboradores.INSTANCIA.validarCredenciais(email, String.valueOf(password));
+        var colaborador = GestorColaboradores.getInstance().validarCredenciais(email, String.valueOf(password));
         if(colaborador == null){
             
             JOptionPane.showMessageDialog(this,"Credênciais Invalidas.", "Aviso", JOptionPane.WARNING_MESSAGE);

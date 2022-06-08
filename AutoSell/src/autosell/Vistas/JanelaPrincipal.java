@@ -6,6 +6,7 @@ import autosell.Vistas.Colaboradores.JanelaEditarColaborador;
 import autosell.Vistas.Colaboradores.JanelaListagemColaboradores;
 import autosell.Vistas.Estabelecimentos.JanelaEditarEstabelecimento;
 import autosell.Vistas.Estabelecimentos.JanelaListagemEstabelecimentos;
+import autosell.Vistas.Veiculos.JanelaListagemVeiculos;
 
 public class JanelaPrincipal extends javax.swing.JFrame {
 
@@ -306,7 +307,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemAdicionarVeiculoActionPerformed
 
     private void menuItemListagemVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemVeiculosActionPerformed
-        // TODO: Criar listagem de veículos (ter atenção as permissões)
+        var janelaListagem = new JanelaListagemVeiculos(desktopPane, colaboradorAutenticado);
+        desktopPane.add(janelaListagem);
+        janelaListagem.setVisible(true);
     }//GEN-LAST:event_menuItemListagemVeiculosActionPerformed
 
     private void menuItemAdicionarEventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarEventosActionPerformed
@@ -379,7 +382,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemAdicionarColaboradorActionPerformed
 
     private void menuItemListagemColaboradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemColaboradoresActionPerformed
-        var janela = new JanelaListagemColaboradores(desktopPane, colaboradorAutenticado);
+       var janela = new JanelaListagemColaboradores(desktopPane, colaboradorAutenticado);
         desktopPane.add(janela);
         janela.setVisible(true);
 

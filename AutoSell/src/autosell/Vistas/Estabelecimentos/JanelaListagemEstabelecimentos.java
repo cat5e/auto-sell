@@ -4,42 +4,34 @@ import autosell.Gestores.GestorEstabelecimentos;
 import autosell.Modelos.Colaborador;
 import autosell.Modelos.Estabelecimento;
 import autosell.Vistas.JanelaListagem;
+import java.util.LinkedList;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
-    
+
 public class JanelaListagemEstabelecimentos extends JanelaListagem<Estabelecimento> {
 
     public JanelaListagemEstabelecimentos(JDesktopPane desktopPane, Colaborador colaboradorAutenticado) {
         super("Listagem de Estabelecimentos",
                 new String[]{
-                    "Nome", 
-                    "Tipo", 
+                    "Nome",
+                    "Tipo",
                     "Nr. Máx. Veículos",
-                    "Morada", 
-                    "Telefone", 
+                    "Morada",
+                    "Telefone",
                     "Obj"},
                 desktopPane,
-                colaboradorAutenticado);
+                colaboradorAutenticado,
+                GestorEstabelecimentos.getInstance());
     }
 
     @Override
-    protected void acaoRemoverGestor(Estabelecimento estabelecimento){
-        GestorEstabelecimentos.INSTANCIA.remover(estabelecimento);
-    }
-    
-    @Override
-    protected JInternalFrame getInternalFrame(Estabelecimento value){
+    protected JInternalFrame getInternalFrame(Estabelecimento value) {
         return new JanelaEditarEstabelecimento(value);
     }
 
     @Override
-    protected Object[][] getData() {
-        var estabelecimentos = GestorEstabelecimentos.INSTANCIA.getListagem();
-
-        var aux = new Object[estabelecimentos.size()][6];
-
+    protected void getData(Object[][] aux, LinkedList<Estabelecimento> estabelecimentos) {
         int i = 0;
-            
         for (Estabelecimento estabelecimento : estabelecimentos) {
             aux[i][0] = estabelecimento.getNome();
             aux[i][1] = estabelecimento.getTipo();
@@ -49,7 +41,5 @@ public class JanelaListagemEstabelecimentos extends JanelaListagem<Estabelecimen
             aux[i][5] = estabelecimento;
             i++;
         }
-
-        return aux;
     }
 }

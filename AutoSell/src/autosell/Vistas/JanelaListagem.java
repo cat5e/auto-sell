@@ -1,11 +1,12 @@
 package autosell.Vistas;
 
+import autosell.Gestores.Gestor;
 import autosell.Modelos.Colaborador;
 import autosell.Utils.AppLogger;
 import autosell.Utils.TableModel;
-import autosell.Vistas.Colaboradores.JanelaEditarColaborador;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
 import javax.swing.JDesktopPane;
@@ -28,11 +29,16 @@ public abstract class JanelaListagem<T> extends javax.swing.JInternalFrame {
     protected TableModel tableModel;
     protected String[] columnNames;
     private int objectColumnIndex;
+    protected Gestor<T> gestor;
 
-    public JanelaListagem(String nomeJanela, String[] columnNames, JDesktopPane desktopPane, Colaborador colaboradorAutenticado) {
+    public JanelaListagem(String nomeJanela, String[] columnNames, 
+            JDesktopPane desktopPane, 
+            Colaborador colaboradorAutenticado,
+            Gestor<T> gestor) {
         this.desktopPane = desktopPane;
         this.colaboradorAutenticado = colaboradorAutenticado;
         this.columnNames = columnNames;
+        this.gestor = gestor;
 
         initComponents();
         setTitle(nomeJanela);
@@ -67,6 +73,9 @@ public abstract class JanelaListagem<T> extends javax.swing.JInternalFrame {
             table.getColumnModel().getColumn(objectColumnIndex).setMinWidth(0);
             table.getColumnModel().getColumn(objectColumnIndex).setMaxWidth(0);
             table.getColumnModel().getColumn(objectColumnIndex).setWidth(0);
+            
+            table.setRowSelectionInterval(0, 0);
+            
         } catch (Exception e) {
             AppLogger.LOG.warning(getTitle(), e);
         }
@@ -129,7 +138,7 @@ public abstract class JanelaListagem<T> extends javax.swing.JInternalFrame {
         try {
             var value = (T) table.getValueAt(table.getSelectedRow(), objectColumnIndex);
 
-            acaoRemoverGestor(value);
+            gestor.remover(value);
 
             tableModel.setData(getTableData());
         } catch (Exception e) {
@@ -140,13 +149,16 @@ public abstract class JanelaListagem<T> extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, "Registo removido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    protected abstract void acaoRemoverGestor(T t);
-
     private Object[][] getTableData() {
-        return getData();
+        var veiculos = gestor.getListagem();
+
+        var aux = new Object[veiculos.size()][columnNames.length];
+        getData(aux, veiculos);
+        
+        return aux;
     }
 
-    protected abstract Object[][] getData();
+    protected abstract void getData(Object[][] aux, LinkedList<T> list);
 
     protected void acaoSelecionar() {
         var value = (T) table.getValueAt(table.getSelectedRow(), objectColumnIndex);

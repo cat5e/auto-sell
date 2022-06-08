@@ -2,6 +2,7 @@ package autosell.Vistas.Colaboradores;
 
 import autosell.CustomExceptions.CustomExeption;
 import autosell.Enumeracoes.TipoColaborador;
+import autosell.Gestores.Gestor;
 import autosell.Gestores.GestorArmazenamentoDados;
 import autosell.Gestores.GestorColaboradores;
 import autosell.Gestores.GestorEstabelecimentos;
@@ -21,6 +22,7 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
     private Colaborador colaborador;
     private final boolean isColaboradorAutenticadoColaborador;
     private final boolean isColaboradorAutenticadoAdmin;
+    private final GestorColaboradores gestor;
     // TOOD: Implementar vendas do colaborador
     /*private JTable table;
     private TableRowSorter<TableModel> tableRowSorter;
@@ -28,6 +30,8 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
     private TableModel tableModel;*/
     
     public JanelaEditarColaborador(Colaborador colaborador, Colaborador colaboradorAutenticado) {
+        gestor = GestorColaboradores.getInstance();
+        
         this.colaborador = colaborador;
         
         isColaboradorAutenticadoColaborador = this.colaborador != null && 
@@ -52,7 +56,7 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
     }
     
     private void loadEstabelecimentos(){
-        var estabelecimentos = GestorEstabelecimentos.INSTANCIA.getListagem();
+        var estabelecimentos = GestorEstabelecimentos.getInstance().getListagem();
        
         for (Estabelecimento estabelecimento : estabelecimentos) {
             comboBoxEstabelecimento.addItem(estabelecimento);
@@ -83,7 +87,7 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
                         String.valueOf(passwordFieldNovaPassword.getPassword()), 
                         (TipoColaborador) comboBoxTipoColaborador.getSelectedItem());
 
-                if(!GestorColaboradores.INSTANCIA.adicionar(colaborador)){
+                if(!gestor.adicionar(colaborador)){
                     throw new CustomExeption("Não foi possível guardar o registo.");
                 }
             }
@@ -124,7 +128,7 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
         
         String emailColaborador = colaborador == null ? "" : colaborador.getEmail();
         if(!textFieldEmail.getText().equals(emailColaborador) &&
-              GestorColaboradores.INSTANCIA.isEmailDuplicated(textFieldEmail.getText())){
+              gestor.isEmailDuplicated(textFieldEmail.getText())){
             JOptionPane.showMessageDialog(this,String.format("O email '%s', já existe no sistema.", textFieldEmail.getText()),
                             "Dados inválidos", JOptionPane.WARNING_MESSAGE);
                     return false;
@@ -154,9 +158,9 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
                 isValido = validacaoComponente(this,passwordFieldConfirmNovaPassword);
             }
             
-            if(isValido && novaPassword.length() < GestorColaboradores.INSTANCIA.LIMITE_MIN_CHAR_PASSWORD){
+            if(isValido && novaPassword.length() < gestor.LIMITE_MIN_CHAR_PASSWORD){
                 JOptionPane.showMessageDialog(this, String.format("A password tem de ter no minimo %d caracteres.",
-                    GestorColaboradores.INSTANCIA.LIMITE_MIN_CHAR_PASSWORD),
+                    gestor.LIMITE_MIN_CHAR_PASSWORD),
                             "Dados inválidos", JOptionPane.WARNING_MESSAGE);
                 isValido = false;
             }

@@ -1,30 +1,17 @@
 package autosell.Gestores;
 
 import autosell.Modelos.Veiculo;
-import java.util.LinkedList;
 
-public enum GestorVeiculos {
-    INSTANCIA;
+
+public class GestorVeiculos extends Gestor<Veiculo>{
     
-    private LinkedList<Veiculo> veiculos;
+    private GestorVeiculos(){}
     
-    private GestorVeiculos() {
-        veiculos = new LinkedList<>();
+    private static class Singleton {
+        private static final GestorVeiculos GESTOR_VEICULOS = new GestorVeiculos();
     }
-    
-    public void adicionar(Veiculo veiculo){
-        if(veiculo == null || veiculos.contains(veiculo)) {
-            return;
-        }
-        
-        veiculos.add(veiculo);
-    }
-    
-    public LinkedList<Veiculo> getListagem(){
-        return new LinkedList<>(veiculos);
-    }
-    
-    public void setListagem(LinkedList<Veiculo> veiculos){
-        this.veiculos = veiculos;
+
+    public static GestorVeiculos getInstance(){
+        return Singleton.GESTOR_VEICULOS;
     }
 }
