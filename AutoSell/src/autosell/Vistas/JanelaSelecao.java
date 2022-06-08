@@ -1,86 +1,57 @@
 package autosell.Vistas;
 
 import autosell.Gestores.Gestor;
-import autosell.Modelos.Colaborador;
 import autosell.Utils.AppLogger;
 import autosell.Utils.TableModel;
-import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
-import javax.swing.JDesktopPane;
-import javax.swing.JInternalFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.TableRowSorter;
 
-public abstract class JanelaListagem<T> extends javax.swing.JInternalFrame {
 
-    protected JDesktopPane desktopPane;
-    protected Colaborador colaboradorAutenticado;
-    protected JTable table;
-    protected TableRowSorter<TableModel> tableRowSorter;
-    protected int[] tableColumnIndex;
-    protected TableModel tableModel;
-    protected String[] columnNames;
-    private int objectColumnIndex;
+public class JanelaSelecao<T>  extends javax.swing.JDialog {
     protected Gestor<T> gestor;
-
-    public JanelaListagem(String nomeJanela, String[] columnNames, 
-            JDesktopPane desktopPane, 
-            Colaborador colaboradorAutenticado,
-            Gestor<T> gestor) {
-        this.desktopPane = desktopPane;
-        this.colaboradorAutenticado = colaboradorAutenticado;
-        this.columnNames = columnNames;
+    protected TableRowSorter<TableModel> tableRowSorter;
+    protected TableModel tableModel;
+    protected LinkedList<T> resultList;
+    
+    public JanelaSelecao(String nomeJanela, Gestor<T> gestor) {
         this.gestor = gestor;
-
+        resultList = new LinkedList<>();
+        
         initComponents();
         setTitle(nomeJanela);
-
-        initTableComponents(columnNames, getTableData());
+        
+        String[] columns = new String[]{ "", "Obj"};
+        tableModel = new TableModel(columns, getTableData());
+        table.setModel(tableModel);
+        tableRowSorter = new TableRowSorter<>(tableModel);
+        
+        table.getColumnModel().getColumn(1).setMinWidth(0);
+        table.getColumnModel().getColumn(1).setMaxWidth(0);
+        table.getColumnModel().getColumn(1).setWidth(0);
+        table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        table.getSelectionModel().addListSelectionListener(this::selecaoAlterada);
+            
     }
-
-    private void initTableComponents(String[] columnNames, Object[][] tableData) {
-        try {
-            tableModel = new TableModel(columnNames, tableData);
-            tableRowSorter = new TableRowSorter<>(tableModel);
-            table = new JTable(tableModel);
-
-            if (tableData.length == 0) {
-                return;
-            }
-
-            table.setRowSorter(tableRowSorter);
-            table.setPreferredScrollableViewportSize(new Dimension(500, 70));
-            table.setFillsViewportHeight(true);
-            table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            table.getSelectionModel().addListSelectionListener(this::selecaoAlterada);
-
-            panelTable.add(table);
-
-            JScrollPane scrollPane = new JScrollPane(table);
-            panelTable.add(scrollPane);
-
-            tableColumnIndex = tableModel.getColumnIndexes();
-
-            objectColumnIndex = columnNames.length - 1;
-            table.getColumnModel().getColumn(objectColumnIndex).setMinWidth(0);
-            table.getColumnModel().getColumn(objectColumnIndex).setMaxWidth(0);
-            table.getColumnModel().getColumn(objectColumnIndex).setWidth(0);
-            
-            table.setRowSelectionInterval(0, 0);
-            
-        } catch (Exception e) {
-            AppLogger.LOG.warning(getTitle(), e);
+    
+    private Object[][] getTableData(){
+        var listagem = gestor.getListagem();
+        var aux = new Object[listagem.size()][2];
+        
+        int i = 0;
+        for (T t : listagem) {
+            aux[i][0] = t.toString();
+            aux[i][1] = t;
+            i++;
         }
+        return aux;
     }
-
+    
     private void selecaoAlterada(ListSelectionEvent e) {
         int viewRow = table.getSelectedRow();
 
@@ -88,7 +59,7 @@ public abstract class JanelaListagem<T> extends javax.swing.JInternalFrame {
             table.convertRowIndexToModel(viewRow);
         }
     }
-
+    
     private void aplicarFiltro(String criterio) {
 
         RowFilter<TableModel, Object> rowFilter = null;
@@ -108,7 +79,7 @@ public abstract class JanelaListagem<T> extends javax.swing.JInternalFrame {
                 String regexToSearch = new StringBuilder("(?i)")
                         .append(textToSearchSplitted1).toString();
 
-                listOfRowFilters.add(RowFilter.regexFilter(regexToSearch, tableColumnIndex));
+                listOfRowFilters.add(RowFilter.regexFilter(regexToSearch, 1));
             }
 
             rowFilter = RowFilter.andFilter(listOfRowFilters);
@@ -120,67 +91,23 @@ public abstract class JanelaListagem<T> extends javax.swing.JInternalFrame {
         tableRowSorter.setRowFilter(rowFilter);
     }
 
-    protected void acaoRemover() {
-        if (tableModel.getRowCount() < 2) {
-            return;
-        }
-
-        var resultado = JOptionPane.showConfirmDialog(this,
-                "Deseja remover a linha selecionada? Esta opção é irreversível.",
-                "Remover?",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
-
-        if (resultado != JOptionPane.YES_OPTION) {
-            return;
-        }
-
+    private void acaoAtualizar() {
         try {
-            var value = (T) table.getValueAt(table.getSelectedRow(), objectColumnIndex);
-
-            gestor.remover(value);
-
             tableModel.setData(getTableData());
         } catch (Exception e) {
             AppLogger.LOG.warning(this, e);
-            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao tentar remover o registo", "Erro", JOptionPane.WARNING_MESSAGE);
         }
-
-        JOptionPane.showMessageDialog(this, "Registo removido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    private Object[][] getTableData() {
-        var veiculos = gestor.getListagem();
-
-        var aux = new Object[veiculos.size()][columnNames.length];
-        getData(aux, veiculos);
-        
-        return aux;
-    }
-
-    protected abstract void getData(Object[][] aux, LinkedList<T> list);
-
-    protected void acaoSelecionar() {
-        var value = (T) table.getValueAt(table.getSelectedRow(), objectColumnIndex);
-
-        var janela = getInternalFrame(value);
-        desktopPane.add(janela);
-        janela.setVisible(true);
     }
     
-    protected abstract JInternalFrame getInternalFrame(T value); 
-
-    protected void acaoAtualizar() {
-        try {
-            tableModel.setData(getTableData());
-        } catch (Exception e) {
-            AppLogger.LOG.warning(this, e);
-        }
+    public LinkedList<T> ShowDialog(){
+        setVisible(true);
+        return resultList;
     }
-
+    
     /**
-     * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The
-     * content of this method is always regenerated by the Form Editor.
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -195,11 +122,12 @@ public abstract class JanelaListagem<T> extends javax.swing.JInternalFrame {
         separator2 = new javax.swing.JToolBar.Separator();
         buttonAtualizar = new javax.swing.JButton();
         separator3 = new javax.swing.JToolBar.Separator();
-        buttonRemover = new javax.swing.JButton();
-        panelTable = new javax.swing.JPanel();
+        scroolPaneTable = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
 
-        setClosable(true);
-        setMinimumSize(new java.awt.Dimension(700, 517));
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAlwaysOnTop(true);
+        setModal(true);
 
         buttonSelecionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/autosell/Resources/checkbox-marked-outline.png"))); // NOI18N
         buttonSelecionar.setText("Selecionar");
@@ -256,43 +184,45 @@ public abstract class JanelaListagem<T> extends javax.swing.JInternalFrame {
         toolBarMenu.add(buttonAtualizar);
         toolBarMenu.add(separator3);
 
-        buttonRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/autosell/Resources/trash-can.png"))); // NOI18N
-        buttonRemover.setText("Remover");
-        buttonRemover.setFocusable(false);
-        buttonRemover.setMaximumSize(new java.awt.Dimension(82, 52));
-        buttonRemover.setMinimumSize(new java.awt.Dimension(82, 52));
-        buttonRemover.setPreferredSize(new java.awt.Dimension(82, 52));
-        buttonRemover.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonRemoverActionPerformed(evt);
-            }
-        });
-        toolBarMenu.add(buttonRemover);
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        panelTable.setBackground(new java.awt.Color(255, 255, 255));
-        panelTable.setName("panelTable"); // NOI18N
-        panelTable.setLayout(new java.awt.GridLayout());
+            },
+            new String [] {
+
+            }
+        ));
+        table.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        table.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        table.setShowGrid(false);
+        scroolPaneTable.setViewportView(table);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(toolBarMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
-            .addComponent(panelTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(toolBarMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(scroolPaneTable)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(toolBarMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(panelTable, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scroolPaneTable, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSelecionarActionPerformed
-        acaoSelecionar();
+
+        for(int row : table.getSelectedRows()){
+            resultList.add((T) table.getValueAt(row, 1));
+        }
+        
+        setVisible(false);
+        dispose();
     }//GEN-LAST:event_buttonSelecionarActionPerformed
 
     private void buttonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPesquisarActionPerformed
@@ -308,20 +238,16 @@ public abstract class JanelaListagem<T> extends javax.swing.JInternalFrame {
         acaoAtualizar();
     }//GEN-LAST:event_buttonAtualizarActionPerformed
 
-    private void buttonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRemoverActionPerformed
-        acaoRemover();
-    }//GEN-LAST:event_buttonRemoverActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAtualizar;
     private javax.swing.JButton buttonLimpar;
     private javax.swing.JButton buttonPesquisar;
-    private javax.swing.JButton buttonRemover;
     private javax.swing.JButton buttonSelecionar;
-    private javax.swing.JPanel panelTable;
+    private javax.swing.JScrollPane scroolPaneTable;
     private javax.swing.JToolBar.Separator separator1;
     private javax.swing.JToolBar.Separator separator2;
     private javax.swing.JToolBar.Separator separator3;
+    private javax.swing.JTable table;
     private javax.swing.JTextField textFieldPesquisar;
     private javax.swing.JToolBar toolBarMenu;
     // End of variables declaration//GEN-END:variables
