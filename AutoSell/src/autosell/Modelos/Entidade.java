@@ -1,8 +1,9 @@
 package autosell.Modelos;
 
 import autosell.Enumeracoes.TipoEntidade;
+import java.io.Serializable;
 
-public class Entidade {
+public class Entidade implements Serializable{
     private String nome;
     private String dataNascimento;
     private String nif;
@@ -72,8 +73,5 @@ public class Entidade {
 
     public void setTipoEntidade(TipoEntidade tipoEntidade) {
         this.tipoEntidade = tipoEntidade;
-    }
-    
-    
-    
+    } 
 }

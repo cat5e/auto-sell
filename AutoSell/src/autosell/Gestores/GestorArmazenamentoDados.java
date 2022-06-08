@@ -4,7 +4,9 @@ import autosell.CustomExceptions.CustomExeption;
 import autosell.Enumeracoes.TipoColaborador;
 import autosell.Enumeracoes.TipoEstabelecimento;
 import autosell.Modelos.Colaborador;
+import autosell.Modelos.Entidade;
 import autosell.Modelos.Estabelecimento;
+import autosell.Modelos.Evento;
 import autosell.Modelos.Veiculo;
 import autosell.Utils.AppFileHandler;
 import autosell.Utils.AppLogger;
@@ -19,8 +21,6 @@ import java.util.LinkedList;
 public enum GestorArmazenamentoDados {
     INSTANCIA;
 
-    // TODO: As listagens dos gestores deveriam ser implementadas aqui para proteção de carregamento e disponibilização.
-    
     private final String ficheiro;
 
     private GestorArmazenamentoDados() {
@@ -35,6 +35,9 @@ public enum GestorArmazenamentoDados {
             GestorEstabelecimentos.getInstance().setListagem((LinkedList<Estabelecimento>) objectInputStream.readObject());
             GestorColaboradores.getInstance().setListagem((LinkedList<Colaborador>) objectInputStream.readObject());
             GestorVeiculos.getInstance().setListagem((LinkedList<Veiculo>) objectInputStream.readObject());
+            GestorEntidades.getInstance().setListagem((LinkedList<Entidade>) objectInputStream.readObject());
+            GestorEventos.getInstance().setListagem((LinkedList<Evento>) objectInputStream.readObject());
+            
         }
     }
 
@@ -45,6 +48,8 @@ public enum GestorArmazenamentoDados {
             objectOutputStream.writeObject(GestorEstabelecimentos.getInstance().getListagem());
             objectOutputStream.writeObject(GestorColaboradores.getInstance().getListagem());
             objectOutputStream.writeObject(GestorVeiculos.getInstance().getListagem());
+            objectOutputStream.writeObject(GestorEntidades.getInstance().getListagem());
+            objectOutputStream.writeObject(GestorEventos.getInstance().getListagem());            
         }
         
         return true;
