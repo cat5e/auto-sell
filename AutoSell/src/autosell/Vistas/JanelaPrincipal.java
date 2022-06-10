@@ -2,6 +2,8 @@ package autosell.Vistas;
 
 import autosell.Enumeracoes.TipoColaborador;
 import autosell.Modelos.Colaborador;
+import autosell.Vistas.Artigos.JanelaEditarArtigo;
+import autosell.Vistas.Artigos.JanelaListagemArtigos;
 import autosell.Vistas.Colaboradores.JanelaEditarColaborador;
 import autosell.Vistas.Colaboradores.JanelaListagemColaboradores;
 import autosell.Vistas.Entidades.JanelaEditarEntidade;
@@ -13,6 +15,7 @@ import autosell.Vistas.Eventos.JanelaListagemEventos;
 import autosell.Vistas.Intervencoes.JanelaEditarIntervencao;
 import autosell.Vistas.Intervencoes.JanelaListagemIntervencoes;
 import autosell.Vistas.Veiculos.JanelaListagemVeiculos;
+import java.awt.Component;
 
 public class JanelaPrincipal extends javax.swing.JFrame {
 
@@ -339,11 +342,15 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemListagemTransacoesActionPerformed
 
     private void menuItemAdicionarArtigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarArtigoActionPerformed
-        // TODO: Criar a edição de Artigos
+         var janela = new JanelaEditarArtigo(null, colaboradorAutenticado);
+        desktopPane.add(janela);
+        janela.setVisible(true);
     }//GEN-LAST:event_menuItemAdicionarArtigoActionPerformed
 
     private void menuItemListagemArtigosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemArtigosActionPerformed
-        // TODO: Criar a listagem de Artigos
+       var janela = new JanelaListagemArtigos(desktopPane, colaboradorAutenticado);
+        desktopPane.add(janela);
+        janela.setVisible(true);
     }//GEN-LAST:event_menuItemListagemArtigosActionPerformed
 
     private void menuItemAdicionarIntervencaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarIntervencaoActionPerformed
