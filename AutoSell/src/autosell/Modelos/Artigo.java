@@ -1,6 +1,8 @@
 package autosell.Modelos;
 
-public class Artigo {
+import java.io.Serializable;
+
+public class Artigo implements Serializable{
     private String referencia;
     private String nome;
     private float quantidadeMinima;
@@ -73,7 +75,13 @@ public class Artigo {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    @Override
+    public String toString() {
+        return "(" + referencia + ") " + nome + " - " + quantidadeAtual + " " + unidade + " | " + estabelecimento;
+    }
     
 
+    
     
 }

@@ -292,7 +292,7 @@ public class JanelaEditarEvento extends javax.swing.JInternalFrame {
 
     private void buttonAdicionarVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAdicionarVeiculoActionPerformed
         var listagem = new JanelaSelecao<>("Selecionar veículos...",
-                GestorVeiculos.getInstance()).ShowDialog();
+                GestorVeiculos.getInstance(), true).showDialog();
 
         for (Veiculo veiculo : listagem) {
             if (veiculo == null || veiculos.contains(veiculo)) {

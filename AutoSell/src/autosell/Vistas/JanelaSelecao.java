@@ -6,6 +6,7 @@ import autosell.Utils.TableModel;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.regex.PatternSyntaxException;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
@@ -14,13 +15,19 @@ import javax.swing.table.TableRowSorter;
 
 
 public class JanelaSelecao<T>  extends javax.swing.JDialog {
-    protected Gestor<T> gestor;
-    protected TableRowSorter<TableModel> tableRowSorter;
-    protected TableModel tableModel;
-    protected LinkedList<T> resultList;
+    private Gestor<T> gestor;
+    private TableRowSorter<TableModel> tableRowSorter;
+    private TableModel tableModel;
+    private LinkedList<T> resultList;
+    private Predicate<T> predicate;
     
-    public JanelaSelecao(String nomeJanela, Gestor<T> gestor) {
+    public JanelaSelecao(String nomeJanela, Gestor<T> gestor, boolean multipleSelection){
+        this(nomeJanela, gestor, null, multipleSelection);
+    }
+
+    public JanelaSelecao(String nomeJanela, Gestor<T> gestor, Predicate<T> predicate, boolean multipleSelection) {
         this.gestor = gestor;
+        this.predicate = predicate;
         resultList = new LinkedList<>();
         
         initComponents();
@@ -34,13 +41,12 @@ public class JanelaSelecao<T>  extends javax.swing.JDialog {
         table.getColumnModel().getColumn(1).setMinWidth(0);
         table.getColumnModel().getColumn(1).setMaxWidth(0);
         table.getColumnModel().getColumn(1).setWidth(0);
-        table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        table.setSelectionMode(multipleSelection ? ListSelectionModel.MULTIPLE_INTERVAL_SELECTION : ListSelectionModel.SINGLE_SELECTION);
         table.getSelectionModel().addListSelectionListener(this::selecaoAlterada);
-            
     }
     
     private Object[][] getTableData(){
-        var listagem = gestor.getListagem();
+        var listagem = predicate == null ? gestor.getListagem() : gestor.getListagem(predicate);
         var aux = new Object[listagem.size()][2];
         
         int i = 0;
@@ -99,7 +105,7 @@ public class JanelaSelecao<T>  extends javax.swing.JDialog {
         }
     }
     
-    public LinkedList<T> ShowDialog(){
+    public LinkedList<T> showDialog(){
         setVisible(true);
         return resultList;
     }

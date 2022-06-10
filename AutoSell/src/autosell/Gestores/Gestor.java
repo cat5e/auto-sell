@@ -1,6 +1,8 @@
 package autosell.Gestores;
 
 import java.util.LinkedList;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Gestor<T> {
     protected LinkedList<T> ts;
@@ -32,5 +34,10 @@ public class Gestor<T> {
         
         return ts.remove(t);
     }
-    
+    // TODO: Precisa de ser testado
+    public LinkedList<T> getListagem(Predicate<T> predicate){
+         return ts.stream()
+            .filter(predicate)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
 }

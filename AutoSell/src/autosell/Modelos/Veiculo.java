@@ -27,10 +27,6 @@ public class Veiculo implements Serializable{
     private String caracteristicas;
     private String observacoes;
     private Estabelecimento estabelecimento;
-    // TODO: Adicionar private Evento evento;
-    // TODO: Carregar lista de intervencoes
-    // TODO: Carregar lista de transacoes
-    // TODO: Carregar lista eventos
     
     public Veiculo(float preco, String matricula, String marca, Estabelecimento estabelecimento) {
         this.preco = preco;

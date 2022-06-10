@@ -3,10 +3,12 @@ package autosell.Gestores;
 import autosell.CustomExceptions.CustomExeption;
 import autosell.Enumeracoes.TipoColaborador;
 import autosell.Enumeracoes.TipoEstabelecimento;
+import autosell.Modelos.Artigo;
 import autosell.Modelos.Colaborador;
 import autosell.Modelos.Entidade;
 import autosell.Modelos.Estabelecimento;
 import autosell.Modelos.Evento;
+import autosell.Modelos.Intervencao;
 import autosell.Modelos.Veiculo;
 import autosell.Utils.AppFileHandler;
 import autosell.Utils.AppLogger;
@@ -37,7 +39,8 @@ public enum GestorArmazenamentoDados {
             GestorVeiculos.getInstance().setListagem((LinkedList<Veiculo>) objectInputStream.readObject());
             GestorEntidades.getInstance().setListagem((LinkedList<Entidade>) objectInputStream.readObject());
             GestorEventos.getInstance().setListagem((LinkedList<Evento>) objectInputStream.readObject());
-            
+            GestorArtigos.getInstance().setListagem((LinkedList<Artigo>) objectInputStream.readObject());
+            GestorIntervencoes.getInstance().setListagem((LinkedList<Intervencao>) objectInputStream.readObject());
         }
     }
 
@@ -49,7 +52,9 @@ public enum GestorArmazenamentoDados {
             objectOutputStream.writeObject(GestorColaboradores.getInstance().getListagem());
             objectOutputStream.writeObject(GestorVeiculos.getInstance().getListagem());
             objectOutputStream.writeObject(GestorEntidades.getInstance().getListagem());
-            objectOutputStream.writeObject(GestorEventos.getInstance().getListagem());            
+            objectOutputStream.writeObject(GestorEventos.getInstance().getListagem());
+            objectOutputStream.writeObject(GestorArtigos.getInstance().getListagem());            
+            objectOutputStream.writeObject(GestorIntervencoes.getInstance().getListagem());            
         }
         
         return true;
@@ -89,6 +94,17 @@ public enum GestorArmazenamentoDados {
         gestorVeiculos.adicionar(new Veiculo(12240.12F, "AE-11-AA", "Porshe", estabelecimento));
         gestorVeiculos.adicionar(new Veiculo(2334.00F, "AF-11-AA", "Opel", estabelecimento));
         gestorVeiculos.adicionar(new Veiculo(45644.11F, "AG-11-AA", "Ford", estabelecimento));
+        
+        
+        var gestorArtigos = GestorArtigos.getInstance();
+        gestorArtigos.adicionar(new Artigo("PN-AZ-099", "Pneu Azol Ptel 123.44", 50, 2, "Unidades", estabelecimento));        
+        gestorArtigos.adicionar(new Artigo("OL-PTR-11", "Oleo Petrol", 158, 0, "Litros", estabelecimento));
+        gestorArtigos.adicionar(new Artigo("PL-AA-TR", "Pastilhas Trabões Bubalicios", 18, 10, "Unidades", estabelecimento));
+        gestorArtigos.adicionar(new Artigo("OL-TR-PTR-12", "Óleo trabões Milka", 56, 2, "Litros", estabelecimento));
+        gestorArtigos.adicionar(new Artigo("LQ-REF-01", "Liquido Refrigerante FreshTop", 96, 2, "Litros", estabelecimento1));
+        gestorArtigos.adicionar(new Artigo("AM-REF-12", "Ambientador topxuxa", 49, 2, "Unidades", estabelecimento1));
+        gestorArtigos.adicionar(new Artigo("LP-Medio-11", "Luz Medios brilhante 11", 96, 2, "Unidades", estabelecimento1));
+
         
         if(escreverDados()) {
             AppLogger.LOG.info(this, "Os dados iniciais foram populados com sucesso");

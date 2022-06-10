@@ -10,6 +10,8 @@ import autosell.Vistas.Estabelecimentos.JanelaEditarEstabelecimento;
 import autosell.Vistas.Estabelecimentos.JanelaListagemEstabelecimentos;
 import autosell.Vistas.Eventos.JanelaEditarEvento;
 import autosell.Vistas.Eventos.JanelaListagemEventos;
+import autosell.Vistas.Intervencoes.JanelaEditarIntervencao;
+import autosell.Vistas.Intervencoes.JanelaListagemIntervencoes;
 import autosell.Vistas.Veiculos.JanelaListagemVeiculos;
 
 public class JanelaPrincipal extends javax.swing.JFrame {
@@ -345,11 +347,16 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemListagemArtigosActionPerformed
 
     private void menuItemAdicionarIntervencaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarIntervencaoActionPerformed
-        // TODO: Criar a edição de Intervenções
+        var janela = new JanelaEditarIntervencao(null, colaboradorAutenticado);
+        desktopPane.add(janela);
+        janela.setVisible(true);
     }//GEN-LAST:event_menuItemAdicionarIntervencaoActionPerformed
 
     private void menuItemListagemIntervencoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemIntervencoesActionPerformed
-        // TODO: Criar a listagem de Intervenções
+        var janela = new JanelaListagemIntervencoes(desktopPane, colaboradorAutenticado);
+        desktopPane.add(janela);
+        janela.setVisible(true);
+        
     }//GEN-LAST:event_menuItemListagemIntervencoesActionPerformed
 
     private void menuItemAdicionarEstabelecimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarEstabelecimentoActionPerformed

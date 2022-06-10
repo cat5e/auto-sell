@@ -1,12 +1,13 @@
 package autosell.Modelos;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public class Intervencao {
+public class Intervencao implements Serializable {
     private String data;
     private Veiculo veiculo;
     private String descricao;
-    private final LinkedList<Artigo> artigos;
+    private final LinkedList<Consumivel> consumiveis;
     private Colaborador tecnico;
     private Estabelecimento estabelecimento; 
 
@@ -16,7 +17,7 @@ public class Intervencao {
         this.descricao = descricao;
         this.tecnico = tecnico;
         this.estabelecimento = estabelecimento;
-        artigos = new LinkedList<>();
+        consumiveis = new LinkedList<>();
     }
 
     public String getData() {
@@ -43,8 +44,8 @@ public class Intervencao {
         this.descricao = descricao;
     }
 
-    public LinkedList<Artigo> getArtigos() {
-        return new LinkedList<>(artigos);
+    public LinkedList<Consumivel> getConsumiveis() {
+        return new LinkedList<>(consumiveis);
     }
 
     public Colaborador getTecnico() {
@@ -63,20 +64,20 @@ public class Intervencao {
         this.estabelecimento = estabelecimento;
     }
     
-    public boolean adidionarArtigo(Artigo artigo){
-        if(artigo == null || artigos.contains(artigo)){
+    public boolean adidionarConsumivel(Consumivel consumivel){
+        if(consumivel == null || consumiveis.contains(consumivel)){
             return false;
         }
         
-        return artigos.add(artigo);
+        return consumiveis.add(consumivel);
     }
     
-    public boolean removerArtigo(Artigo artigo){
-        if(artigo == null || !artigos.contains(artigo)){
+    public boolean removerConsumivel(Consumivel consumivel){
+        if(consumivel == null || !consumiveis.contains(consumivel)){
             return false;
         }
         
-        return artigos.remove(artigo);
+        return consumiveis.remove(consumivel);
     }
     
 }

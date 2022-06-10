@@ -5,8 +5,6 @@ import autosell.Gestores.GestorArmazenamentoDados;
 import autosell.Utils.AppLogger;
 import autosell.Vistas.JanelaLogin;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class AutoSell {
 
@@ -28,7 +26,6 @@ public class AutoSell {
         }
         //</editor-fold>
 
-        
         try {
             GestorArmazenamentoDados.INSTANCIA.lerDados();
         }
@@ -52,5 +49,4 @@ public class AutoSell {
             new JanelaLogin().setVisible(true);
         });
     }
-
 }
