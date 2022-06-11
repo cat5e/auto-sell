@@ -14,9 +14,10 @@ import autosell.Vistas.Eventos.JanelaEditarEvento;
 import autosell.Vistas.Eventos.JanelaListagemEventos;
 import autosell.Vistas.Intervencoes.JanelaEditarIntervencao;
 import autosell.Vistas.Intervencoes.JanelaListagemIntervencoes;
+import autosell.Vistas.Transacoes.JanelaEditarTransacao;
+import autosell.Vistas.Transacoes.JanelaListagemTransacoes;
 import autosell.Vistas.Veiculos.JanelaEditarVeiculo;
 import autosell.Vistas.Veiculos.JanelaListagemVeiculos;
-import java.awt.Component;
 
 public class JanelaPrincipal extends javax.swing.JFrame {
 
@@ -337,11 +338,15 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemListagemEventosActionPerformed
 
     private void menuItemAdicionarTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarTransacoesActionPerformed
-        // TODO: Criar a edição de transações
+       var janela = new JanelaEditarTransacao(null, colaboradorAutenticado);
+       desktopPane.add(janela);
+       janela.setVisible(true);
     }//GEN-LAST:event_menuItemAdicionarTransacoesActionPerformed
 
     private void menuItemListagemTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemTransacoesActionPerformed
-        // TODO: Criar listagem de transações
+        var janela = new JanelaListagemTransacoes(desktopPane, colaboradorAutenticado);
+        desktopPane.add(janela);
+        janela.setVisible(true);
     }//GEN-LAST:event_menuItemListagemTransacoesActionPerformed
 
     private void menuItemAdicionarArtigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarArtigoActionPerformed
