@@ -10,11 +10,11 @@ import autosell.Modelos.Artigo;
 import autosell.Modelos.Colaborador;
 import autosell.Modelos.Estabelecimento;
 import autosell.Utils.AppLogger;
-import static autosell.Utils.ValidacoesUtils.validacaoComponente;
 import java.awt.HeadlessException;
 import java.io.IOException;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import static autosell.Utils.ValidacoesUtils.isComponenteVazio;
 
 public class JanelaEditarArtigo extends javax.swing.JInternalFrame {
 
@@ -110,7 +110,7 @@ public class JanelaEditarArtigo extends javax.swing.JInternalFrame {
         };
         
         for (JComponent jComponent : componentesAValidar) {
-            if (!validacaoComponente(this, jComponent)) {
+            if (!isComponenteVazio(this, jComponent)) {
                 return false;
             }
         }

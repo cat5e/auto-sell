@@ -6,11 +6,11 @@ import autosell.Gestores.GestorArmazenamentoDados;
 import autosell.Gestores.GestorEstabelecimentos;
 import autosell.Modelos.Estabelecimento;
 import autosell.Utils.AppLogger;
-import static autosell.Utils.ValidacoesUtils.validacaoComponente;
 import java.io.IOException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import static autosell.Utils.ValidacoesUtils.isComponenteVazio;
 
 public class JanelaEditarEstabelecimento extends javax.swing.JInternalFrame {
 
@@ -84,7 +84,7 @@ public class JanelaEditarEstabelecimento extends javax.swing.JInternalFrame {
             comboboxTipo};
 
         for (JComponent jComponent : componentesAValidar) {
-            if (!validacaoComponente(this, jComponent)) {
+            if (!isComponenteVazio(this, jComponent)) {
                 return false;
             }
         }

@@ -13,13 +13,13 @@ import autosell.Modelos.Intervencao;
 import autosell.Modelos.Veiculo;
 import autosell.Utils.AppLogger;
 import autosell.Utils.TableModel;
-import static autosell.Utils.ValidacoesUtils.validacaoComponente;
 import autosell.Vistas.JanelaSelecao;
 import java.awt.HeadlessException;
 import java.io.IOException;
 import java.util.LinkedList;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import static autosell.Utils.ValidacoesUtils.isComponenteVazio;
 
 public class JanelaEditarIntervencao extends javax.swing.JInternalFrame {
 
@@ -124,7 +124,7 @@ public class JanelaEditarIntervencao extends javax.swing.JInternalFrame {
         JComponent componentesAValidar[] = {textFieldDataIntervencao, textAreaDescricao};
 
         for (JComponent jComponent : componentesAValidar) {
-            if (!validacaoComponente(this, jComponent)) {
+            if (!isComponenteVazio(this, jComponent)) {
                 return false;
             }
         }

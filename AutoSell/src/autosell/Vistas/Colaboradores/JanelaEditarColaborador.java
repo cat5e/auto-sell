@@ -13,7 +13,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import static autosell.Utils.ValidacoesUtils.isNullOrEmpty;
-import static autosell.Utils.ValidacoesUtils.validacaoComponente;
+import static autosell.Utils.ValidacoesUtils.isComponenteVazio;
 
 
 
@@ -119,7 +119,7 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
             comboBoxEstabelecimento, comboBoxTipoColaborador};
    
         for (JComponent jComponent : componentesAValidar) {
-            if(!validacaoComponente(this, jComponent)){
+            if(!isComponenteVazio(this, jComponent)){
                 return false;
             }
         }
@@ -145,16 +145,16 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
         boolean isValido = true;
         
         if(colaborador == null){
-            isValido = validacaoComponente(this,passwordFieldNovaPassword);
+            isValido = isComponenteVazio(this,passwordFieldNovaPassword);
         }
         
         if(isValido && !isNullOrEmpty(novaPassword)){
             if(isColaboradorAutenticadoColaborador) {
-               isValido = validacaoComponente(this,passwordFieldPasswordAntiga);
+               isValido = isComponenteVazio(this,passwordFieldPasswordAntiga);
             }
             
             if(isValido){
-                isValido = validacaoComponente(this,passwordFieldConfirmNovaPassword);
+                isValido = isComponenteVazio(this,passwordFieldConfirmNovaPassword);
             }
             
             if(isValido && novaPassword.length() < gestor.LIMITE_MIN_CHAR_PASSWORD){

@@ -8,12 +8,12 @@ import autosell.Modelos.Evento;
 import autosell.Modelos.Veiculo;
 import autosell.Utils.AppLogger;
 import autosell.Utils.TableModel;
-import static autosell.Utils.ValidacoesUtils.validacaoComponente;
 import autosell.Vistas.JanelaSelecao;
 import java.io.IOException;
 import java.util.LinkedList;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import static autosell.Utils.ValidacoesUtils.isComponenteVazio;
 
 public class JanelaEditarEvento extends javax.swing.JInternalFrame {
 
@@ -97,7 +97,7 @@ public class JanelaEditarEvento extends javax.swing.JInternalFrame {
             textFieldDataFim, textFieldLocal};
 
         for (JComponent jComponent : componentesAValidar) {
-            if (!validacaoComponente(this, jComponent)) {
+            if (!isComponenteVazio(this, jComponent)) {
                 return false;
             }
         }
