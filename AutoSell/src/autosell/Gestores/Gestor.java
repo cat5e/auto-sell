@@ -1,6 +1,9 @@
 package autosell.Gestores;
 
 import java.util.LinkedList;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -8,7 +11,7 @@ public class Gestor<T> {
     protected LinkedList<T> ts;
 
     public Gestor() {
-        this.ts = new LinkedList<>();
+        ts = new LinkedList<>();
     }
     
     public boolean adicionar(T t){
@@ -34,10 +37,19 @@ public class Gestor<T> {
         
         return ts.remove(t);
     }
-    // TODO: Precisa de ser testado
+    
     public LinkedList<T> getListagem(Predicate<T> predicate){
          return ts.stream()
             .filter(predicate)
             .collect(Collectors.toCollection(LinkedList::new));
+    }
+    
+    
+    /*
+        From StackOverFlow : https://stackoverflow.com/questions/23699371/java-8-distinct-by-property?page=1&tab=scoredesc#tab-top
+    */
+    public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+        Set<Object> seen = ConcurrentHashMap.newKeySet();
+        return t -> seen.add(keyExtractor.apply(t));
     }
 }
