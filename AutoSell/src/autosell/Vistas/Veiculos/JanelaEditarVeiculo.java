@@ -1,12 +1,213 @@
 package autosell.Vistas.Veiculos;
 
+import autosell.CustomExceptions.CustomExeption;
+import autosell.Enumeracoes.ClassesVeiculos;
+import autosell.Enumeracoes.EstadoVeiculo;
+import autosell.Enumeracoes.MesesAno;
+import autosell.Enumeracoes.TipoCombustivel;
+import autosell.Gestores.GestorArmazenamentoDados;
+import autosell.Gestores.GestorEstabelecimentos;
+import autosell.Gestores.GestorVeiculos;
+import autosell.Modelos.Estabelecimento;
+import autosell.Modelos.Veiculo;
+import autosell.Utils.AppLogger;
+import java.io.IOException;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import static autosell.Utils.ValidacoesUtils.isComponenteVazio;
+import static autosell.Utils.ValidacoesUtils.isNullOrEmpty;
+import static autosell.Utils.ValidacoesUtils.isNumberGreaterOrEqualThanZero;
+import static autosell.Utils.ValidacoesUtils.isNumericValue;
+import javax.swing.JTextField;
+
+// TODO: Implementar adicionar/remover foto do veículo
+// TODO: Carregar todas as listagens
+// TODO: Implementar e apresentar validação se o veículo está num evento
+// TODO: Verificar se é necessário implementar o estado do veículo.
+
 public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
 
-    public JanelaEditarVeiculo() {
+    private Veiculo veiculo;
+
+    public JanelaEditarVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
         initComponents();
+        toolBarMenu.setFloatable(false);
+
+        loadMeses();
+        loadMarcas();
+        loadCombustivel();
+        loadClasses();
+        loadEstadoVeiculo();
+        loadEstabelecimentos();
+
+        if (veiculo != null) {
+            popularDados();
+        }
     }
 
-    
+    private void loadMeses() {
+        comboBoxMes.setModel(new DefaultComboBoxModel(MesesAno.values()));
+    }
+
+    private void loadMarcas() {
+        comboBoxMarca.setModel(new DefaultComboBoxModel(GestorVeiculos.getInstance().getMarcasRegistadas()));
+    }
+
+    private void loadCombustivel() {
+        comboBoxCombustivel.setModel(new DefaultComboBoxModel(TipoCombustivel.values()));
+    }
+
+    private void loadClasses() {
+        comboBoxClasse.setModel(new DefaultComboBoxModel(ClassesVeiculos.values()));
+    }
+
+    private void loadEstadoVeiculo() {
+        comboBoxEstadoVeiculo.setModel(new DefaultComboBoxModel(EstadoVeiculo.values()));
+    }
+
+    private void loadEstabelecimentos() {
+        var estabelecimentos = GestorEstabelecimentos.getInstance().getListagem();
+
+        for (Estabelecimento estabelecimento : estabelecimentos) {
+            comboBoxEstabelecimento.addItem(estabelecimento);
+        }
+    }
+
+    private void popularDados() {
+        textFieldPreco.setText(String.valueOf(veiculo.getPreco()));
+        textFieldMatricula.setText(veiculo.getMatricula());
+        textFieldQuilometros.setText(String.valueOf(veiculo.getQuilometros()));
+        textFieldAno.setText(String.valueOf(veiculo.getAnoRegisto()));
+        comboBoxMes.setSelectedItem(veiculo.getMesRegisto());
+        comboBoxMarca.setSelectedItem(veiculo.getMarca());
+        textFieldModelo.setText(veiculo.getModelo());
+        textFieldCor.setText(veiculo.getCor());
+        comboBoxCombustivel.setSelectedItem(veiculo.getCombustivel());
+        textFieldCilindrada.setText(String.valueOf(veiculo.getCelindrada()));
+        textFieldPotencia.setText(String.valueOf(veiculo.getPotencia()));
+        textFieldLotacao.setText(String.valueOf(veiculo.getLotacao()));
+        comboBoxClasse.setSelectedItem(veiculo.getClasse());
+        textFieldMundacas.setText(String.valueOf(veiculo.getNumeorMudancas()));
+        textFieldNumPortas.setText(String.valueOf(veiculo.getNumeroPortas()));
+        comboBoxEstadoVeiculo.setSelectedItem(veiculo.getEstadoVeiculo());
+        comboBoxEstabelecimento.setSelectedItem(veiculo.getEstabelecimento());
+        // TODO: Verificar por eventos
+        //textFieldEvento.setText(veiculo.getEv);
+        textAreaCaracteristicas.setText(veiculo.getCaracteristicas());
+        textAreaObservacoes.setText(veiculo.getObservacoes());
+    }
+
+    private void acaoGuardar() {
+        try {
+            if (!isDadosValidos()) {
+                return;
+            }
+
+            if (veiculo == null) {
+                veiculo = new Veiculo(
+                        Float.parseFloat(textFieldPreco.getText()),
+                        textFieldMatricula.getText(),
+                        comboBoxMarca.getSelectedItem().toString(),
+                        (Estabelecimento) comboBoxEstabelecimento.getSelectedItem());
+
+                veiculo.setQuilometros(Integer.parseInt(textFieldQuilometros.getText()));
+                veiculo.setAnoRegisto(Integer.parseInt(textFieldAno.getText()));
+                veiculo.setMesRegisto((MesesAno) comboBoxMes.getSelectedItem());
+                veiculo.setModelo(textFieldModelo.getText());
+                veiculo.setCor(textFieldCor.getText());
+                veiculo.setCombustivel((TipoCombustivel) comboBoxCombustivel.getSelectedItem());
+                veiculo.setCelindrada(Float.parseFloat(textFieldCilindrada.getText()));
+                veiculo.setPotencia(Float.parseFloat(textFieldPotencia.getText()));
+                veiculo.setLotacao(Integer.parseInt(textFieldLotacao.getText()));
+                veiculo.setClasse((ClassesVeiculos) comboBoxClasse.getSelectedItem());
+                veiculo.setNumeorMudancas(Integer.parseInt(textFieldMundacas.getText()));
+                veiculo.setNumeroPortas(Integer.parseInt(textFieldNumPortas.getText()));
+                veiculo.setEstadoVeiculo((EstadoVeiculo) comboBoxEstadoVeiculo.getSelectedItem());
+                veiculo.setCaracteristicas(textAreaCaracteristicas.getText());
+                veiculo.setObservacoes(textAreaObservacoes.getText());
+
+                if (!GestorVeiculos.getInstance().adicionar(veiculo)) {
+                    throw new CustomExeption("Não foi possível guardar o registo.");
+                }
+            } else {
+                veiculo.setPreco(Float.parseFloat(textFieldPreco.getText()));
+                veiculo.setMatricula(textFieldMatricula.getText());
+                veiculo.setEstabelecimento((Estabelecimento) comboBoxEstabelecimento.getSelectedItem());
+                veiculo.setMarca(comboBoxMarca.getSelectedItem().toString());
+                veiculo.setQuilometros(Integer.parseInt(textFieldQuilometros.getText()));
+                veiculo.setAnoRegisto(Integer.parseInt(textFieldAno.getText()));
+                veiculo.setMesRegisto((MesesAno) comboBoxMes.getSelectedItem());
+                veiculo.setModelo(textFieldModelo.getText());
+                veiculo.setCor(textFieldCor.getText());
+                veiculo.setCombustivel((TipoCombustivel) comboBoxCombustivel.getSelectedItem());
+                veiculo.setCelindrada(Float.parseFloat(textFieldCilindrada.getText()));
+                veiculo.setPotencia(Float.parseFloat(textFieldPotencia.getText()));
+                veiculo.setLotacao(Integer.parseInt(textFieldLotacao.getText()));
+                veiculo.setClasse((ClassesVeiculos) comboBoxClasse.getSelectedItem());
+                veiculo.setNumeorMudancas(Integer.parseInt(textFieldMundacas.getText()));
+                veiculo.setNumeroPortas(Integer.parseInt(textFieldNumPortas.getText()));
+                veiculo.setEstadoVeiculo((EstadoVeiculo) comboBoxEstadoVeiculo.getSelectedItem());
+                veiculo.setCaracteristicas(textAreaCaracteristicas.getText());
+                veiculo.setObservacoes(textAreaObservacoes.getText());
+            }
+
+            GestorArmazenamentoDados.INSTANCIA.escreverDados();
+
+        } catch (CustomExeption e) {
+            AppLogger.LOG.warning(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+        } catch (IOException e) {
+            AppLogger.LOG.severe(this, e);
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao guardar os dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+
+        JOptionPane.showMessageDialog(this, "Os dados foram gravados com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private boolean isDadosValidos() {
+        JComponent componentesAValidar[] = {
+            textFieldPreco,
+            textFieldMatricula,
+            comboBoxMarca,
+            comboBoxEstabelecimento};
+
+        for (JComponent jComponent : componentesAValidar) {
+            if (!isComponenteVazio(this, jComponent)) {
+                return false;
+            }
+        }
+
+        JTextField componentesNumericosAValidar[] = {
+            textFieldAno,
+            textFieldCilindrada,
+            textFieldLotacao,
+            textFieldMundacas,
+            textFieldNumPortas,
+            textFieldPotencia,
+            textFieldPreco,
+            textFieldQuilometros};
+
+        for (JTextField textField : componentesNumericosAValidar) {
+            if (isNullOrEmpty(textField.getText())) {
+                continue;
+            }
+
+            if (isNumericValue(this, textField) && isNumberGreaterOrEqualThanZero(this, textField)) {
+                return false;
+            }
+        }
+
+        if (GestorVeiculos.getInstance().isMatriculaDuplicada(textFieldMatricula.getText())) {
+            JOptionPane.showMessageDialog(this, "Já existe um veículo com uma matrícula igual.",
+                    "Dados inválidos", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The
      * content of this method is always regenerated by the Form Editor.
@@ -14,7 +215,6 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         toolBarMenu = new javax.swing.JToolBar();
         buttonGuardar = new javax.swing.JButton();
@@ -75,6 +275,8 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
         scrollPaneTransacoes = new javax.swing.JScrollPane();
         tableTransacoes = new javax.swing.JTable();
 
+        setClosable(true);
+
         buttonGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/autosell/Resources/content-save.png"))); // NOI18N
         buttonGuardar.setText("Guardar");
         buttonGuardar.setMaximumSize(new java.awt.Dimension(80, 52));
@@ -100,12 +302,6 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
         labelPreco.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelPreco.setText("Preço");
 
-        textFieldAno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textFieldAnoActionPerformed(evt);
-            }
-        });
-
         labelMatricula.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelMatricula.setText("Matrícula");
 
@@ -117,6 +313,8 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
 
         labelMes.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelMes.setText("Mês do Registo");
+
+        comboBoxMarca.setEditable(true);
 
         labelMarca.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelMarca.setText("Marca");
@@ -460,22 +658,18 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGuardarActionPerformed
-       // acaoGuardar();
+        acaoGuardar();
     }//GEN-LAST:event_buttonGuardarActionPerformed
-
-    private void textFieldAnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldAnoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textFieldAnoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonGuardar;
-    private javax.swing.JComboBox<String> comboBoxClasse;
-    private javax.swing.JComboBox<String> comboBoxCombustivel;
-    private javax.swing.JComboBox<String> comboBoxEstabelecimento;
-    private javax.swing.JComboBox<String> comboBoxEstadoVeiculo;
+    private javax.swing.JComboBox<ClassesVeiculos> comboBoxClasse;
+    private javax.swing.JComboBox<TipoCombustivel> comboBoxCombustivel;
+    private javax.swing.JComboBox<Estabelecimento> comboBoxEstabelecimento;
+    private javax.swing.JComboBox<EstadoVeiculo> comboBoxEstadoVeiculo;
     private javax.swing.JComboBox<String> comboBoxMarca;
-    private javax.swing.JComboBox<String> comboBoxMes;
+    private javax.swing.JComboBox<MesesAno> comboBoxMes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel labelAno;
     private javax.swing.JLabel labelCilindrada;
