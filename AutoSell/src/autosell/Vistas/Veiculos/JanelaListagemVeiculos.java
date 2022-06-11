@@ -29,7 +29,7 @@ public class JanelaListagemVeiculos extends JanelaListagem<Veiculo> {
 
     @Override
     protected JInternalFrame getInternalFrame(Veiculo value) {
-        return new JInternalFrame();
+        return new JanelaEditarVeiculo(value);
     }
 
     @Override

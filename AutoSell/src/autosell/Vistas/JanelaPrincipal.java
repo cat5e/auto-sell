@@ -14,6 +14,7 @@ import autosell.Vistas.Eventos.JanelaEditarEvento;
 import autosell.Vistas.Eventos.JanelaListagemEventos;
 import autosell.Vistas.Intervencoes.JanelaEditarIntervencao;
 import autosell.Vistas.Intervencoes.JanelaListagemIntervencoes;
+import autosell.Vistas.Veiculos.JanelaEditarVeiculo;
 import autosell.Vistas.Veiculos.JanelaListagemVeiculos;
 import java.awt.Component;
 
@@ -312,7 +313,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuItemAdicionarVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarVeiculoActionPerformed
-        // TODO: Criar a edição de veículos (ter atenção as permissões)
+        var janela = new JanelaEditarVeiculo(null);
+        desktopPane.add(janela);
+        janela.setVisible(true);
     }//GEN-LAST:event_menuItemAdicionarVeiculoActionPerformed
 
     private void menuItemListagemVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemVeiculosActionPerformed
