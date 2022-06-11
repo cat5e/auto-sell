@@ -9,6 +9,7 @@ import autosell.Modelos.Entidade;
 import autosell.Modelos.Estabelecimento;
 import autosell.Modelos.Evento;
 import autosell.Modelos.Intervencao;
+import autosell.Modelos.Transacao;
 import autosell.Modelos.Veiculo;
 import autosell.Utils.AppFileHandler;
 import autosell.Utils.AppLogger;
@@ -41,6 +42,7 @@ public enum GestorArmazenamentoDados {
             GestorEventos.getInstance().setListagem((LinkedList<Evento>) objectInputStream.readObject());
             GestorArtigos.getInstance().setListagem((LinkedList<Artigo>) objectInputStream.readObject());
             GestorIntervencoes.getInstance().setListagem((LinkedList<Intervencao>) objectInputStream.readObject());
+            GestorTransacoes.getInstance().setListagem((LinkedList<Transacao>) objectInputStream.readObject());
         }
     }
 
@@ -54,7 +56,8 @@ public enum GestorArmazenamentoDados {
             objectOutputStream.writeObject(GestorEntidades.getInstance().getListagem());
             objectOutputStream.writeObject(GestorEventos.getInstance().getListagem());
             objectOutputStream.writeObject(GestorArtigos.getInstance().getListagem());            
-            objectOutputStream.writeObject(GestorIntervencoes.getInstance().getListagem());            
+            objectOutputStream.writeObject(GestorIntervencoes.getInstance().getListagem());     
+            objectOutputStream.writeObject(GestorTransacoes.getInstance().getListagem());     
         }
         
         return true;
