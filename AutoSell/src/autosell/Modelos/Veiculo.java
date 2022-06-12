@@ -193,4 +193,11 @@ public class Veiculo implements Serializable{
     }
 // </editor-fold> 
 
+    @Override
+    public String toString() {
+        return "(" + preco + ") " + matricula + " | " + marca + " | " + modelo + " | " +  anoRegisto;
+    }
+
+    
+    
 }

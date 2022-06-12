@@ -1,14 +1,27 @@
 package autosell.Modelos;
 
-public class DetalhesTransacao {
+import autosell.Enumeracoes.TipoDetalheTransacao;
+import java.io.Serializable;
+
+public class DetalhesTransacao implements Serializable{
     private String descricao;
     private String detalhes;
     private float valor;
+    private TipoDetalheTransacao tipoDetalheTransacao;
 
-    public DetalhesTransacao(String descricao, String detalhes, float valor) {
+    public TipoDetalheTransacao getTipoDetalheTransacao() {
+        return tipoDetalheTransacao;
+    }
+
+    public void setTipoDetalheTransacao(TipoDetalheTransacao tipoDetalheTransacao) {
+        this.tipoDetalheTransacao = tipoDetalheTransacao;
+    }
+
+    public DetalhesTransacao(String descricao, String detalhes, float valor, TipoDetalheTransacao tipoDetalheTransacao) {
         this.descricao = descricao;
         this.detalhes = detalhes;
         this.valor = valor;
+        this.tipoDetalheTransacao = tipoDetalheTransacao;
     }   
     
     // <editor-fold defaultstate="collapsed" desc="Getters Section">

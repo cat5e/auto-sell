@@ -661,7 +661,6 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
         acaoGuardar();
     }//GEN-LAST:event_buttonGuardarActionPerformed
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonGuardar;
     private javax.swing.JComboBox<ClassesVeiculos> comboBoxClasse;

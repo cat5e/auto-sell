@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
+  <Properties>
+    <Property name="closable" type="boolean" value="true"/>
+  </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
@@ -130,7 +133,7 @@
                           <Component id="panelTotais" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   <Component id="panelDetalhesTransacao" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -151,6 +154,7 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
             </Property>
+            <Property name="enabled" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="Tipo Transa&#xe7;&#xe3;o" noResource="true"/>
           </Properties>
           <AuxValues>
@@ -226,6 +230,9 @@
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Adicionar Ve&#xed;culo"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonAdicionarVeiculoActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="buttonRemoverVeiculo">
               <Properties>
@@ -234,6 +241,9 @@
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Remover Ve&#xed;culo"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonRemoverVeiculoActionPerformed"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="scroolPaneVeiculos">
               <AuxValues>
@@ -311,6 +321,9 @@
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Adicionar ve&#xed;culo &#xe1; troca"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonAdicionarVeiculoATrocaActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="butonRemoverVeiculoATroca">
               <Properties>
@@ -319,6 +332,9 @@
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Remover ve&#xed;culo &#xe0; troca"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="butonRemoverVeiculoATrocaActionPerformed"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="scrollPaneVeiculosATroca">
               <AuxValues>
@@ -329,7 +345,6 @@
               <SubComponents>
                 <Component class="javax.swing.JList" name="listVeiculosATroca">
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CodeGeneration" type="java.lang.Integer" value="1"/>
                     <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="JanelaEditarTransacao_listVeiculosATroca"/>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Veiculo&gt;"/>
                   </AuxValues>
@@ -362,6 +377,8 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="labelNome" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
+                              <Component id="buttonRemoverEntidade" min="-2" pref="110" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="buttonProcurarEntidade" min="-2" pref="112" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
@@ -405,9 +422,12 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="labelNome" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="buttonProcurarEntidade" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="labelNome" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="buttonProcurarEntidade" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="buttonRemoverEntidade" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="textFieldNome" min="-2" max="-2" attributes="0"/>
@@ -446,6 +466,7 @@
             <Component class="javax.swing.JTextField" name="textFieldMorada">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="labelDataNascimento">
@@ -459,6 +480,7 @@
             <Component class="javax.swing.JTextField" name="textFieldNif">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="labelNif">
@@ -472,16 +494,19 @@
             <Component class="javax.swing.JTextField" name="textFieldDataNascimento">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="textFieldEmail">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="textFieldNumeroTelefone">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="labelNumeroTelefone">
@@ -511,6 +536,7 @@
             <Component class="javax.swing.JTextField" name="textFieldNome">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="buttonProcurarEntidade">
@@ -521,6 +547,21 @@
                 <Property name="text" type="java.lang.String" value="Procurar"/>
                 <Property name="toolTipText" type="java.lang.String" value="Procurar entidade"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonProcurarEntidadeActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="buttonRemoverEntidade">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/autosell/Resources/minus.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Remover"/>
+                <Property name="toolTipText" type="java.lang.String" value="Remover entidade"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonRemoverEntidadeActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -541,11 +582,20 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="labelTotal" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="textFieldTotal" min="-2" pref="154" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="labelTotal" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Component id="textFieldTotal" min="-2" pref="154" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="labelTotal1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="textFieldTotalPagar" min="-2" pref="154" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -557,7 +607,12 @@
                           <Component id="labelTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="textFieldTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="67" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="textFieldTotalPagar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelTotal1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -566,11 +621,23 @@
             <Component class="javax.swing.JTextField" name="textFieldTotal">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="labelTotal">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Total de Transa&#xe7;&#xe3;o:"/>
+                <Property name="text" type="java.lang.String" value="Total trans&#xe7;&#xe3;o:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="labelTotal1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Total a pagar:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="textFieldTotalPagar">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -597,9 +664,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="buttonRemoverDetalhe" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="buttonAdicionarDetalhe" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="buttonRemoverDetalhe" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="scrollPaneDetalhes" pref="794" max="32767" attributes="0"/>
                       </Group>
@@ -610,9 +677,9 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="buttonAdicionarDetalhe" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="buttonRemoverDetalhe" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="buttonAdicionarDetalhe" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="scrollPaneDetalhes" min="-2" pref="190" max="-2" attributes="0"/>
@@ -641,18 +708,24 @@
             <Component class="javax.swing.JButton" name="buttonAdicionarDetalhe">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/autosell/Resources/minus.png"/>
+                  <Image iconType="3" name="/autosell/Resources/plus.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Remover detalhes da transa&#xe7;&#xe3;o"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonAdicionarDetalheActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="buttonRemoverDetalhe">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/autosell/Resources/plus.png"/>
+                  <Image iconType="3" name="/autosell/Resources/minus.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Adicionar detalhes da transa&#xe7;&#xe3;o"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonRemoverDetalheActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

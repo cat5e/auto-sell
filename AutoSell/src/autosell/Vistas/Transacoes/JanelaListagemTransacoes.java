@@ -1,10 +1,7 @@
 package autosell.Vistas.Transacoes;
 
-import autosell.Vistas.Intervencoes.*;
-import autosell.Gestores.GestorIntervencoes;
 import autosell.Gestores.GestorTransacoes;
 import autosell.Modelos.Colaborador;
-import autosell.Modelos.Intervencao;
 import autosell.Modelos.Transacao;
 import autosell.Vistas.JanelaListagem;
 import java.util.LinkedList;
@@ -21,7 +18,7 @@ public class JanelaListagemTransacoes extends JanelaListagem<Transacao> {
                     "NIF entidade",
                     "Data",
                     "Preço Final",
-                    "Estado",
+                    "Colaborador",
                     "Obj"},
                 desktopPane,
                 colaboradorAutenticado,
@@ -30,7 +27,7 @@ public class JanelaListagemTransacoes extends JanelaListagem<Transacao> {
 
     @Override
     protected JInternalFrame getInternalFrame(Transacao value) {
-        return new JanelaEditarTransacao(value, colaboradorAutenticado);
+        return new JanelaEditarTransacao(value, colaboradorAutenticado, value.getTipo());
     }
 
     @Override
@@ -44,7 +41,7 @@ public class JanelaListagemTransacoes extends JanelaListagem<Transacao> {
             aux[i][3] = transacao.getEntidade().getNif();
             aux[i][4] = transacao.getData();
             aux[i][5] = transacao.getPrecoFinal();
-            aux[i][6] = transacao.getEstado();
+            aux[i][6] = transacao.getColaborador();
             aux[i][7] = transacao;
             i++;
         }

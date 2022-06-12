@@ -1,10 +1,10 @@
 package autosell.Utils;
 
 import java.awt.Component;
-import java.util.function.ObjDoubleConsumer;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class ValidacoesUtils {
@@ -31,6 +31,15 @@ public class ValidacoesUtils {
                 return false;
             }
         }
+        
+        if (object instanceof JTextArea jTextArea) {
+            if (isNullOrEmpty(jTextArea.getText())) {
+                JOptionPane.showMessageDialog(componente, String.format(mensagemValidacao, jTextArea.getName()),
+                        "Dados inválidos", JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
+        }
+        
         if (object instanceof JPasswordField jpasswordField) {
             if (isNullOrEmpty(String.copyValueOf(jpasswordField.getPassword()))) {
                 JOptionPane.showMessageDialog(componente, String.format(mensagemValidacao, jpasswordField.getName()),

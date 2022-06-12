@@ -74,4 +74,11 @@ public class Entidade implements Serializable{
     public void setTipoEntidade(TipoEntidade tipoEntidade) {
         this.tipoEntidade = tipoEntidade;
     } 
+
+    @Override
+    public String toString() {
+        return tipoEntidade + " - " +  nome + " - " + nif + " - " + numeroTelefone;
+    }
+    
+    
 }

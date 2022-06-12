@@ -64,12 +64,20 @@
             <Property name="text" type="java.lang.String" value="Transa&#xe7;&#xf5;es"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="menuItemAdicionarTransacoes">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemNovaVenda">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Adicionar Transa&#xe7;&#xf5;es"/>
+                <Property name="text" type="java.lang.String" value="Nova Venda"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemAdicionarTransacoesActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemNovaVendaActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemNovaCompra">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Nova Compra"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemNovaCompraActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuItemListagemTransacoes">

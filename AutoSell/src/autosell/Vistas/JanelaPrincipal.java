@@ -1,6 +1,7 @@
 package autosell.Vistas;
 
 import autosell.Enumeracoes.TipoColaborador;
+import autosell.Enumeracoes.TipoTransacao;
 import autosell.Modelos.Colaborador;
 import autosell.Vistas.Artigos.JanelaEditarArtigo;
 import autosell.Vistas.Artigos.JanelaListagemArtigos;
@@ -77,7 +78,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         menuItemAdicionarEventos = new javax.swing.JMenuItem();
         menuItemListagemEventos = new javax.swing.JMenuItem();
         menuTransacoes = new javax.swing.JMenu();
-        menuItemAdicionarTransacoes = new javax.swing.JMenuItem();
+        menuItemNovaVenda = new javax.swing.JMenuItem();
+        menuItemNovaCompra = new javax.swing.JMenuItem();
         menuItemListagemTransacoes = new javax.swing.JMenuItem();
         menuArmazem = new javax.swing.JMenu();
         menuItemAdicionarArtigo = new javax.swing.JMenuItem();
@@ -158,13 +160,21 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         menuTransacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/autosell/Resources/swap-horizontal.png"))); // NOI18N
         menuTransacoes.setText("Transações");
 
-        menuItemAdicionarTransacoes.setText("Adicionar Transações");
-        menuItemAdicionarTransacoes.addActionListener(new java.awt.event.ActionListener() {
+        menuItemNovaVenda.setText("Nova Venda");
+        menuItemNovaVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemAdicionarTransacoesActionPerformed(evt);
+                menuItemNovaVendaActionPerformed(evt);
             }
         });
-        menuTransacoes.add(menuItemAdicionarTransacoes);
+        menuTransacoes.add(menuItemNovaVenda);
+
+        menuItemNovaCompra.setText("Nova Compra");
+        menuItemNovaCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemNovaCompraActionPerformed(evt);
+            }
+        });
+        menuTransacoes.add(menuItemNovaCompra);
 
         menuItemListagemTransacoes.setText("Listagem de Transações");
         menuItemListagemTransacoes.addActionListener(new java.awt.event.ActionListener() {
@@ -337,11 +347,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         janelaListagem.setVisible(true);
     }//GEN-LAST:event_menuItemListagemEventosActionPerformed
 
-    private void menuItemAdicionarTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarTransacoesActionPerformed
-       var janela = new JanelaEditarTransacao(null, colaboradorAutenticado);
+    private void menuItemNovaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemNovaCompraActionPerformed
+       var janela = new JanelaEditarTransacao(null, colaboradorAutenticado, TipoTransacao.COMPRA);
        desktopPane.add(janela);
        janela.setVisible(true);
-    }//GEN-LAST:event_menuItemAdicionarTransacoesActionPerformed
+    }//GEN-LAST:event_menuItemNovaCompraActionPerformed
 
     private void menuItemListagemTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemTransacoesActionPerformed
         var janela = new JanelaListagemTransacoes(desktopPane, colaboradorAutenticado);
@@ -422,6 +432,12 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_menuItemListagemColaboradoresActionPerformed
 
+    private void menuItemNovaVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemNovaVendaActionPerformed
+       var janela = new JanelaEditarTransacao(null, colaboradorAutenticado, TipoTransacao.VENDA);
+       desktopPane.add(janela);
+       janela.setVisible(true);
+    }//GEN-LAST:event_menuItemNovaVendaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonNomeDoUtilizador;
     private javax.swing.JDesktopPane desktopPane;
@@ -439,7 +455,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemAdicionarEstabelecimento;
     private javax.swing.JMenuItem menuItemAdicionarEventos;
     private javax.swing.JMenuItem menuItemAdicionarIntervencao;
-    private javax.swing.JMenuItem menuItemAdicionarTransacoes;
     private javax.swing.JMenuItem menuItemAdicionarVeiculo;
     private javax.swing.JMenuItem menuItemListagemArtigos;
     private javax.swing.JMenuItem menuItemListagemColaboradores;
@@ -449,6 +464,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemListagemIntervencoes;
     private javax.swing.JMenuItem menuItemListagemTransacoes;
     private javax.swing.JMenuItem menuItemListagemVeiculos;
+    private javax.swing.JMenuItem menuItemNovaCompra;
+    private javax.swing.JMenuItem menuItemNovaVenda;
     private javax.swing.JMenu menuTransacoes;
     private javax.swing.JMenu menuVeiculos;
     private javax.swing.JToolBar toolBarPrincipal;
