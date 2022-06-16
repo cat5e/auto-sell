@@ -1,3 +1,8 @@
-/AutoSell/nbproject/private/
-/AutoSell/build/
-/AutoSell/dist/
+**/nbproject/private/  
+build/  
+nbbuild/  
+target/  
+nbdist/ 
+dist/
+.nb-gradle/  
+AutoSell/dist/*.*

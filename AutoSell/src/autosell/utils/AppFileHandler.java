@@ -8,7 +8,7 @@ import javax.imageio.IIOException;
 
 public class AppFileHandler {
 
-    private final String filePath;
+    private final String filePath;    
     
     public AppFileHandler(String filePath) {
         this.filePath = filePath;
