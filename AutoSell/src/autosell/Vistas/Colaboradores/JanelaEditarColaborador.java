@@ -39,6 +39,7 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
         isColaboradorAutenticadoAdmin = colaboradorAutenticado != null && 
                 colaboradorAutenticado.getTipoColaborador().equals(TipoColaborador.ADMINISTRADOR);
         initComponents();
+        toolBarMenu.setFloatable(false);
         
         // TODO: Verificar o tipo de colaborador
         loadTipoColaboradores();

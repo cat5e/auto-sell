@@ -21,6 +21,7 @@ public class JanelaEditarEntidade extends javax.swing.JInternalFrame {
     public JanelaEditarEntidade(Entidade entidade) {
         this.entidade = entidade;
         initComponents();
+        toolBarMenu.setFloatable(false);
         
         loadTipoEntidade();
         if (entidade != null) {

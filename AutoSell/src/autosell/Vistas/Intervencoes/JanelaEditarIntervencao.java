@@ -36,6 +36,7 @@ public class JanelaEditarIntervencao extends javax.swing.JInternalFrame {
         this.tecnico = tecnico;
         consumiveis = new LinkedList<>();
         initComponents();
+        toolBarMenu.setFloatable(false);
 
         if (intervencao != null) {
             popularDados();

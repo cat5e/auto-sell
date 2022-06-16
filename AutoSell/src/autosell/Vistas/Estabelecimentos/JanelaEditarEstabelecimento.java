@@ -19,6 +19,7 @@ public class JanelaEditarEstabelecimento extends javax.swing.JInternalFrame {
     public JanelaEditarEstabelecimento(Estabelecimento estabelecimento) {
         this.estabelecimento = estabelecimento;
         initComponents();
+        toolBarMenu.setFloatable(false);
 
         loadTipoEstabelecimentos();
         if (estabelecimento != null) {

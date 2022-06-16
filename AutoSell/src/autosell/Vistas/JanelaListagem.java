@@ -42,6 +42,8 @@ public abstract class JanelaListagem<T> extends javax.swing.JInternalFrame {
 
         initComponents();
         setTitle(nomeJanela);
+        toolBarMenu.setFloatable(false);
+        
 
         initTableComponents(columnNames, getTableData());
     }

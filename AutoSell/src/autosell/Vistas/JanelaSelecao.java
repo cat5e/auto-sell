@@ -32,6 +32,7 @@ public class JanelaSelecao<T> extends javax.swing.JDialog {
 
         initComponents();
         setTitle(nomeJanela);
+        toolBarMenu.setFloatable(false);
 
         String[] columns = new String[]{"", "Obj"};
         tableModel = new TableModel(columns, getTableData());

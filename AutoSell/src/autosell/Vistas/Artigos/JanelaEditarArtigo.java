@@ -26,6 +26,7 @@ public class JanelaEditarArtigo extends javax.swing.JInternalFrame {
         this.colaboradorAutenticado = colaboradorAutenticado;
         
         initComponents();
+        toolBarMenu.setFloatable(false);
 
         loadEstabelecimentos();
         if (artigo != null) {

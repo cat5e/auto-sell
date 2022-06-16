@@ -13,6 +13,7 @@ public class JanelaEditarDetalheTransacao extends javax.swing.JDialog {
 
     public JanelaEditarDetalheTransacao() {
         initComponents();
+        toolBarMenu.setFloatable(false);
     }
 
     private void acaoGuardar() {

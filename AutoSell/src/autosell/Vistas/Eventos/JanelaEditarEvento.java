@@ -26,6 +26,7 @@ public class JanelaEditarEvento extends javax.swing.JInternalFrame {
         this.evento = evento;
         veiculos = new LinkedList<>();
         initComponents();
+        toolBarMenu.setFloatable(false);
 
         if (evento != null) {
             popularDados();
