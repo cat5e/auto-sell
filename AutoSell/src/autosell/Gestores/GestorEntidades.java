@@ -3,7 +3,7 @@ package autosell.Gestores;
 import autosell.Modelos.Entidade;
 
 public class GestorEntidades extends Gestor<Entidade> {
-
+    
     private GestorEntidades() {
 
     }

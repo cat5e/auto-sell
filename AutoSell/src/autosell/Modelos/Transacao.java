@@ -19,6 +19,9 @@ public class Transacao implements Serializable {
         this.tipo = tipo;
         this.data = data;
         this.colaborador = colaborador;
+        veiculosAssociados = new LinkedList<>();
+        veiculosTroca = new LinkedList<>();
+        detalhesTransacao = new LinkedList<>();
     }
 
     public TipoTransacao getTipo() {
@@ -133,4 +136,17 @@ public class Transacao implements Serializable {
         detalhesTransacao.remove(detalhe);
     }
 
+    public void limparDetalhesTransacao(){
+        detalhesTransacao.clear();
+    }
+    
+    public void limparVeiculosTroca() {
+        veiculosTroca.clear();
+    }
+    
+    public void limparVeiculosAssociados() {
+        veiculosAssociados.clear();
+    }
+            
+            
 }

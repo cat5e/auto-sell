@@ -1,17 +1,8 @@
 package autosell.Vistas.Transacoes;
 
 import autosell.CustomExceptions.CustomExeption;
-import autosell.Enumeracoes.ClassesVeiculos;
-import autosell.Enumeracoes.EstadoVeiculo;
-import autosell.Enumeracoes.MesesAno;
-import autosell.Enumeracoes.TipoCombustivel;
-import autosell.Enumeracoes.TipoDetalheTransacao;
-import autosell.Enumeracoes.TipoEntidade;
-import autosell.Enumeracoes.TipoTransacao;
-import autosell.Gestores.GestorArmazenamentoDados;
-import autosell.Gestores.GestorEntidades;
-import autosell.Gestores.GestorTransacoes;
-import autosell.Gestores.GestorVeiculos;
+import autosell.Enumeracoes.*;
+import autosell.Gestores.*;
 import autosell.Modelos.*;
 import autosell.Utils.AppLogger;
 import autosell.Utils.TableModel;
@@ -27,8 +18,8 @@ import javax.swing.JOptionPane;
 public class JanelaEditarTransacao extends javax.swing.JInternalFrame {
 
     private Transacao transacao;
-    private Colaborador colaboradorAutenticado;
-    private TipoTransacao tipoTransacao;
+    private final Colaborador colaboradorAutenticado;
+    private final TipoTransacao tipoTransacao;
     private DefaultListModel listModelVeiculos;
     private DefaultListModel listModelVeiculosATroca;
     private final TableModel tableModelDetalhes;
@@ -58,10 +49,6 @@ public class JanelaEditarTransacao extends javax.swing.JInternalFrame {
 
         loadTipoTransacao();
 
-        if (transacao != null) {
-            popularDados();
-        }
-
         columns = new String[]{
             "Descrição",
             "Detalhe",
@@ -88,6 +75,10 @@ public class JanelaEditarTransacao extends javax.swing.JInternalFrame {
                 javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
                 javax.swing.border.TitledBorder.DEFAULT_POSITION,
                 new java.awt.Font("Segoe UI", 1, 12)));
+
+        if (transacao != null) {
+            popularDados();
+        }
 
         comboBoxTipo.setSelectedItem(tipoTransacao);
 
@@ -250,28 +241,13 @@ public class JanelaEditarTransacao extends javax.swing.JInternalFrame {
                         colaboradorAutenticado
                 );
 
-                transacao.setEntidade(entidade);
-                transacao.setPrecoFinal(totalTransacao);
-
-                for (int i = 0; i < listModelVeiculos.getSize(); i++) {
-                    var veiculo = (Veiculo) listModelVeiculos.getElementAt(i);
-                    transacao.adicionarVeiculoAssociado(veiculo);
-                }
+                guardarDadosTransacao(transacao);
                 
-                for (int i = 0; i < listModelVeiculosATroca.getSize(); i++) {
-                    var veiculo = (Veiculo) listModelVeiculosATroca.getElementAt(i);
-                    transacao.adicionarVeiculoTroca(veiculo);
-                }
-                
-                for(DetalhesTransacao detalhe : detalhesTransacao) {
-                    transacao.adicionarDetalhesTransacao(detalhe);
-                }
-
                 if (!GestorTransacoes.getInstance().adicionar(transacao)) {
                     throw new CustomExeption("Não foi possível guardar o registo.");
                 }
             } else {
-
+                transacao.setData(textFieldData.getText());
             }
 
             GestorArmazenamentoDados.INSTANCIA.escreverDados();
@@ -285,6 +261,28 @@ public class JanelaEditarTransacao extends javax.swing.JInternalFrame {
         }
 
         JOptionPane.showMessageDialog(this, "Os dados foram gravados com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void guardarDadosTransacao(Transacao transacao) {
+        transacao.setEntidade(entidade);
+        transacao.setPrecoFinal(totalTransacao);
+        
+        transacao.limparVeiculosAssociados();
+        for (int i = 0; i < listModelVeiculos.getSize(); i++) {
+            var veiculo = (Veiculo) listModelVeiculos.getElementAt(i);
+            transacao.adicionarVeiculoAssociado(veiculo);
+        }
+
+        transacao.limparVeiculosTroca();
+        for (int i = 0; i < listModelVeiculosATroca.getSize(); i++) {
+            var veiculo = (Veiculo) listModelVeiculosATroca.getElementAt(i);
+            transacao.adicionarVeiculoTroca(veiculo);
+        }
+
+        transacao.limparDetalhesTransacao();
+        for (DetalhesTransacao detalhe : detalhesTransacao) {
+            transacao.adicionarDetalhesTransacao(detalhe);
+        }
     }
 
     private boolean isDadosValidos() {
