@@ -1,9 +1,9 @@
 package autosell;
 
-import autosell.CustomExceptions.CustomExeption;
-import autosell.Gestores.GestorArmazenamentoDados;
-import autosell.Utils.AppLogger;
-import autosell.Vistas.JanelaLogin;
+import autosell.exceptions.CustomExeption;
+import autosell.gestores.GestorArmazenamentoDados;
+import autosell.utils.AppLogger;
+import autosell.vistas.JanelaLogin;
 import java.io.IOException;
 
 public class AutoSell {
