@@ -7,6 +7,7 @@ import autosell.Vistas.JanelaListagem;
 import java.util.LinkedList;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
+import static autosell.Utils.DateUtil.getDateFormated;
 
 public class JanelaListagemEventos extends JanelaListagem<Evento> {
     public JanelaListagemEventos(JDesktopPane desktopPane, Colaborador colaboradorAutenticado) {
@@ -34,8 +35,8 @@ public class JanelaListagemEventos extends JanelaListagem<Evento> {
 
         for (Evento evento : eventos) {
             aux[i][0] = evento.getNome();
-            aux[i][1] = evento.getDataInicio();
-            aux[i][2] = evento.getDataFim();
+            aux[i][1] = getDateFormated(evento.getDataInicio());
+            aux[i][2] = getDateFormated(evento.getDataFim());
             aux[i][3] = evento.getLocal();
             aux[i][4] = evento.getVeiculos().size();
             aux[i][5] = evento;

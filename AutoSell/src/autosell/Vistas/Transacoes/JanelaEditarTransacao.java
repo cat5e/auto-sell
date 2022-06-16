@@ -14,6 +14,10 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import static autosell.Utils.DateUtil.getDateFormated;
+import static autosell.Utils.DateUtil.parseLocalDate;
+import static autosell.Utils.ValidacoesUtils.isDateCorrect;
+
 
 public class JanelaEditarTransacao extends javax.swing.JInternalFrame {
 
@@ -90,10 +94,10 @@ public class JanelaEditarTransacao extends javax.swing.JInternalFrame {
 
     private void popularDados() {
         comboBoxTipo.setSelectedItem(transacao.getTipo());
-        textFieldData.setText(transacao.getData());
+        textFieldData.setText(getDateFormated(transacao.getData()));
         entidade = transacao.getEntidade();
         textFieldNome.setText(entidade.getNome());
-        textFieldDataNascimento.setText(entidade.getDataNascimento());
+        textFieldDataNascimento.setText(getDateFormated(entidade.getDataNascimento()));
         textFieldNif.setText(entidade.getNif());
         textFieldNumeroTelefone.setText(entidade.getNumeroTelefone());
         textFieldEmail.setText(entidade.getEmail());
@@ -139,7 +143,7 @@ public class JanelaEditarTransacao extends javax.swing.JInternalFrame {
         this.entidade = entidade;
 
         textFieldNome.setText(entidade == null ? "" : entidade.getNome());
-        textFieldDataNascimento.setText(entidade == null ? "" : entidade.getDataNascimento());
+        textFieldDataNascimento.setText(entidade == null ? "" : getDateFormated(entidade.getDataNascimento()));
         textFieldEmail.setText(entidade == null ? "" : entidade.getEmail());
         textFieldNif.setText(entidade == null ? "" : entidade.getNif());
         textFieldMorada.setText(entidade == null ? "" : entidade.getMorada());
@@ -237,7 +241,7 @@ public class JanelaEditarTransacao extends javax.swing.JInternalFrame {
             if (transacao == null) {
                 transacao = new Transacao(
                         tipoTransacao,
-                        textFieldData.getText(),
+                        parseLocalDate(textFieldData.getText()),
                         colaboradorAutenticado
                 );
 
@@ -247,7 +251,7 @@ public class JanelaEditarTransacao extends javax.swing.JInternalFrame {
                     throw new CustomExeption("Não foi possível guardar o registo.");
                 }
             } else {
-                transacao.setData(textFieldData.getText());
+                transacao.setData(parseLocalDate(textFieldData.getText()));
             }
 
             GestorArmazenamentoDados.INSTANCIA.escreverDados();
@@ -310,7 +314,7 @@ public class JanelaEditarTransacao extends javax.swing.JInternalFrame {
             return false;
         }
 
-        return true;
+        return isDateCorrect(this, textFieldData);
     }
 
     /**

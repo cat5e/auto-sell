@@ -1,17 +1,18 @@
 package autosell.Modelos;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.LinkedList;
 
 public class Intervencao implements Serializable {
-    private String data;
+    private LocalDate data;
     private Veiculo veiculo;
     private String descricao;
     private final LinkedList<Consumivel> consumiveis;
     private Colaborador tecnico;
     private Estabelecimento estabelecimento; 
 
-    public Intervencao(String data, Veiculo veiculo, String descricao, Colaborador tecnico, Estabelecimento estabelecimento) {
+    public Intervencao(LocalDate data, Veiculo veiculo, String descricao, Colaborador tecnico, Estabelecimento estabelecimento) {
         this.data = data;
         this.veiculo = veiculo;
         this.descricao = descricao;
@@ -20,11 +21,11 @@ public class Intervencao implements Serializable {
         consumiveis = new LinkedList<>();
     }
 
-    public String getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 

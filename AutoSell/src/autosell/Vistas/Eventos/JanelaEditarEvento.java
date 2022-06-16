@@ -14,6 +14,10 @@ import java.util.LinkedList;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import static autosell.Utils.ValidacoesUtils.isComponenteVazio;
+import static autosell.Utils.ValidacoesUtils.isDateCorrect;
+import static autosell.Utils.DateUtil.getDateFormated;
+import static autosell.Utils.DateUtil.parseLocalDate;
+import javax.swing.JTextField;
 
 public class JanelaEditarEvento extends javax.swing.JInternalFrame {
 
@@ -49,8 +53,8 @@ public class JanelaEditarEvento extends javax.swing.JInternalFrame {
 
     private void popularDados() {
         textFieldNome.setText(evento.getNome());
-        textFieldDataInicio.setText(evento.getDataInicio());
-        textFieldDataFim.setText(evento.getDataFim());
+        textFieldDataInicio.setText(getDateFormated(evento.getDataInicio()));
+        textFieldDataFim.setText(getDateFormated(evento.getDataFim()));
         textFieldLocal.setText(evento.getLocal());
         veiculos = evento.getVeiculos();
     }
@@ -64,9 +68,10 @@ public class JanelaEditarEvento extends javax.swing.JInternalFrame {
             if (evento == null) {
                 evento = new Evento(
                         textFieldNome.getText(),
-                        textFieldDataInicio.getText(),
-                        textFieldDataFim.getText(),
+                        parseLocalDate(textFieldDataInicio.getText()),
+                        parseLocalDate(textFieldDataFim.getText()),
                         textFieldLocal.getText());
+                
                 for (Veiculo veiculo : veiculos) {
                     evento.addVeiculo(veiculo);
                 }
@@ -76,8 +81,8 @@ public class JanelaEditarEvento extends javax.swing.JInternalFrame {
                 }
             } else {
                 evento.setNome(textFieldNome.getText());
-                evento.setDataInicio(textFieldDataInicio.getText());
-                evento.setDataFim(textFieldDataFim.getText());
+                evento.setDataInicio(parseLocalDate(textFieldDataInicio.getText()));
+                evento.setDataFim(parseLocalDate(textFieldDataFim.getText()));
                 evento.setLocal(textFieldLocal.getText());
             }
 
@@ -99,6 +104,13 @@ public class JanelaEditarEvento extends javax.swing.JInternalFrame {
 
         for (JComponent jComponent : componentesAValidar) {
             if (!isComponenteVazio(this, jComponent)) {
+                return false;
+            }
+        }
+        
+        JTextField datasAValidar[] = {textFieldDataInicio, textFieldDataFim};
+        for (JTextField jTextField : datasAValidar) {
+            if (! isDateCorrect(this, jTextField)) {
                 return false;
             }
         }
@@ -231,12 +243,14 @@ public class JanelaEditarEvento extends javax.swing.JInternalFrame {
                             .addComponent(labelNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textFieldDataInicio)
+                            .addComponent(textFieldDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(labelDataInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(textFieldDataFim, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-                            .addComponent(labelDataFim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                                .addComponent(labelDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27))
+                            .addComponent(textFieldDataFim)))
                     .addComponent(labelLocal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(textFieldLocal)
                     .addComponent(scrollPanelVeiculos, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE))

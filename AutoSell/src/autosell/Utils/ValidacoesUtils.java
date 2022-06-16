@@ -1,11 +1,13 @@
 package autosell.Utils;
 
 import java.awt.Component;
+import java.time.LocalDate;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import static autosell.Utils.DateUtil.parseLocalDate;
 
 public class ValidacoesUtils {
 
@@ -68,6 +70,16 @@ public class ValidacoesUtils {
         String mensagemValidacao = "O valor do campo '%s' não pode ser negativo!";
 
         if (Double.parseDouble(jTextField.getText()) < 0) {
+            JOptionPane.showMessageDialog(componente, String.format(mensagemValidacao, jTextField.getName()),
+                    "Dados inválidos", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+    
+    public static boolean isDateCorrect(Component componente, JTextField jTextField) {
+        String mensagemValidacao = "A data em '%s' está incorreta. Introduza uma dada com o seguinte formato: dia/mês/ano. Exemplo: 12/05/2001";
+        if(parseLocalDate(jTextField.getText()).equals(LocalDate.MIN)) {
             JOptionPane.showMessageDialog(componente, String.format(mensagemValidacao, jTextField.getName()),
                     "Dados inválidos", JOptionPane.WARNING_MESSAGE);
             return false;

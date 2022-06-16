@@ -7,6 +7,7 @@ import autosell.Vistas.JanelaListagem;
 import java.util.LinkedList;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
+import static autosell.Utils.DateUtil.getDateFormated;
 
 public class JanelaListagemTransacoes extends JanelaListagem<Transacao> {
     public JanelaListagemTransacoes(JDesktopPane desktopPane, Colaborador colaboradorAutenticado) {
@@ -39,7 +40,7 @@ public class JanelaListagemTransacoes extends JanelaListagem<Transacao> {
             aux[i][1] = transacao.getVeiculosAssociados().size();
             aux[i][2] = transacao.getEntidade().getNome();
             aux[i][3] = transacao.getEntidade().getNif();
-            aux[i][4] = transacao.getData();
+            aux[i][4] = getDateFormated(transacao.getData());
             aux[i][5] = transacao.getPrecoFinal();
             aux[i][6] = transacao.getColaborador();
             aux[i][7] = transacao;

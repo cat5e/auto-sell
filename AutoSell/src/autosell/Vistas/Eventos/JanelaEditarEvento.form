@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <Properties>
     <Property name="closable" type="boolean" value="true"/>
   </Properties>
@@ -90,13 +90,16 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="textFieldDataInicio" max="32767" attributes="0"/>
+                              <Component id="textFieldDataInicio" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
                               <Component id="labelDataInicio" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="textFieldDataFim" pref="108" max="32767" attributes="0"/>
-                              <Component id="labelDataFim" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="labelDataFim" min="-2" pref="108" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="textFieldDataFim" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="labelLocal" alignment="0" max="32767" attributes="0"/>

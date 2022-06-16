@@ -1,16 +1,17 @@
 package autosell.Modelos;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.LinkedList;
 
 public class Evento implements Serializable {
       private String nome;
-      private String dataInicio;
-      private String dataFim;
+      private LocalDate dataInicio;
+      private LocalDate dataFim;
       private String local;
       private final LinkedList<Veiculo> veiculos;
 
-    public Evento(String nome, String dataInicio, String dataFim, String local) {
+    public Evento(String nome, LocalDate dataInicio, LocalDate dataFim, String local) {
         this.nome = nome;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
@@ -26,19 +27,19 @@ public class Evento implements Serializable {
         this.nome = nome;
     }
 
-    public String getDataInicio() {
+    public LocalDate getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(String dataInicio) {
+    public void setDataInicio(LocalDate dataInicio) {
         this.dataInicio = dataInicio;
     }
 
-    public String getDataFim() {
+    public LocalDate getDataFim() {
         return dataFim;
     }
 
-    public void setDataFim(String dataFim) {
+    public void setDataFim(LocalDate dataFim) {
         this.dataFim = dataFim;
     }
 

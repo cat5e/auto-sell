@@ -7,6 +7,7 @@ import autosell.Vistas.JanelaListagem;
 import java.util.LinkedList;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
+import static autosell.Utils.DateUtil.getDateFormated;
 
 public class JanelaListagemIntervencoes extends JanelaListagem<Intervencao> {
     public JanelaListagemIntervencoes(JDesktopPane desktopPane, Colaborador colaboradorAutenticado) {
@@ -34,7 +35,7 @@ public class JanelaListagemIntervencoes extends JanelaListagem<Intervencao> {
         int i = 0;
 
         for (Intervencao intervencao : intervencoes) {
-            aux[i][0] = intervencao.getData();
+            aux[i][0] = getDateFormated(intervencao.getData());
             aux[i][1] = intervencao.getVeiculo().getMatricula();
             aux[i][2] = intervencao.getVeiculo().getMarca();
             aux[i][3] = intervencao.getVeiculo().getModelo();

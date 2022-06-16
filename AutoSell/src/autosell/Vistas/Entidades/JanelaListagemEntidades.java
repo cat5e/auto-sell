@@ -7,6 +7,7 @@ import autosell.Vistas.JanelaListagem;
 import java.util.LinkedList;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
+import static autosell.Utils.DateUtil.getDateFormated;
 
 public class JanelaListagemEntidades extends JanelaListagem<Entidade> {
     public JanelaListagemEntidades(JDesktopPane desktopPane, Colaborador colaboradorAutenticado) {
@@ -36,7 +37,7 @@ public class JanelaListagemEntidades extends JanelaListagem<Entidade> {
         for (Entidade entidade : entidades) {
             aux[i][0] = entidade.getTipoEntidade();
             aux[i][1] = entidade.getNome();
-            aux[i][2] = entidade.getDataNascimento();
+            aux[i][2] = getDateFormated(entidade.getDataNascimento());
             aux[i][3] = entidade.getNif();
             aux[i][4] = entidade.getNumeroTelefone();
             aux[i][5] = entidade.getEmail();

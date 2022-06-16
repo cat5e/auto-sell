@@ -2,12 +2,13 @@ package autosell.Modelos;
 
 import autosell.Enumeracoes.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.LinkedList;
 
 public class Transacao implements Serializable {
 
     private TipoTransacao tipo;
-    private String data;
+    private LocalDate data;
     private LinkedList<Veiculo> veiculosAssociados;
     private LinkedList<Veiculo> veiculosTroca;
     private Entidade entidade;
@@ -15,7 +16,7 @@ public class Transacao implements Serializable {
     private Colaborador colaborador;
     private float precoFinal;
 
-    public Transacao(TipoTransacao tipo, String data, Colaborador colaborador) {
+    public Transacao(TipoTransacao tipo, LocalDate data, Colaborador colaborador) {
         this.tipo = tipo;
         this.data = data;
         this.colaborador = colaborador;
@@ -28,7 +29,7 @@ public class Transacao implements Serializable {
         return tipo;
     }
 
-    public String getData() {
+    public LocalDate getData() {
         return data;
     }
 
@@ -60,7 +61,7 @@ public class Transacao implements Serializable {
         this.tipo = tipo;
     }
 
-    public void setData(String data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 

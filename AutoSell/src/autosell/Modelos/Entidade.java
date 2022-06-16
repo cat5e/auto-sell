@@ -2,10 +2,11 @@ package autosell.Modelos;
 
 import autosell.Enumeracoes.TipoEntidade;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class Entidade implements Serializable{
     private String nome;
-    private String dataNascimento;
+    private LocalDate dataNascimento;
     private String nif;
     private String numeroTelefone;
     private String email;
@@ -27,11 +28,11 @@ public class Entidade implements Serializable{
         this.nome = nome;
     }
 
-    public String getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(String dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

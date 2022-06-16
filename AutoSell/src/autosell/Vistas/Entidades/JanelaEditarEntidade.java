@@ -11,6 +11,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import static autosell.Utils.ValidacoesUtils.isComponenteVazio;
+import static autosell.Utils.ValidacoesUtils.isDateCorrect;
+import static autosell.Utils.DateUtil.getDateFormated;
+import static autosell.Utils.DateUtil.parseLocalDate;
 
 
 public class JanelaEditarEntidade extends javax.swing.JInternalFrame {
@@ -35,7 +38,7 @@ public class JanelaEditarEntidade extends javax.swing.JInternalFrame {
     
     private void popularDados() {
         comboBoxTipo.setSelectedItem(entidade.getTipoEntidade());
-        textFieldDataNascimento.setText(entidade.getDataNascimento());
+        textFieldDataNascimento.setText(getDateFormated(entidade.getDataNascimento()));
         textFieldEmail.setText(entidade.getEmail());
         textFieldMorada.setText(entidade.getMorada());
         textFieldNIF.setText(entidade.getNif());
@@ -55,7 +58,8 @@ public class JanelaEditarEntidade extends javax.swing.JInternalFrame {
                         textFieldNIF.getText(),
                         textFieldTelefone.getText(),
                         (TipoEntidade) comboBoxTipo.getSelectedItem());
-                entidade.setDataNascimento(textFieldDataNascimento.getText());
+                
+                entidade.setDataNascimento(parseLocalDate(textFieldDataNascimento.getText()));
                 entidade.setMorada(textFieldMorada.getText());
 
                 if (!GestorEntidades.getInstance().adicionar(entidade)) {
@@ -67,7 +71,7 @@ public class JanelaEditarEntidade extends javax.swing.JInternalFrame {
                 entidade.setNif(textFieldNIF.getText());
                 entidade.setNumeroTelefone(textFieldTelefone.getText());
                 entidade.setTipoEntidade((TipoEntidade) comboBoxTipo.getSelectedItem());
-                entidade.setDataNascimento(textFieldDataNascimento.getText());
+                entidade.setDataNascimento(parseLocalDate(textFieldDataNascimento.getText()));
             }
 
             GestorArmazenamentoDados.INSTANCIA.escreverDados();
@@ -101,7 +105,7 @@ public class JanelaEditarEntidade extends javax.swing.JInternalFrame {
             return false;
         }
         
-        return true;
+        return isDateCorrect(this,textFieldDataNascimento);
      }
     
     /**
