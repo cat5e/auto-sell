@@ -1,9 +1,6 @@
 package autosell.modelos;
 
-import autosell.enumeracoes.ClassesVeiculos;
-import autosell.enumeracoes.EstadoVeiculo;
-import autosell.enumeracoes.MesesAno;
-import autosell.enumeracoes.TipoCombustivel;
+import autosell.enumeracoes.*;
 import java.io.Serializable;
 
 public class Veiculo implements Serializable{
@@ -23,7 +20,6 @@ public class Veiculo implements Serializable{
     private ClassesVeiculos classe;
     private int numeorMudancas;
     private int numeroPortas;
-    private EstadoVeiculo estadoVeiculo;
     private String caracteristicas;
     private String observacoes;
     private Estabelecimento estabelecimento;
@@ -33,7 +29,6 @@ public class Veiculo implements Serializable{
         this.matricula = matricula;
         this.marca = marca;
         this.estabelecimento = estabelecimento;
-        this.estadoVeiculo = EstadoVeiculo.DISPONIVEL;
     }
 
     // <editor-fold defaultstate="collapsed" desc="Getters Section">
@@ -95,10 +90,6 @@ public class Veiculo implements Serializable{
 
     public int getNumeroPortas() {
         return numeroPortas;
-    }
-
-    public EstadoVeiculo getEstadoVeiculo() {
-        return estadoVeiculo;
     }
 
     public String getCaracteristicas() {
@@ -174,10 +165,6 @@ public class Veiculo implements Serializable{
 
     public void setNumeroPortas(int numeroPortas) {
         this.numeroPortas = numeroPortas;
-    }
-
-    public void setEstadoVeiculo(EstadoVeiculo estadoVeiculo) {
-        this.estadoVeiculo = estadoVeiculo;
     }
 
     public void setCaracteristicas(String caracteristicas) {

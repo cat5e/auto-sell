@@ -1,13 +1,8 @@
 package autosell.vistas.veiculos;
 
 import autosell.exceptions.CustomExeption;
-import autosell.enumeracoes.ClassesVeiculos;
-import autosell.enumeracoes.EstadoVeiculo;
-import autosell.enumeracoes.MesesAno;
-import autosell.enumeracoes.TipoCombustivel;
-import autosell.gestores.GestorArmazenamentoDados;
-import autosell.gestores.GestorEstabelecimentos;
-import autosell.gestores.GestorVeiculos;
+import autosell.enumeracoes.*;
+import autosell.gestores.*;
 import autosell.modelos.Estabelecimento;
 import autosell.modelos.Veiculo;
 import autosell.utils.AppLogger;
@@ -15,16 +10,9 @@ import java.io.IOException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import static autosell.utils.ValidacoesUtils.isComponenteVazio;
-import static autosell.utils.ValidacoesUtils.isNullOrEmpty;
-import static autosell.utils.ValidacoesUtils.isNumberGreaterOrEqualThanZero;
-import static autosell.utils.ValidacoesUtils.isNumericValue;
 import javax.swing.JTextField;
+import static autosell.utils.ValidacoesUtils.*;
 
-// TODO: Implementar adicionar/remover foto do veículo
-// TODO: Carregar todas as listagens
-// TODO: Implementar e apresentar validação se o veículo está num evento
-// TODO: Verificar se é necessário implementar o estado do veículo.
 public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
 
     private Veiculo veiculo;
@@ -38,7 +26,6 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
         loadMarcas();
         loadCombustivel();
         loadClasses();
-        loadEstadoVeiculo();
         loadEstabelecimentos();
 
         if (veiculo != null) {
@@ -60,10 +47,6 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
 
     private void loadClasses() {
         comboBoxClasse.setModel(new DefaultComboBoxModel(ClassesVeiculos.values()));
-    }
-
-    private void loadEstadoVeiculo() {
-        comboBoxEstadoVeiculo.setModel(new DefaultComboBoxModel(EstadoVeiculo.values()));
     }
 
     private void loadEstabelecimentos() {
@@ -90,10 +73,7 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
         comboBoxClasse.setSelectedItem(veiculo.getClasse());
         textFieldMundacas.setText(String.valueOf(veiculo.getNumeorMudancas()));
         textFieldNumPortas.setText(String.valueOf(veiculo.getNumeroPortas()));
-        comboBoxEstadoVeiculo.setSelectedItem(veiculo.getEstadoVeiculo());
         comboBoxEstabelecimento.setSelectedItem(veiculo.getEstabelecimento());
-        // TODO: Verificar por eventos
-        //textFieldEvento.setText(veiculo.getEv);
         textAreaCaracteristicas.setText(veiculo.getCaracteristicas());
         textAreaObservacoes.setText(veiculo.getObservacoes());
     }
@@ -144,7 +124,6 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
         veiculo.setCor(textFieldCor.getText());
         veiculo.setCombustivel((TipoCombustivel) comboBoxCombustivel.getSelectedItem());
         veiculo.setClasse((ClassesVeiculos) comboBoxClasse.getSelectedItem());
-        veiculo.setEstadoVeiculo((EstadoVeiculo) comboBoxEstadoVeiculo.getSelectedItem());
         veiculo.setCaracteristicas(textAreaCaracteristicas.getText());
         veiculo.setObservacoes(textAreaObservacoes.getText());
 
@@ -273,12 +252,8 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
         labelMudancas = new javax.swing.JLabel();
         textFieldNumPortas = new javax.swing.JTextField();
         labelNumPortas = new javax.swing.JLabel();
-        comboBoxEstadoVeiculo = new javax.swing.JComboBox<>();
-        labelEstadoVeiculo = new javax.swing.JLabel();
         comboBoxEstabelecimento = new javax.swing.JComboBox<>();
         labelEstabelecimento = new javax.swing.JLabel();
-        textFieldEvento = new javax.swing.JTextField();
-        labelEvento = new javax.swing.JLabel();
         tabbedPaneEdicao = new javax.swing.JTabbedPane();
         panelCaracteristicas = new javax.swing.JPanel();
         scrollPaneCaracteristicas = new javax.swing.JScrollPane();
@@ -286,15 +261,6 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
         panelObservacoes = new javax.swing.JPanel();
         scrollPaneObservacoes = new javax.swing.JScrollPane();
         textAreaObservacoes = new javax.swing.JTextArea();
-        panelReparacoes = new javax.swing.JPanel();
-        scrollPaneReparacoes = new javax.swing.JScrollPane();
-        tableReparacoes = new javax.swing.JTable();
-        panelEventos = new javax.swing.JPanel();
-        scrollPaneEventos = new javax.swing.JScrollPane();
-        tableEventos = new javax.swing.JTable();
-        panelTransacoes = new javax.swing.JPanel();
-        scrollPaneTransacoes = new javax.swing.JScrollPane();
-        tableTransacoes = new javax.swing.JTable();
 
         setClosable(true);
 
@@ -396,11 +362,6 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
         labelNumPortas.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelNumPortas.setText("Nº. de Portas");
 
-        comboBoxEstadoVeiculo.setName("Estado Veículo"); // NOI18N
-
-        labelEstadoVeiculo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        labelEstadoVeiculo.setText("Estado do Veículo");
-
         comboBoxEstabelecimento.setName("Estabelecimento"); // NOI18N
         comboBoxEstabelecimento.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -410,11 +371,6 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
 
         labelEstabelecimento.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelEstabelecimento.setText("Estabelecimento");
-
-        textFieldEvento.setName("Evento"); // NOI18N
-
-        labelEvento.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        labelEvento.setText("Evento");
 
         tabbedPaneEdicao.setToolTipText("");
         tabbedPaneEdicao.setName("123"); // NOI18N
@@ -431,7 +387,9 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
         );
         panelCaracteristicasLayout.setVerticalGroup(
             panelCaracteristicasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPaneCaracteristicas, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+            .addGroup(panelCaracteristicasLayout.createSequentialGroup()
+                .addComponent(scrollPaneCaracteristicas, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 32, Short.MAX_VALUE))
         );
 
         tabbedPaneEdicao.addTab("Características", panelCaracteristicas);
@@ -448,88 +406,10 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
         );
         panelObservacoesLayout.setVerticalGroup(
             panelObservacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPaneObservacoes, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+            .addComponent(scrollPaneObservacoes, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
         );
 
         tabbedPaneEdicao.addTab("Observações", panelObservacoes);
-
-        tableReparacoes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Estabelecimento", "Descrição da Reparação", "Data da Intervenção"
-            }
-        ));
-        scrollPaneReparacoes.setViewportView(tableReparacoes);
-
-        javax.swing.GroupLayout panelReparacoesLayout = new javax.swing.GroupLayout(panelReparacoes);
-        panelReparacoes.setLayout(panelReparacoesLayout);
-        panelReparacoesLayout.setHorizontalGroup(
-            panelReparacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPaneReparacoes, javax.swing.GroupLayout.DEFAULT_SIZE, 868, Short.MAX_VALUE)
-        );
-        panelReparacoesLayout.setVerticalGroup(
-            panelReparacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPaneReparacoes, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-        );
-
-        tabbedPaneEdicao.addTab("Reparações", panelReparacoes);
-
-        tableEventos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Nome", "Data Início", "Data Fim", "Local", "Número de Veículos"
-            }
-        ));
-        scrollPaneEventos.setViewportView(tableEventos);
-
-        javax.swing.GroupLayout panelEventosLayout = new javax.swing.GroupLayout(panelEventos);
-        panelEventos.setLayout(panelEventosLayout);
-        panelEventosLayout.setHorizontalGroup(
-            panelEventosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPaneEventos, javax.swing.GroupLayout.DEFAULT_SIZE, 868, Short.MAX_VALUE)
-        );
-        panelEventosLayout.setVerticalGroup(
-            panelEventosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPaneEventos, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-        );
-
-        tabbedPaneEdicao.addTab("Eventos", panelEventos);
-
-        tableTransacoes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Tipo", "Nº. Veiculos", "Nome da entidade", "NIF", "Data", "Title 6", "Estado"
-            }
-        ));
-        scrollPaneTransacoes.setViewportView(tableTransacoes);
-
-        javax.swing.GroupLayout panelTransacoesLayout = new javax.swing.GroupLayout(panelTransacoes);
-        panelTransacoes.setLayout(panelTransacoesLayout);
-        panelTransacoesLayout.setHorizontalGroup(
-            panelTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPaneTransacoes, javax.swing.GroupLayout.DEFAULT_SIZE, 868, Short.MAX_VALUE)
-        );
-        panelTransacoesLayout.setVerticalGroup(
-            panelTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPaneTransacoes, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-        );
-
-        tabbedPaneEdicao.addTab("Transações", panelTransacoes);
 
         javax.swing.GroupLayout panelEdicaoLayout = new javax.swing.GroupLayout(panelEdicao);
         panelEdicao.setLayout(panelEdicaoLayout);
@@ -542,8 +422,8 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
                     .addGroup(panelEdicaoLayout.createSequentialGroup()
                         .addGroup(panelEdicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(panelFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(panelFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelEdicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelEdicaoLayout.createSequentialGroup()
                                 .addGroup(panelEdicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -607,16 +487,9 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
                                     .addComponent(textFieldNumPortas, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(panelEdicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelEstadoVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(comboBoxEstadoVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(panelEdicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(comboBoxEstabelecimento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(labelEstabelecimento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(panelEdicaoLayout.createSequentialGroup()
-                                .addComponent(labelEvento)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(textFieldEvento))))
+                                    .addComponent(labelEstabelecimento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(181, 181, 181)))))
                 .addContainerGap())
         );
         panelEdicaoLayout.setVerticalGroup(
@@ -681,21 +554,12 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(textFieldNumPortas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelEdicaoLayout.createSequentialGroup()
-                                .addComponent(labelEstadoVeiculo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(comboBoxEstadoVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelEdicaoLayout.createSequentialGroup()
                                 .addComponent(labelEstabelecimento)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(comboBoxEstabelecimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelEvento)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textFieldEvento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(comboBoxEstabelecimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(panelFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabbedPaneEdicao)
-                .addContainerGap())
+                .addComponent(tabbedPaneEdicao))
         );
 
         tabbedPaneEdicao.getAccessibleContext().setAccessibleName("asdasd");
@@ -731,7 +595,6 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<ClassesVeiculos> comboBoxClasse;
     private javax.swing.JComboBox<TipoCombustivel> comboBoxCombustivel;
     private javax.swing.JComboBox<Estabelecimento> comboBoxEstabelecimento;
-    private javax.swing.JComboBox<EstadoVeiculo> comboBoxEstadoVeiculo;
     private javax.swing.JComboBox<String> comboBoxMarca;
     private javax.swing.JComboBox<MesesAno> comboBoxMes;
     private javax.swing.JLabel jLabel1;
@@ -741,8 +604,6 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
     private javax.swing.JLabel labelCombustivel;
     private javax.swing.JLabel labelCor;
     private javax.swing.JLabel labelEstabelecimento;
-    private javax.swing.JLabel labelEstadoVeiculo;
-    private javax.swing.JLabel labelEvento;
     private javax.swing.JLabel labelFoto;
     private javax.swing.JLabel labelLotacao;
     private javax.swing.JLabel labelMarca;
@@ -756,26 +617,16 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
     private javax.swing.JLabel labelQuilometros;
     private javax.swing.JPanel panelCaracteristicas;
     private javax.swing.JPanel panelEdicao;
-    private javax.swing.JPanel panelEventos;
     private javax.swing.JPanel panelFoto;
     private javax.swing.JPanel panelObservacoes;
-    private javax.swing.JPanel panelReparacoes;
-    private javax.swing.JPanel panelTransacoes;
     private javax.swing.JScrollPane scrollPaneCaracteristicas;
-    private javax.swing.JScrollPane scrollPaneEventos;
     private javax.swing.JScrollPane scrollPaneObservacoes;
-    private javax.swing.JScrollPane scrollPaneReparacoes;
-    private javax.swing.JScrollPane scrollPaneTransacoes;
     private javax.swing.JTabbedPane tabbedPaneEdicao;
-    private javax.swing.JTable tableEventos;
-    private javax.swing.JTable tableReparacoes;
-    private javax.swing.JTable tableTransacoes;
     private javax.swing.JTextArea textAreaCaracteristicas;
     private javax.swing.JTextArea textAreaObservacoes;
     private javax.swing.JTextField textFieldAno;
     private javax.swing.JTextField textFieldCilindrada;
     private javax.swing.JTextField textFieldCor;
-    private javax.swing.JTextField textFieldEvento;
     private javax.swing.JTextField textFieldLotacao;
     private javax.swing.JTextField textFieldMatricula;
     private javax.swing.JTextField textFieldModelo;

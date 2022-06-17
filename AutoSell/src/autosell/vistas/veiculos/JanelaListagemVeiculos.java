@@ -20,7 +20,6 @@ public class JanelaListagemVeiculos extends JanelaListagem<Veiculo> {
                     "Ano",
                     "Combustível",
                     "Estabelecimento",
-                    "Estado",
                     "Obj"},
                 desktopPane,
                 colaboradorAutenticado,
@@ -43,8 +42,7 @@ public class JanelaListagemVeiculos extends JanelaListagem<Veiculo> {
             aux[i][4] = veiculo.getAnoRegisto();
             aux[i][5] = veiculo.getCombustivel();
             aux[i][6] = veiculo.getEstabelecimento();
-            aux[i][7] = veiculo.getEstadoVeiculo();
-            aux[i][8] = veiculo;
+            aux[i][7] = veiculo;
             i++;
         }
     }

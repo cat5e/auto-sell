@@ -41,7 +41,6 @@ public class JanelaEditarEvento extends javax.swing.JInternalFrame {
             "Marca",
             "Modelo",
             "Estabelecimento",
-            "Estado",
             "Obj"};
         tableModel = new TableModel(columns, getTableData());
         tableVeiculos.setModel(tableModel);
@@ -126,8 +125,7 @@ public class JanelaEditarEvento extends javax.swing.JInternalFrame {
             aux[i][1] = veiculo.getMarca();
             aux[i][2] = veiculo.getModelo();
             aux[i][3] = veiculo.getEstabelecimento();
-            aux[i][4] = veiculo.getEstadoVeiculo();
-            aux[i][5] = veiculo;
+            aux[i][4] = veiculo;
             i++;
         }
         return aux;
