@@ -7,7 +7,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class Gestor<T> {
+public abstract class Gestor<T> {
     protected LinkedList<T> ts;
 
     public Gestor() {

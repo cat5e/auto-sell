@@ -1,16 +1,7 @@
 package autosell.gestores;
 
 import autosell.exceptions.CustomExeption;
-import autosell.enumeracoes.TipoColaborador;
-import autosell.enumeracoes.TipoEstabelecimento;
-import autosell.modelos.Artigo;
-import autosell.modelos.Colaborador;
-import autosell.modelos.Entidade;
-import autosell.modelos.Estabelecimento;
-import autosell.modelos.Evento;
-import autosell.modelos.Intervencao;
-import autosell.modelos.Transacao;
-import autosell.modelos.Veiculo;
+import autosell.modelos.*;
 import autosell.utils.AppFileHandler;
 import autosell.utils.AppLogger;
 import autosell.utils.data.seed.Seeder;
