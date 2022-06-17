@@ -2,6 +2,7 @@ package autosell.modelos;
 
 import autosell.enumeracoes.*;
 import java.io.Serializable;
+import javax.swing.ImageIcon;
 
 public class Veiculo implements Serializable{
 
@@ -23,12 +24,14 @@ public class Veiculo implements Serializable{
     private String caracteristicas;
     private String observacoes;
     private Estabelecimento estabelecimento;
+    private ImageIcon foto;
     
     public Veiculo(float preco, String matricula, String marca, Estabelecimento estabelecimento) {
         this.preco = preco;
         this.matricula = matricula;
         this.marca = marca;
         this.estabelecimento = estabelecimento;
+        foto = new ImageIcon();
     }
 
     // <editor-fold defaultstate="collapsed" desc="Getters Section">
@@ -104,6 +107,10 @@ public class Veiculo implements Serializable{
         return estabelecimento;
     }
 
+    public ImageIcon getFoto(){
+        return foto;
+    }
+    
     // </editor-fold> 
     
     // <editor-fold defaultstate="collapsed" desc="Setters Section">
@@ -178,6 +185,15 @@ public class Veiculo implements Serializable{
     public void setEstabelecimento(Estabelecimento estabelecimento) {
         this.estabelecimento = estabelecimento;
     }
+    
+    public void setFoto(ImageIcon foto) {
+        if(foto == null) { 
+            return;
+        }
+        
+        this.foto = foto;
+    }
+    
 // </editor-fold> 
 
     @Override

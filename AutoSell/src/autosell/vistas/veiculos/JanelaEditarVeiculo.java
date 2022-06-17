@@ -12,16 +12,23 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import static autosell.utils.ValidacoesUtils.*;
+import java.awt.Dimension;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 
 public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
 
     private Veiculo veiculo;
+    private ImageIcon fotoVeiculo;
 
     public JanelaEditarVeiculo(Veiculo veiculo) {
         this.veiculo = veiculo;
         initComponents();
         toolBarMenu.setFloatable(false);
-
+      
         loadMeses();
         loadMarcas();
         loadCombustivel();
@@ -76,6 +83,27 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
         comboBoxEstabelecimento.setSelectedItem(veiculo.getEstabelecimento());
         textAreaCaracteristicas.setText(veiculo.getCaracteristicas());
         textAreaObservacoes.setText(veiculo.getObservacoes());
+        
+        fotoVeiculo = veiculo.getFoto();
+        loadFoto();
+    }
+
+    private void loadFoto() {
+        
+        if(fotoVeiculo == null) {
+            labelFoto.setIcon(null);
+            return;
+        }
+        
+        try {
+            labelFoto.setIcon(fotoVeiculo);
+            
+            labelFoto.revalidate();
+            labelFoto.repaint();
+
+        } catch (Exception e) {
+            AppLogger.LOG.warning(this, e);
+        }
     }
 
     private void acaoGuardar() {
@@ -148,6 +176,8 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
         if (!isNullOrEmpty(textFieldNumPortas.getText())) {
             veiculo.setNumeroPortas(Integer.parseInt(textFieldNumPortas.getText()));
         }
+        
+        veiculo.setFoto(fotoVeiculo);
     }
 
     private boolean isDadosValidos() {
@@ -187,7 +217,8 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
             }
         }
 
-        if (GestorVeiculos.getInstance().isMatriculaDuplicada(textFieldMatricula.getText())) {
+        if (!veiculo.getMatricula().equals(textFieldMatricula.getText()) &&
+                GestorVeiculos.getInstance().isMatriculaDuplicada(textFieldMatricula.getText())) {
             JOptionPane.showMessageDialog(this, "Já existe um veículo com uma matrícula igual.",
                     "Dados inválidos", JOptionPane.WARNING_MESSAGE);
             return false;
@@ -218,6 +249,8 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
 
         toolBarMenu = new javax.swing.JToolBar();
         buttonGuardar = new javax.swing.JButton();
+        buttonAdicionarImagem = new javax.swing.JButton();
+        buttonRemoverImagem = new javax.swing.JButton();
         panelEdicao = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         panelFoto = new javax.swing.JPanel();
@@ -276,14 +309,34 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
         });
         toolBarMenu.add(buttonGuardar);
 
+        buttonAdicionarImagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/autosell/resources/plus.png"))); // NOI18N
+        buttonAdicionarImagem.setText("Adicionar Imagem");
+        buttonAdicionarImagem.setFocusable(false);
+        buttonAdicionarImagem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAdicionarImagemActionPerformed(evt);
+            }
+        });
+        toolBarMenu.add(buttonAdicionarImagem);
+
+        buttonRemoverImagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/autosell/resources/minus.png"))); // NOI18N
+        buttonRemoverImagem.setText("Remover Imagem");
+        buttonRemoverImagem.setFocusable(false);
+        buttonRemoverImagem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonRemoverImagemActionPerformed(evt);
+            }
+        });
+        toolBarMenu.add(buttonRemoverImagem);
+
         panelEdicao.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Foto");
 
+        panelFoto.setMaximumSize(new java.awt.Dimension(49, 16));
+        panelFoto.setMinimumSize(new java.awt.Dimension(49, 16));
         panelFoto.setLayout(new java.awt.GridBagLayout());
-
-        labelFoto.setText("labelFoto");
         panelFoto.add(labelFoto, new java.awt.GridBagConstraints());
 
         labelPreco.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -557,7 +610,7 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
                                 .addComponent(labelEstabelecimento)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(comboBoxEstabelecimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(panelFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(panelFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tabbedPaneEdicao))
         );
@@ -569,14 +622,14 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(toolBarMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panelEdicao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelEdicao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(toolBarMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(panelEdicao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panelEdicao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -590,8 +643,29 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
         hasEstabelecimentoCapacidade();
     }//GEN-LAST:event_comboBoxEstabelecimentoItemStateChanged
 
+    private void buttonAdicionarImagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAdicionarImagemActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.showOpenDialog(this);
+
+        try {
+            File file = fileChooser.getSelectedFile();
+
+            fotoVeiculo = new ImageIcon(ImageIO.read(file));
+            loadFoto();
+        } catch (IOException e) {
+            AppLogger.LOG.severe(this, e);
+        }
+    }//GEN-LAST:event_buttonAdicionarImagemActionPerformed
+
+    private void buttonRemoverImagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRemoverImagemActionPerformed
+        fotoVeiculo = null;
+        loadFoto();
+    }//GEN-LAST:event_buttonRemoverImagemActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonAdicionarImagem;
     private javax.swing.JButton buttonGuardar;
+    private javax.swing.JButton buttonRemoverImagem;
     private javax.swing.JComboBox<ClassesVeiculos> comboBoxClasse;
     private javax.swing.JComboBox<TipoCombustivel> comboBoxCombustivel;
     private javax.swing.JComboBox<Estabelecimento> comboBoxEstabelecimento;
