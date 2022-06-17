@@ -317,12 +317,24 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textFieldPreco">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Pre&#xe7;o" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textFieldMatricula">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Matr&#xed;cula" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textFieldQuilometros">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Quil&#xf3;metros" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textFieldAno">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Ano" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="labelMatricula">
           <Properties>
@@ -361,6 +373,7 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
             </Property>
+            <Property name="name" type="java.lang.String" value="M&#xea;s do Registo" noResource="true"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;MesesAno&gt;"/>
@@ -372,6 +385,7 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
             </Property>
+            <Property name="name" type="java.lang.String" value="Marca" noResource="true"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -386,6 +400,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textFieldModelo">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Modelo" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="labelModelo">
           <Properties>
@@ -396,6 +413,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textFieldCor">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Cor" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="labelCor">
           <Properties>
@@ -410,6 +430,7 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
             </Property>
+            <Property name="name" type="java.lang.String" value="Combust&#xed;vel" noResource="true"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;TipoCombustivel&gt;"/>
@@ -432,6 +453,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textFieldCilindrada">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Cilindrada" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="labelPotencia">
           <Properties>
@@ -442,6 +466,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textFieldPotencia">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Pont&#xea;ncia" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="labelLotacao">
           <Properties>
@@ -452,12 +479,16 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textFieldLotacao">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Lota&#xe7;&#xe3;o" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="comboBoxClasse">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
             </Property>
+            <Property name="name" type="java.lang.String" value="Classe" noResource="true"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;ClassesVeiculos&gt;"/>
@@ -472,6 +503,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textFieldMundacas">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="N&#xfa;mero de Mudan&#xe7;as" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="labelMudancas">
           <Properties>
@@ -482,6 +516,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textFieldNumPortas">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="N&#xfa;mero de Portas" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="labelNumPortas">
           <Properties>
@@ -496,6 +533,7 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
             </Property>
+            <Property name="name" type="java.lang.String" value="Estado Ve&#xed;culo" noResource="true"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;EstadoVeiculo&gt;"/>
@@ -514,7 +552,11 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
             </Property>
+            <Property name="name" type="java.lang.String" value="Estabelecimento" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="comboBoxEstabelecimentoItemStateChanged"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Estabelecimento&gt;"/>
           </AuxValues>
@@ -528,6 +570,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textFieldEvento">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="Evento" noResource="true"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="labelEvento">
           <Properties>

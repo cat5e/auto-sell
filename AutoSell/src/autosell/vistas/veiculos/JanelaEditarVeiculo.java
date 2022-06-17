@@ -25,7 +25,6 @@ import javax.swing.JTextField;
 // TODO: Carregar todas as listagens
 // TODO: Implementar e apresentar validação se o veículo está num evento
 // TODO: Verificar se é necessário implementar o estado do veículo.
-
 public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
 
     private Veiculo veiculo;
@@ -112,21 +111,7 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
                         comboBoxMarca.getSelectedItem().toString(),
                         (Estabelecimento) comboBoxEstabelecimento.getSelectedItem());
 
-                veiculo.setQuilometros(Integer.parseInt(textFieldQuilometros.getText()));
-                veiculo.setAnoRegisto(Integer.parseInt(textFieldAno.getText()));
-                veiculo.setMesRegisto((MesesAno) comboBoxMes.getSelectedItem());
-                veiculo.setModelo(textFieldModelo.getText());
-                veiculo.setCor(textFieldCor.getText());
-                veiculo.setCombustivel((TipoCombustivel) comboBoxCombustivel.getSelectedItem());
-                veiculo.setCelindrada(Float.parseFloat(textFieldCilindrada.getText()));
-                veiculo.setPotencia(Float.parseFloat(textFieldPotencia.getText()));
-                veiculo.setLotacao(Integer.parseInt(textFieldLotacao.getText()));
-                veiculo.setClasse((ClassesVeiculos) comboBoxClasse.getSelectedItem());
-                veiculo.setNumeorMudancas(Integer.parseInt(textFieldMundacas.getText()));
-                veiculo.setNumeroPortas(Integer.parseInt(textFieldNumPortas.getText()));
-                veiculo.setEstadoVeiculo((EstadoVeiculo) comboBoxEstadoVeiculo.getSelectedItem());
-                veiculo.setCaracteristicas(textAreaCaracteristicas.getText());
-                veiculo.setObservacoes(textAreaObservacoes.getText());
+                guardarDadosVeículo(veiculo);
 
                 if (!GestorVeiculos.getInstance().adicionar(veiculo)) {
                     throw new CustomExeption("Não foi possível guardar o registo.");
@@ -136,21 +121,8 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
                 veiculo.setMatricula(textFieldMatricula.getText());
                 veiculo.setEstabelecimento((Estabelecimento) comboBoxEstabelecimento.getSelectedItem());
                 veiculo.setMarca(comboBoxMarca.getSelectedItem().toString());
-                veiculo.setQuilometros(Integer.parseInt(textFieldQuilometros.getText()));
-                veiculo.setAnoRegisto(Integer.parseInt(textFieldAno.getText()));
-                veiculo.setMesRegisto((MesesAno) comboBoxMes.getSelectedItem());
-                veiculo.setModelo(textFieldModelo.getText());
-                veiculo.setCor(textFieldCor.getText());
-                veiculo.setCombustivel((TipoCombustivel) comboBoxCombustivel.getSelectedItem());
-                veiculo.setCelindrada(Float.parseFloat(textFieldCilindrada.getText()));
-                veiculo.setPotencia(Float.parseFloat(textFieldPotencia.getText()));
-                veiculo.setLotacao(Integer.parseInt(textFieldLotacao.getText()));
-                veiculo.setClasse((ClassesVeiculos) comboBoxClasse.getSelectedItem());
-                veiculo.setNumeorMudancas(Integer.parseInt(textFieldMundacas.getText()));
-                veiculo.setNumeroPortas(Integer.parseInt(textFieldNumPortas.getText()));
-                veiculo.setEstadoVeiculo((EstadoVeiculo) comboBoxEstadoVeiculo.getSelectedItem());
-                veiculo.setCaracteristicas(textAreaCaracteristicas.getText());
-                veiculo.setObservacoes(textAreaObservacoes.getText());
+
+                guardarDadosVeículo(veiculo);
             }
 
             GestorArmazenamentoDados.INSTANCIA.escreverDados();
@@ -166,7 +138,44 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, "Os dados foram gravados com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    private void guardarDadosVeículo(Veiculo veiculo) {
+        veiculo.setMesRegisto((MesesAno) comboBoxMes.getSelectedItem());
+        veiculo.setModelo(textFieldModelo.getText());
+        veiculo.setCor(textFieldCor.getText());
+        veiculo.setCombustivel((TipoCombustivel) comboBoxCombustivel.getSelectedItem());
+        veiculo.setClasse((ClassesVeiculos) comboBoxClasse.getSelectedItem());
+        veiculo.setEstadoVeiculo((EstadoVeiculo) comboBoxEstadoVeiculo.getSelectedItem());
+        veiculo.setCaracteristicas(textAreaCaracteristicas.getText());
+        veiculo.setObservacoes(textAreaObservacoes.getText());
+
+        if (!isNullOrEmpty(textFieldQuilometros.getText())) {
+            veiculo.setQuilometros(Integer.parseInt(textFieldQuilometros.getText()));
+        }
+        if (!isNullOrEmpty(textFieldAno.getText())) {
+            veiculo.setAnoRegisto(Integer.parseInt(textFieldAno.getText()));
+        }
+        if (!isNullOrEmpty(textFieldCilindrada.getText())) {
+            veiculo.setCelindrada(Float.parseFloat(textFieldCilindrada.getText()));
+        }
+        if (!isNullOrEmpty(textFieldPotencia.getText())) {
+            veiculo.setPotencia(Float.parseFloat(textFieldPotencia.getText()));
+        }
+        if (!isNullOrEmpty(textFieldLotacao.getText())) {
+            veiculo.setLotacao(Integer.parseInt(textFieldLotacao.getText()));
+        }
+        if (!isNullOrEmpty(textFieldMundacas.getText())) {
+            veiculo.setNumeorMudancas(Integer.parseInt(textFieldMundacas.getText()));
+        }
+        if (!isNullOrEmpty(textFieldNumPortas.getText())) {
+            veiculo.setNumeroPortas(Integer.parseInt(textFieldNumPortas.getText()));
+        }
+    }
+
     private boolean isDadosValidos() {
+        if (!hasEstabelecimentoCapacidade()) {
+            return false;
+        }
+
         JComponent componentesAValidar[] = {
             textFieldPreco,
             textFieldMatricula,
@@ -194,7 +203,7 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
                 continue;
             }
 
-            if (isNumericValue(this, textField) && isNumberGreaterOrEqualThanZero(this, textField)) {
+            if (!isNumericValue(this, textField) && isNumberGreaterOrEqualThanZero(this, textField)) {
                 return false;
             }
         }
@@ -202,6 +211,18 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
         if (GestorVeiculos.getInstance().isMatriculaDuplicada(textFieldMatricula.getText())) {
             JOptionPane.showMessageDialog(this, "Já existe um veículo com uma matrícula igual.",
                     "Dados inválidos", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean hasEstabelecimentoCapacidade() {
+        Estabelecimento e = (Estabelecimento) comboBoxEstabelecimento.getSelectedItem();
+        int countVeiculos = GestorVeiculos.getInstance().getListagem((veiculo) -> veiculo.getEstabelecimento().equals(e)).size();
+        if (countVeiculos >= e.getLimiteVeiculos()) {
+            JOptionPane.showMessageDialog(this, "Foi atingido o limite de veículos do estabelecimento " + e.getNome(),
+                    "Limite veículos", JOptionPane.WARNING_MESSAGE);
             return false;
         }
 
@@ -302,6 +323,14 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
         labelPreco.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelPreco.setText("Preço");
 
+        textFieldPreco.setName("Preço"); // NOI18N
+
+        textFieldMatricula.setName("Matrícula"); // NOI18N
+
+        textFieldQuilometros.setName("Quilómetros"); // NOI18N
+
+        textFieldAno.setName("Ano"); // NOI18N
+
         labelMatricula.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelMatricula.setText("Matrícula");
 
@@ -314,16 +343,25 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
         labelMes.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelMes.setText("Mês do Registo");
 
+        comboBoxMes.setName("Mês do Registo"); // NOI18N
+
         comboBoxMarca.setEditable(true);
+        comboBoxMarca.setName("Marca"); // NOI18N
 
         labelMarca.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelMarca.setText("Marca");
 
+        textFieldModelo.setName("Modelo"); // NOI18N
+
         labelModelo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelModelo.setText("Modelo");
 
+        textFieldCor.setName("Cor"); // NOI18N
+
         labelCor.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelCor.setText("Cor");
+
+        comboBoxCombustivel.setName("Combustível"); // NOI18N
 
         labelCombustivel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelCombustivel.setText("Combustível");
@@ -331,26 +369,49 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
         labelCilindrada.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelCilindrada.setText("Cilindrada");
 
+        textFieldCilindrada.setName("Cilindrada"); // NOI18N
+
         labelPotencia.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelPotencia.setText("Potência");
+
+        textFieldPotencia.setName("Pontência"); // NOI18N
 
         labelLotacao.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelLotacao.setText("Lotação");
 
+        textFieldLotacao.setName("Lotação"); // NOI18N
+
+        comboBoxClasse.setName("Classe"); // NOI18N
+
         labelClasse.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelClasse.setText("Classe");
+
+        textFieldMundacas.setName("Número de Mudanças"); // NOI18N
 
         labelMudancas.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelMudancas.setText("Número de Mudanças");
 
+        textFieldNumPortas.setName("Número de Portas"); // NOI18N
+
         labelNumPortas.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelNumPortas.setText("Nº. de Portas");
+
+        comboBoxEstadoVeiculo.setName("Estado Veículo"); // NOI18N
 
         labelEstadoVeiculo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelEstadoVeiculo.setText("Estado do Veículo");
 
+        comboBoxEstabelecimento.setName("Estabelecimento"); // NOI18N
+        comboBoxEstabelecimento.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboBoxEstabelecimentoItemStateChanged(evt);
+            }
+        });
+
         labelEstabelecimento.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelEstabelecimento.setText("Estabelecimento");
+
+        textFieldEvento.setName("Evento"); // NOI18N
 
         labelEvento.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelEvento.setText("Evento");
@@ -660,6 +721,10 @@ public class JanelaEditarVeiculo extends javax.swing.JInternalFrame {
     private void buttonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGuardarActionPerformed
         acaoGuardar();
     }//GEN-LAST:event_buttonGuardarActionPerformed
+
+    private void comboBoxEstabelecimentoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboBoxEstabelecimentoItemStateChanged
+        hasEstabelecimentoCapacidade();
+    }//GEN-LAST:event_comboBoxEstabelecimentoItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonGuardar;
