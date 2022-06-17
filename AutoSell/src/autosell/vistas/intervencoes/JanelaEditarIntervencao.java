@@ -156,7 +156,7 @@ public class JanelaEditarIntervencao extends javax.swing.JInternalFrame {
             aux[i][1] = consumivel.getNome();
             aux[i][2] = consumivel.getQuantidade();
             aux[i][3] = consumivel.getUnidade();
-            aux[i][5] = consumivel;
+            aux[i][4] = consumivel;
             i++;
         }
         return aux;

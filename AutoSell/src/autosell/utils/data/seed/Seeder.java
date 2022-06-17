@@ -3,7 +3,6 @@ package autosell.utils.data.seed;
 import autosell.enumeracoes.*;
 import autosell.modelos.*;
 import autosell.gestores.*;
-import java.time.LocalDate;
 import static autosell.utils.DateUtil.parseLocalDate;
 
 public class Seeder {
@@ -265,56 +264,56 @@ public class Seeder {
         Artigo ar1 = new Artigo(
                 "PN-AZ-099", 
                 "Pneu Azol Ptel 123.44", 
-                50, 
                 2, 
+                50, 
                 "Unidades", 
                 e1);
         
         Artigo ar2 = new Artigo(
                 "OL-PTR-11", 
                 "Oleo Petrol", 
-                158, 
                 0, 
+                158, 
                 "Litros", 
                 e1);
         
         Artigo ar3 = new Artigo(
                 "PL-AA-TR", 
                 "Pastilhas Trabões Bubalicios", 
+                2, 
                 18, 
-                10, 
                 "Unidades", 
                 e1);
         
         Artigo ar4 = new Artigo(
                 "OL-TR-PTR-12", 
                 "Óleo trabões Milka", 
-                56, 
                 2, 
+                56, 
                 "Litros", 
                 e2);
         
         Artigo ar5 = new Artigo(
                 "LQ-REF-01", 
                 "Liquido Refrigerante FreshTop", 
-                96, 
                 2, 
+                96, 
                 "Litros", 
                 e1);
         
         Artigo ar6 = new Artigo(
                 "AM-REF-12", 
                 "Ambientador topxuxa", 
-                49, 
                 2, 
+                49, 
                 "Unidades", 
                 e2);
         
         Artigo ar7 = new Artigo(
                 "LP-Medio-11", 
                 "Luz Medios brilhante 11", 
-                96, 
                 2, 
+                96, 
                 "Unidades", 
                 e1);
         
