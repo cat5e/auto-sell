@@ -202,12 +202,9 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
         passwordFieldPasswordAntiga = new javax.swing.JPasswordField();
         passwordFieldPasswordAntiga.setEnabled(isColaboradorAutenticadoColaborador);
         passwordFieldNovaPassword = new javax.swing.JPasswordField();
-        labelVendas = new javax.swing.JLabel();
         passwordFieldConfirmNovaPassword = new javax.swing.JPasswordField();
         labelConfirmNovaPassword = new javax.swing.JLabel();
         labelNovaPassword = new javax.swing.JLabel();
-        panelVendas = new javax.swing.JPanel();
-        labelToBeImplemented = new javax.swing.JLabel();
         labelTipoColaborador = new javax.swing.JLabel();
         comboBoxTipoColaborador = new javax.swing.JComboBox<>();
         comboBoxTipoColaborador.setEnabled(isColaboradorAutenticadoAdmin);
@@ -256,9 +253,6 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
 
         passwordFieldNovaPassword.setName("Nova Password"); // NOI18N
 
-        labelVendas.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        labelVendas.setText("Vendas");
-
         passwordFieldConfirmNovaPassword.setName("Confirmação Nova Password"); // NOI18N
 
         labelConfirmNovaPassword.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -267,13 +261,6 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
 
         labelNovaPassword.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelNovaPassword.setText("Nova Password");
-
-        panelVendas.setBackground(new java.awt.Color(255, 255, 255));
-        panelVendas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        panelVendas.setLayout(new java.awt.GridBagLayout());
-
-        labelToBeImplemented.setText("To be Implemented...");
-        panelVendas.add(labelToBeImplemented, new java.awt.GridBagConstraints());
 
         labelTipoColaborador.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelTipoColaborador.setText("Tipo Colaborador");
@@ -287,7 +274,6 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
             .addGroup(panelEdicaoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelEdicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelVendas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelEdicaoLayout.createSequentialGroup()
                         .addGroup(panelEdicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(comboBoxTipoColaborador, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -311,9 +297,7 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
                             .addComponent(labelEstabelecimento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(labelConfirmNovaPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)))
                     .addGroup(panelEdicaoLayout.createSequentialGroup()
-                        .addGroup(panelEdicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelTipoColaborador)
-                            .addComponent(labelVendas))
+                        .addComponent(labelTipoColaborador)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -352,11 +336,7 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
                 .addComponent(labelTipoColaborador)
                 .addGap(0, 0, 0)
                 .addComponent(comboBoxTipoColaborador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(labelVendas)
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(panelVendas, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -392,10 +372,7 @@ public class JanelaEditarColaborador extends javax.swing.JInternalFrame {
     private javax.swing.JLabel labelNovaPassword;
     private javax.swing.JLabel labelPasswordAntiga;
     private javax.swing.JLabel labelTipoColaborador;
-    private javax.swing.JLabel labelToBeImplemented;
-    private javax.swing.JLabel labelVendas;
     private javax.swing.JPanel panelEdicao;
-    private javax.swing.JPanel panelVendas;
     private javax.swing.JPasswordField passwordFieldConfirmNovaPassword;
     private javax.swing.JPasswordField passwordFieldNovaPassword;
     private javax.swing.JPasswordField passwordFieldPasswordAntiga;

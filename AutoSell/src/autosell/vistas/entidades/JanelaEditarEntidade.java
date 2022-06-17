@@ -19,8 +19,6 @@ import static autosell.utils.DateUtil.parseLocalDate;
 public class JanelaEditarEntidade extends javax.swing.JInternalFrame {
     private Entidade entidade;
     
-    // TODO: Carregar Histórico de transações
-    
     public JanelaEditarEntidade(Entidade entidade) {
         this.entidade = entidade;
         initComponents();
@@ -134,9 +132,6 @@ public class JanelaEditarEntidade extends javax.swing.JInternalFrame {
         textFieldEmail = new javax.swing.JTextField();
         labelMorada = new javax.swing.JLabel();
         textFieldMorada = new javax.swing.JTextField();
-        labelHistorico = new javax.swing.JLabel();
-        scrollPaneHistorico = new javax.swing.JScrollPane();
-        tableHistorico = new javax.swing.JTable();
 
         setClosable(true);
 
@@ -189,22 +184,6 @@ public class JanelaEditarEntidade extends javax.swing.JInternalFrame {
 
         textFieldMorada.setName("Morada"); // NOI18N
 
-        labelHistorico.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        labelHistorico.setText("Histórico de transações");
-
-        tableHistorico.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Tipo", "Nº. Veículos", "Data", "Title 4", "Estado"
-            }
-        ));
-        scrollPaneHistorico.setViewportView(tableHistorico);
-
         javax.swing.GroupLayout panelPrincipaçLayout = new javax.swing.GroupLayout(panelPrincipaç);
         panelPrincipaç.setLayout(panelPrincipaçLayout);
         panelPrincipaçLayout.setHorizontalGroup(
@@ -221,7 +200,7 @@ public class JanelaEditarEntidade extends javax.swing.JInternalFrame {
                                 .addComponent(textFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(panelPrincipaçLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(comboBoxTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(comboBoxTipo, 0, 187, Short.MAX_VALUE)
                             .addComponent(labelTipo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(panelPrincipaçLayout.createSequentialGroup()
                         .addGroup(panelPrincipaçLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,11 +222,8 @@ public class JanelaEditarEntidade extends javax.swing.JInternalFrame {
                             .addComponent(textFieldEmail)))
                     .addComponent(textFieldMorada)
                     .addGroup(panelPrincipaçLayout.createSequentialGroup()
-                        .addGroup(panelPrincipaçLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelMorada)
-                            .addComponent(labelHistorico))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(scrollPaneHistorico))
+                        .addComponent(labelMorada)
+                        .addGap(0, 596, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelPrincipaçLayout.setVerticalGroup(
@@ -285,10 +261,6 @@ public class JanelaEditarEntidade extends javax.swing.JInternalFrame {
                 .addComponent(labelMorada)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textFieldMorada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelHistorico)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPaneHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -320,15 +292,12 @@ public class JanelaEditarEntidade extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<TipoEntidade> comboBoxTipo;
     private javax.swing.JLabel labelDataNascimento;
     private javax.swing.JLabel labelEmail;
-    private javax.swing.JLabel labelHistorico;
     private javax.swing.JLabel labelMorada;
     private javax.swing.JLabel labelNIF;
     private javax.swing.JLabel labelNome;
     private javax.swing.JLabel labelTelefone;
     private javax.swing.JLabel labelTipo;
     private javax.swing.JPanel panelPrincipaç;
-    private javax.swing.JScrollPane scrollPaneHistorico;
-    private javax.swing.JTable tableHistorico;
     private javax.swing.JTextField textFieldDataNascimento;
     private javax.swing.JTextField textFieldEmail;
     private javax.swing.JTextField textFieldMorada;

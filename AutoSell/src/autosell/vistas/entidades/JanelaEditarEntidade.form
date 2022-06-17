@@ -88,7 +88,7 @@
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="comboBoxTipo" max="32767" attributes="0"/>
+                              <Component id="comboBoxTipo" pref="187" max="32767" attributes="0"/>
                               <Component id="labelTipo" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -118,13 +118,9 @@
                       </Group>
                       <Component id="textFieldMorada" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="labelMorada" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="labelHistorico" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="labelMorada" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="596" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="scrollPaneHistorico" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -174,10 +170,6 @@
                   <Component id="labelMorada" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="textFieldMorada" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="labelHistorico" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="scrollPaneHistorico" min="-2" pref="155" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -281,36 +273,6 @@
             <Property name="name" type="java.lang.String" value="Morada" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="labelHistorico">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="12" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Hist&#xf3;rico de transa&#xe7;&#xf5;es"/>
-          </Properties>
-        </Component>
-        <Container class="javax.swing.JScrollPane" name="scrollPaneHistorico">
-          <AuxValues>
-            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-          </AuxValues>
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-          <SubComponents>
-            <Component class="javax.swing.JTable" name="tableHistorico">
-              <Properties>
-                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="5" rowCount="4">
-                    <Column editable="true" title="Tipo" type="java.lang.Object"/>
-                    <Column editable="true" title="N&#xba;. Ve&#xed;culos" type="java.lang.Object"/>
-                    <Column editable="true" title="Data" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 4" type="java.lang.Object"/>
-                    <Column editable="true" title="Estado" type="java.lang.Object"/>
-                  </Table>
-                </Property>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
       </SubComponents>
     </Container>
   </SubComponents>
