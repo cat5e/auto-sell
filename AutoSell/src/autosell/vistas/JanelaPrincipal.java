@@ -11,6 +11,7 @@ import autosell.vistas.entidades.JanelaEditarEntidade;
 import autosell.vistas.entidades.JanelaListagemEntidades;
 import autosell.vistas.estabelecimentos.JanelaEditarEstabelecimento;
 import autosell.vistas.estabelecimentos.JanelaListagemEstabelecimentos;
+import autosell.vistas.estatisticas.JanelaEstatisticas;
 import autosell.vistas.eventos.JanelaEditarEvento;
 import autosell.vistas.eventos.JanelaListagemEventos;
 import autosell.vistas.intervencoes.JanelaEditarIntervencao;
@@ -97,6 +98,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         menuItemAdicionarColaborador = new javax.swing.JMenuItem();
         menuItemListagemColaboradores = new javax.swing.JMenuItem();
         menuEstatisticas = new javax.swing.JMenu();
+        menuItemVisualizarEstatisticas = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("AutoSell");
@@ -298,6 +300,15 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 menuEstatisticasActionPerformed(evt);
             }
         });
+
+        menuItemVisualizarEstatisticas.setText("Visualizar");
+        menuItemVisualizarEstatisticas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemVisualizarEstatisticasActionPerformed(evt);
+            }
+        });
+        menuEstatisticas.add(menuItemVisualizarEstatisticas);
+
         menuBar.add(menuEstatisticas);
 
         setJMenuBar(menuBar);
@@ -348,9 +359,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemListagemEventosActionPerformed
 
     private void menuItemNovaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemNovaCompraActionPerformed
-       var janela = new JanelaEditarTransacao(null, colaboradorAutenticado, TipoTransacao.COMPRA);
-       desktopPane.add(janela);
-       janela.setVisible(true);
+        var janela = new JanelaEditarTransacao(null, colaboradorAutenticado, TipoTransacao.COMPRA);
+        desktopPane.add(janela);
+        janela.setVisible(true);
     }//GEN-LAST:event_menuItemNovaCompraActionPerformed
 
     private void menuItemListagemTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemTransacoesActionPerformed
@@ -360,13 +371,13 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemListagemTransacoesActionPerformed
 
     private void menuItemAdicionarArtigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarArtigoActionPerformed
-         var janela = new JanelaEditarArtigo(null, colaboradorAutenticado);
+        var janela = new JanelaEditarArtigo(null, colaboradorAutenticado);
         desktopPane.add(janela);
         janela.setVisible(true);
     }//GEN-LAST:event_menuItemAdicionarArtigoActionPerformed
 
     private void menuItemListagemArtigosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemArtigosActionPerformed
-       var janela = new JanelaListagemArtigos(desktopPane, colaboradorAutenticado);
+        var janela = new JanelaListagemArtigos(desktopPane, colaboradorAutenticado);
         desktopPane.add(janela);
         janela.setVisible(true);
     }//GEN-LAST:event_menuItemListagemArtigosActionPerformed
@@ -381,11 +392,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         var janela = new JanelaListagemIntervencoes(desktopPane, colaboradorAutenticado);
         desktopPane.add(janela);
         janela.setVisible(true);
-        
+
     }//GEN-LAST:event_menuItemListagemIntervencoesActionPerformed
 
     private void menuItemAdicionarEstabelecimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarEstabelecimentoActionPerformed
-        var janela = new JanelaEditarEstabelecimento(null); 
+        var janela = new JanelaEditarEstabelecimento(null);
         desktopPane.add(janela);
         janela.setVisible(true);
     }//GEN-LAST:event_menuItemAdicionarEstabelecimentoActionPerformed
@@ -397,7 +408,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemListagemEstabelecimentosActionPerformed
 
     private void menuItemAdicionarEntidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAdicionarEntidadeActionPerformed
-        var janela = new JanelaEditarEntidade(null); 
+        var janela = new JanelaEditarEntidade(null);
         desktopPane.add(janela);
         janela.setVisible(true);
     }//GEN-LAST:event_menuItemAdicionarEntidadeActionPerformed
@@ -409,7 +420,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemListagemEntidadesActionPerformed
 
     private void menuEstatisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEstatisticasActionPerformed
-        // TODO: Criar a listagem de Estatisticas
+
     }//GEN-LAST:event_menuEstatisticasActionPerformed
 
     private void buttonNomeDoUtilizadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNomeDoUtilizadorActionPerformed
@@ -426,17 +437,23 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemAdicionarColaboradorActionPerformed
 
     private void menuItemListagemColaboradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListagemColaboradoresActionPerformed
-       var janela = new JanelaListagemColaboradores(desktopPane, colaboradorAutenticado);
+        var janela = new JanelaListagemColaboradores(desktopPane, colaboradorAutenticado);
         desktopPane.add(janela);
         janela.setVisible(true);
 
     }//GEN-LAST:event_menuItemListagemColaboradoresActionPerformed
 
     private void menuItemNovaVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemNovaVendaActionPerformed
-       var janela = new JanelaEditarTransacao(null, colaboradorAutenticado, TipoTransacao.VENDA);
-       desktopPane.add(janela);
-       janela.setVisible(true);
+        var janela = new JanelaEditarTransacao(null, colaboradorAutenticado, TipoTransacao.VENDA);
+        desktopPane.add(janela);
+        janela.setVisible(true);
     }//GEN-LAST:event_menuItemNovaVendaActionPerformed
+
+    private void menuItemVisualizarEstatisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemVisualizarEstatisticasActionPerformed
+        var janela = new JanelaEstatisticas();
+        desktopPane.add(janela);
+        janela.setVisible(true);
+    }//GEN-LAST:event_menuItemVisualizarEstatisticasActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonNomeDoUtilizador;
@@ -466,6 +483,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemListagemVeiculos;
     private javax.swing.JMenuItem menuItemNovaCompra;
     private javax.swing.JMenuItem menuItemNovaVenda;
+    private javax.swing.JMenuItem menuItemVisualizarEstatisticas;
     private javax.swing.JMenu menuTransacoes;
     private javax.swing.JMenu menuVeiculos;
     private javax.swing.JToolBar toolBarPrincipal;

@@ -376,7 +376,7 @@ public class Seeder {
                 TipoTransacao.COMPRA, 
                 parseLocalDate("02/06/2021"), 
                 c0);
-        
+        t1.setEntidade(n1);
         t1.adicionarVeiculoAssociado(v6);
         DetalhesTransacao dt1 = new DetalhesTransacao(
                 "A compra foi paga", 
@@ -384,6 +384,8 @@ public class Seeder {
                 -v6.getPreco(),
                 TipoDetalheTransacao.TOTAL_VEICULOS);
         t1.adicionarDetalhesTransacao(dt1);
+        
+        t1.setPrecoFinal(v6.getPreco());
         
         GestorTransacoes.getInstance().adicionar(t1);
         // </editor-fold>

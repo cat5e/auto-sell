@@ -8,6 +8,9 @@ public final class DateUtil {
     public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_FORMAT);
     
     public static String getDateFormated(LocalDate date) {
+        if(date == null)
+            return "";
+        
         return date.format(DATE_FORMATTER);
     }
     
